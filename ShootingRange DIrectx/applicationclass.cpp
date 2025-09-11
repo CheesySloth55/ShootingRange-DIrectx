@@ -152,7 +152,7 @@ bool ApplicationClass::Render(float rotation)
     bool result;
 
 
-    m_Direct3D->BeginScene(0.0f, 0.6f, 0.8f, 1.0f);
+    m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
     m_Camera->Render();
 

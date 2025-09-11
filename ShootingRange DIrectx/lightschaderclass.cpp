@@ -309,7 +309,7 @@ bool LightShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, X
 	LightBufferType* dataPtr2;
 	
 	//transpose
-	//worldMatrix = XMMatrixTranspose(worldMatrix);
+	worldMatrix = XMMatrixTranspose(worldMatrix);
 	viewMatrix = XMMatrixTranspose(viewMatrix);
 	projectionMatrix = XMMatrixTranspose(projectionMatrix);
 
