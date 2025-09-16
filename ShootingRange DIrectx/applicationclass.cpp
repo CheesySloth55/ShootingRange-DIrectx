@@ -26,7 +26,9 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
     char textureFilename[128];
     bool result;
-
+    char modelFilename[128];
+    char videoCardName[128];
+    int videoCardMemory;
 
     // Create and initialize the Direct3D object.
     m_Direct3D = new D3DClass;
@@ -38,19 +40,26 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
         return false;
     }
 
+    m_Direct3D->GetVideoCardInfo(videoCardName, videoCardMemory);
+
+    std::ofstream fout;
+    fout.open("videoCardinfo.txt");
+
+    fout << "Name: " << videoCardName << '\n';
+    fout << "Memory: +" << videoCardMemory << '\n';
     // Create the camera object.
     m_Camera = new CameraClass;
 
     // Set the initial position of the camera.
-    m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
+    m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
 
-    // Set the file name of the texture file that we will be loading.
+    strcpy_s(modelFilename, "cube.txt");
     strcpy_s(textureFilename, "stone01.tga");
 
     // Create and initialize the model object.
     m_Model = new ModelClass;
 
-    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), textureFilename);
+    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), textureFilename, modelFilename);
     if (!result)
     {
         MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -128,7 +137,7 @@ bool ApplicationClass::Frame()
 
 
     // Update the rotation variable each frame.
-    rotation -= 0.0174532925f * 0.5f;
+    rotation -= 0.0174532925f * 0.4f;
     if (rotation < 0.0f)
     {
         rotation += 360.0f;
@@ -153,7 +162,7 @@ bool ApplicationClass::Render(float rotation)
 
 
     m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
-
+        
     m_Camera->Render();
 
     m_Direct3D->GetWorldMatrix(worldMatrix);

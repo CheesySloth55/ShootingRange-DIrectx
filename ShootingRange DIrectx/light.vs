@@ -31,7 +31,7 @@ PixelInputType LightVertexShader(VertexInputType input)
 {
 	PixelInputType output;
 
-	input.position.w = 1.0f;
+	input.position.w = 1.0f; // so that every value is filled 
 
 	//calculate the position of the vertex against the world view and projection matrices
 	output.position = mul(input.position, worldMatrix);

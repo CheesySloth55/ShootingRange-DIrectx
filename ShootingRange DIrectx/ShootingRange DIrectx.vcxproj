@@ -135,6 +135,8 @@
     <ClCompile Include="lightschaderclass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelclass.cpp" />
+    <ClCompile Include="modelparser.cpp" />
+    <ClCompile Include="modelparser.h" />
     <ClCompile Include="systemclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
   </ItemGroup>
@@ -155,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="stone01.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="cube.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
