@@ -46,6 +46,8 @@ private:
 	void ReleaseTexture();
 
 	bool LoadModel(char*);
+	bool LoadBlenderModel(char*);
+
 	void ReleaseModel();
 private:
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
