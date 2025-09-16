@@ -1,0 +1,1 @@
+This project is a showcase of my personal project for my semester at open learning. it is intended to become a game with simple game logic but with a full rendering pipeline, that includes all the steps of rendering a model to putting shadows on your objects. 
