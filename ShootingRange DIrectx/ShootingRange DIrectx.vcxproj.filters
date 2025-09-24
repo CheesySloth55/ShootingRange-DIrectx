@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{0edc61c3-1df0-4606-b07b-fa796ce840ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="applicationclass.cpp">
@@ -106,15 +109,42 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="stone01.tga" />
+    <Image Include="..\Engine\data\sprite01.tga">
+      <Filter>data</Filter>
+    </Image>
+    <Image Include="..\Engine\data\sprite02.tga">
+      <Filter>data</Filter>
+    </Image>
+    <Image Include="..\Engine\data\sprite03.tga">
+      <Filter>data</Filter>
+    </Image>
+    <Image Include="..\Engine\data\sprite04.tga">
+      <Filter>data</Filter>
+    </Image>
+    <Image Include="stone01.tga">
+      <Filter>data</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Engine\cube.txt" />
+    <Text Include="..\Engine\cube.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="..\Engine\data\sprite_data_01.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Engine\light.ps" />
-    <None Include="..\Engine\light.vs" />
-    <None Include="..\Engine\texture.ps" />
-    <None Include="..\Engine\texture.vs" />
+    <None Include="..\Engine\light.ps">
+      <Filter>data</Filter>
+    </None>
+    <None Include="..\Engine\light.vs">
+      <Filter>data</Filter>
+    </None>
+    <None Include="..\Engine\texture.vs">
+      <Filter>data</Filter>
+    </None>
+    <None Include="..\Engine\texture.ps">
+      <Filter>data</Filter>
+    </None>
   </ItemGroup>
 </Project>

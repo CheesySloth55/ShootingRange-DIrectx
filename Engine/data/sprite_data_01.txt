@@ -1,0 +1,8 @@
+6
+../Engine/data/Slime01.tga
+../Engine/data/Slime02.tga
+../Engine/data/Slime03.tga
+../Engine/data/Slime04.tga
+../Engine/data/Slime03.tga
+../Engine/data/Slime02.tga
+250

@@ -74,6 +74,15 @@ bool SpriteClass::Render(ID3D11DeviceContext* deviceContext)
 
 void SpriteClass::Update(float frameTime)
 {
+    int posX, posY;
+    
+    GetRenderLocation(posX, posY);
+    SetRenderLocation(posX + 1, posY);
+    if (posX > m_screenWidth - m_bitmapWidth)
+    {
+        SetRenderLocation(0, posY);
+    }
+
     m_frameTime += frameTime;
 
     if (m_frameTime >= m_cycleTime)
@@ -81,7 +90,7 @@ void SpriteClass::Update(float frameTime)
         m_frameTime -= m_cycleTime;
 
         m_currentTexture++;
-
+        
         if (m_currentTexture == m_textureCount)
         {
             m_currentTexture = 0;
@@ -206,13 +215,11 @@ bool SpriteClass::UpdateBuffers(ID3D11DeviceContext* deviceContext)
 
     vertices = new VertexType[m_vertexCount];
 
-    left = (float)((m_screenWidth / 2) * -1) + (float)m_renderX;
-
+    left = (float)m_renderX - (float)(m_screenWidth / 2);
     right = left + (float)m_bitmapWidth;
-
     top = (float)(m_screenHeight / 2) - (float)m_renderY;
+    bottom = top - (float)m_bitmapHeight;
 
-    bottom = top + (float)m_bitmapHeight;
 
     vertices[0].position = XMFLOAT3(left, top, 0.0f);  // Top left.
     vertices[0].texture = XMFLOAT2(0.0f, 0.0f);
@@ -350,5 +357,10 @@ void SpriteClass::SetRenderLocation(int x, int y)
 {
     m_renderX = x;
     m_renderY = y;
-    return;
+}
+
+void SpriteClass::GetRenderLocation(int& x, int& y)
+{
+    x = m_renderX;
+    y = m_renderY;
 }

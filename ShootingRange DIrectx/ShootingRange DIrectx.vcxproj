@@ -160,10 +160,15 @@
     <ClInclude Include="timerclass.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Engine\data\sprite01.tga" />
+    <Image Include="..\Engine\data\sprite02.tga" />
+    <Image Include="..\Engine\data\sprite03.tga" />
+    <Image Include="..\Engine\data\sprite04.tga" />
     <Image Include="stone01.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Engine\cube.txt" />
+    <Text Include="..\Engine\data\sprite_data_01.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Engine\light.ps" />

@@ -32,7 +32,7 @@ public:
 	ID3D11ShaderResourceView* GetTexture();
 
 	void SetRenderLocation(int, int);
-
+	void GetRenderLocation(int&, int&);
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();

@@ -33,6 +33,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     char modelFilename[128];
     char videoCardName[128];
     int videoCardMemory;
+    char spriteFilename[128];
 
     // Create and initialize the Direct3D object.
     m_Direct3D = new D3DClass;
@@ -57,23 +58,32 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
     m_Camera->Render();
 
+    // Create and initialize the texture shader object.
     m_TextureShader = new TextureShaderClass;
-    
+
     result = m_TextureShader->Initialize(m_Direct3D->GetDevice(), hwnd);
     if (!result)
     {
         MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
         return false;
-    }   
+    }
+    // Set the sprite info file we will be using.
+    strcpy_s(spriteFilename, "../Engine/data/sprite_data_01.txt");
 
-    // Set the file name of the bitmap file.
-    strcpy_s(bitmapFilename, "stone01.tga");
+    // Create and initialize the sprite object.
+    m_Sprite = new SpriteClass;
 
-    // Create and initialize the bitmap object.
-    m_Bitmap = new BitmapClass;
+    result = m_Sprite->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), screenWidth, screenHeight, spriteFilename, 50, 50);
+    if (!result)
+    {
+        MessageBox(hwnd, L"Could not initialize sprite", L"Error", MB_OK);
+        return false;
+    }
+    m_Sprite->SetRenderLocation(200, 200);
+    // Create and initialize the timer object.
+    m_Timer = new TimerClass;
 
-    result = m_Bitmap->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), 
-        screenWidth, screenHeight, bitmapFilename, 1000, 500);
+    result = m_Timer->Initialize();
     if (!result)
     {
         return false;
@@ -85,6 +95,21 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void ApplicationClass::Shutdown()
 {
+    // Release the timer object.
+    if (m_Timer)
+    {
+        delete m_Timer;
+        m_Timer = 0;
+    }
+
+    // Release the sprite object.
+    if (m_Sprite)
+    {
+        m_Sprite->Shutdown();
+        delete m_Sprite;
+        m_Sprite = 0;
+    }
+
     // Release the bitmap object.
     if (m_Bitmap)
     {
@@ -145,16 +170,18 @@ void ApplicationClass::Shutdown()
 
 bool ApplicationClass::Frame()
 {
+    float frameTime;
     static float rotation = 0.0f;
     bool result;
 
+    // Update the system stats.
+    m_Timer->Frame();
 
-    // Update the rotation variable each frame.
-    rotation -= 0.0174532925f * 0.4f;
-    if (rotation < 0.0f)
-    {
-        rotation += 360.0f;
-    }
+    // Get the current frame time.
+    frameTime = m_Timer->GetTime();
+
+    // Update the sprite object using the frame time.
+    m_Sprite->Update(frameTime);
 
 
     // Render the graphics scene.
@@ -175,7 +202,7 @@ bool ApplicationClass::Render()
 
 
     // Clear the buffers to begin the scene.
-    m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+    m_Direct3D->BeginScene(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Get the world, view, and projection matrices from the camera and d3d objects.
     m_Direct3D->GetWorldMatrix(worldMatrix);
@@ -185,20 +212,19 @@ bool ApplicationClass::Render()
     // Turn off the Z buffer to begin all 2D rendering.
     m_Direct3D->TurnZBufferOff();
 
-    // Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
-    result = m_Bitmap->Render(m_Direct3D->GetDeviceContext());
+    // Put the sprite vertex and index buffers on the graphics pipeline to prepare them for drawing.
+    result = m_Sprite->Render(m_Direct3D->GetDeviceContext());
     if (!result)
     {
         return false;
     }
 
-    // Render the bitmap with the texture shader.
-    result = m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture());
+    // Render the sprite with the texture shader.
+    result = m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Sprite->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Sprite->GetTexture());
     if (!result)
     {
         return false;
     }
-
     // Turn the Z buffer back on now that all 2D rendering has completed.
     m_Direct3D->TurnZBufferOn();
 
