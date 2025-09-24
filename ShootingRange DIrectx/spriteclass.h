@@ -26,7 +26,7 @@ public:
 	void Shutdown();
 	bool Render(ID3D11DeviceContext*);
 
-	void Update(float frametime);
+	void Update(float frametime, float& elapsed);
 
 	int GetIndexCount();
 	ID3D11ShaderResourceView* GetTexture();

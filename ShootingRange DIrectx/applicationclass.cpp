@@ -33,7 +33,9 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     char modelFilename[128];
     char videoCardName[128];
     int videoCardMemory;
-    char spriteFilename[128];
+    char spriteFilename1[128];
+    char spriteFilename2[128];
+
 
     // Create and initialize the Direct3D object.
     m_Direct3D = new D3DClass;
@@ -68,18 +70,28 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
         return false;
     }
     // Set the sprite info file we will be using.
-    strcpy_s(spriteFilename, "../Engine/data/sprite_data_01.txt");
-
+    strcpy_s(spriteFilename1, "../Engine/data/sprite_data_01.txt");
+    strcpy_s(spriteFilename2, "../Engine/data/sprite_data_02.txt");
     // Create and initialize the sprite object.
     m_Sprite = new SpriteClass;
+    m_SpriteJump = new SpriteClass;
 
-    result = m_Sprite->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), screenWidth, screenHeight, spriteFilename, 50, 50);
+    result = m_Sprite->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), screenWidth, screenHeight, spriteFilename1, 50, 50);
     if (!result)
     {
-        MessageBox(hwnd, L"Could not initialize sprite", L"Error", MB_OK);
+        MessageBox(hwnd, L"Could not initialize sprite1", L"Error", MB_OK);
         return false;
     }
-    m_Sprite->SetRenderLocation(200, 200);
+
+    result = m_SpriteJump->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), screenWidth, screenHeight, spriteFilename2, 50, 50);
+    if (!result)
+    {
+        MessageBox(hwnd, L"Could not initialize sprite2", L"Error", MB_OK);
+        return false;
+    }
+
+    m_Sprite->SetRenderLocation(200, 400);
+    m_SpriteJump->SetRenderLocation(200, 400);
     // Create and initialize the timer object.
     m_Timer = new TimerClass;
 
@@ -173,6 +185,10 @@ bool ApplicationClass::Frame()
     float frameTime;
     static float rotation = 0.0f;
     bool result;
+    int posX, posY;
+    static float elapsed;
+
+    m_SpriteJump->GetRenderLocation(posX, posY);
 
     // Update the system stats.
     m_Timer->Frame();
@@ -180,9 +196,22 @@ bool ApplicationClass::Frame()
     // Get the current frame time.
     frameTime = m_Timer->GetTime();
 
+    elapsed += frameTime;
     // Update the sprite object using the frame time.
-    m_Sprite->Update(frameTime);
+    if (posX >= 600 && posX <= 950)
+    {
+        
+        m_jump = true;
+    }
+    else
+    {
+        elapsed = 0;
+        m_jump = false;
+    }
+    
 
+    m_Sprite->Update(frameTime, elapsed);
+    m_SpriteJump->Update(frameTime, elapsed);
 
     // Render the graphics scene.
     result = Render();
@@ -213,18 +242,37 @@ bool ApplicationClass::Render()
     m_Direct3D->TurnZBufferOff();
 
     // Put the sprite vertex and index buffers on the graphics pipeline to prepare them for drawing.
-    result = m_Sprite->Render(m_Direct3D->GetDeviceContext());
-    if (!result)
+    if (!m_jump)
     {
-        return false;
+        result = m_Sprite->Render(m_Direct3D->GetDeviceContext());
+        if (!result)
+        {
+            return false;
+        }
+
+        result = m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Sprite->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Sprite->GetTexture());
+        if (!result)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        result = m_SpriteJump->Render(m_Direct3D->GetDeviceContext());
+        if (!result)
+        {
+            return false;
+        }
+
+        result = m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_SpriteJump->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_SpriteJump->GetTexture());
+        if (!result)
+        {
+            return false;
+        }
     }
 
     // Render the sprite with the texture shader.
-    result = m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Sprite->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Sprite->GetTexture());
-    if (!result)
-    {
-        return false;
-    }
+
     // Turn the Z buffer back on now that all 2D rendering has completed.
     m_Direct3D->TurnZBufferOn();
 

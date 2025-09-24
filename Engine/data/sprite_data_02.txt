@@ -1,0 +1,14 @@
+11
+../Engine/data/SlimeJump.tga
+../Engine/data/SlimeJump.tga
+../Engine/data/SlimeJump.tga
+../Engine/data/SlimeJump.tga
+../Engine/data/SlimeJumpDown.tga
+../Engine/data/SlimeJumpDown1.tga
+../Engine/data/SlimeJumpDown2.tga
+../Engine/data/SlimeHitGround1.tga
+../Engine/data/SlimeHitGround2.tga
+../Engine/data/SlimeHitGround3.tga
+../Engine/data/Slime01.tga
+250
+# 2 seconds jump time is 8 images = 4 x 250ms

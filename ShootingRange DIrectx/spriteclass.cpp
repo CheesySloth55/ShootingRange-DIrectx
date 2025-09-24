@@ -72,16 +72,44 @@ bool SpriteClass::Render(ID3D11DeviceContext* deviceContext)
     return true;
 }
 
-void SpriteClass::Update(float frameTime)
+void SpriteClass::Update(float frameTime, float& elapsed)
 {
     int posX, posY;
-    
+    int groundY = 400;
+    int MAXJumpHeight = 200;
+
     GetRenderLocation(posX, posY);
-    SetRenderLocation(posX + 1, posY);
+
+    float t = elapsed / 2.0f;
+    if (posX > 500)
+    {
+        if (t >= 1.0f)
+        {
+            t = 1.0f;
+
+            posY = groundY;
+        }
+        else
+        {
+            posY = groundY - (-4 * MAXJumpHeight * pow(t - 0.5f, 2) + MAXJumpHeight);
+        }
+    }
+
+    if (elapsed > 2.5f)
+    {
+        elapsed = -10.0;
+    }
+    
     if (posX > m_screenWidth - m_bitmapWidth)
     {
         SetRenderLocation(0, posY);
     }
+    else
+    {
+        SetRenderLocation(posX + 1, posY);
+    }
+
+    
 
     m_frameTime += frameTime;
 

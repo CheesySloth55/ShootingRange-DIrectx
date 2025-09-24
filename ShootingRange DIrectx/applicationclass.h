@@ -42,5 +42,7 @@ private:
 	TextureShaderClass* m_TextureShader;
 	BitmapClass* m_Bitmap;
 	SpriteClass* m_Sprite;
+	SpriteClass* m_SpriteJump;
+	bool m_jump;
 	TimerClass* m_Timer;
 };
