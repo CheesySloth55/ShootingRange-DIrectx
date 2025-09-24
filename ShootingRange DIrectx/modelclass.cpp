@@ -206,8 +206,6 @@ bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 {
 	bool result;
 
-
-	// Create and initialize the texture object.
 	m_Texture = new TextureClass;
 
 	result = m_Texture->Initialize(device, deviceContext, filename);
@@ -278,106 +276,7 @@ bool ModelClass::LoadModel(char* filename)
 
 bool ModelClass::LoadBlenderModel(char* filename)
 {
-	std::ifstream fin;
-	std::ofstream fout;
-	std::string input;
-	int vertexCount{};
-
-	// Create a buffer to hold the modified filename
-	char filenameWithExtension[256];
-	strcpy_s(filenameWithExtension, sizeof(filenameWithExtension), filename);
-	strcat_s(filenameWithExtension, sizeof(filenameWithExtension), ".txt");
-
-	fin.open(filename);
-	fout.open(filenameWithExtension);
-
-	if (fin.fail() || fout.fail())
-	{
-		return false;
-	}
-	// get vertex count
-	fout << "Vertex Count: ";
-	fout << "\n\n\n";
-	fout << "Data:\n\n";
-
-	std::vector<std::string> vLines, vtLines, vnLines;
-	//read all the position coordinates
-	while (std::getline(fin, input))
-	{
-		std::istringstream iss(input);
-		std::string type;
-		iss >> type;
-
-
-		if (type == "v")
-		{
-			vLines.push_back(input);
-			vertexCount++;
-		}
-		else if (type == "vt")
-		{
-			vtLines.push_back(input);
-		}
-		else if (type == "vn")
-		{
-			vnLines.push_back(input);
-		}
-		else if (type == "f")
-		{
-			// process faces immediately
-			std::istringstream faceStream(input.substr(2)); 
-			std::string vert;
-
-			while (faceStream >> vert)
-			{
-				std::replace(vert.begin(), vert.end(), '/', ' ');
-				std::istringstream vss(vert);
-				int vIdx = 0, vtIdx = 0, vnIdx = 0;
-				vss >> vIdx >> vtIdx >> vnIdx;
-
-				// look up values from raw lines (still no push_back for structs!)
-				float vx, vy, vz;
-				{
-					std::istringstream vs(vLines[vIdx - 1]);
-					std::string tmp; vs >> tmp >> vx >> vy >> vz;
-				}
-
-				float u = 0, v = 0;
-				if (vtIdx > 0) {
-					std::istringstream vts(vtLines[vtIdx - 1]);
-					std::string tmp; vts >> tmp >> u >> v;
-				}
-
-				float nx = 0, ny = 0, nz = 0;
-				if (vnIdx > 0) {
-					std::istringstream vns(vnLines[vnIdx - 1]);
-					std::string tmp; vns >> tmp >> nx >> ny >> nz;
-				}
-
-				// Write immediately to output
-				fout << vx << " " << vy << " " << vz << " "
-					<< u << " " << v << " "
-					<< nx << " " << ny << " " << nz << "\n";
-			}
-		}
-	}
-	fout.seekp(14);
-	fout << vertexCount;
-
-	
-	 
-
-	fin.close();
-	fout.close();
-
-	int result = LoadModel(filenameWithExtension);
-
-	if (!result)
-	{
-		return false;
-	}
-
-	return true;
+	return false;
 }
 
 void ModelClass::ReleaseModel()

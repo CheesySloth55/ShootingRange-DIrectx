@@ -1,4 +1,3 @@
-
 #include "applicationclass.h"
 
 
@@ -9,6 +8,10 @@ ApplicationClass::ApplicationClass()
 	m_Model = 0;
 	m_LightShader = 0;
 	m_Light = 0;
+    m_TextureShader = 0;
+    m_Bitmap = 0;
+    m_Sprite = 0;
+    m_Timer = 0;
 }
 
 
@@ -24,6 +27,7 @@ ApplicationClass::~ApplicationClass()
 
 bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
+    char bitmapFilename[128];
     char textureFilename[128];
     bool result;
     char modelFilename[128];
@@ -49,39 +53,31 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     fout << "Memory: +" << videoCardMemory << '\n';
     // Create the camera object.
     m_Camera = new CameraClass;
-
     // Set the initial position of the camera.
-    m_Camera->SetPosition(0.0f,5.0f, -10.0f);
-    m_Camera->SetRotation(20.0f, 0.0f, 0.0f);
+    m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+    m_Camera->Render();
 
-    strcpy_s(modelFilename, "cube.txt");
-    strcpy_s(textureFilename, "stone01.tga");
-
-    // Create and initialize the model object.
-    m_Model = new ModelClass;
-
-    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), textureFilename, modelFilename);
+    m_TextureShader = new TextureShaderClass;
+    
+    result = m_TextureShader->Initialize(m_Direct3D->GetDevice(), hwnd);
     if (!result)
     {
-        MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+        MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
         return false;
-    }
+    }   
 
-        // Create and initialize the light shader object.
-        m_LightShader = new LightShaderClass;
+    // Set the file name of the bitmap file.
+    strcpy_s(bitmapFilename, "stone01.tga");
 
-    result = m_LightShader->Initialize(m_Direct3D->GetDevice(), hwnd);
+    // Create and initialize the bitmap object.
+    m_Bitmap = new BitmapClass;
+
+    result = m_Bitmap->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), 
+        screenWidth, screenHeight, bitmapFilename, 1000, 500);
     if (!result)
     {
-        MessageBox(hwnd, L"Could not initialize the light shader object.", L"Error", MB_OK);
         return false;
     }
-    // Create and initialize the light object.
-    m_Light = new LightClass;
-
-    m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
-    m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-    m_Light->SetDirection(0.0f, 0.0f, 1.0f);
 
     return true;
 }
@@ -89,6 +85,21 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void ApplicationClass::Shutdown()
 {
+    // Release the bitmap object.
+    if (m_Bitmap)
+    {
+        m_Bitmap->Shutdown();
+        delete m_Bitmap;
+        m_Bitmap = 0;
+    }
+
+    // Release the texture shader object.
+    if (m_TextureShader)
+    {
+        m_TextureShader->Shutdown();
+        delete m_TextureShader;
+        m_TextureShader = 0;
+    }
     // Release the light object.
     if (m_Light)
     {
@@ -147,7 +158,7 @@ bool ApplicationClass::Frame()
 
 
     // Render the graphics scene.
-    result = Render(rotation);
+    result = Render();
     if (!result)
     {
         return false;
@@ -157,30 +168,39 @@ bool ApplicationClass::Frame()
 }
 
 
-bool ApplicationClass::Render(float rotation)
+bool ApplicationClass::Render()
 {
-    XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
+    XMMATRIX worldMatrix, viewMatrix, orthoMatrix;
     bool result;
 
 
+    // Clear the buffers to begin the scene.
     m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
-        
-    m_Camera->Render();
 
+    // Get the world, view, and projection matrices from the camera and d3d objects.
     m_Direct3D->GetWorldMatrix(worldMatrix);
     m_Camera->GetViewMatrix(viewMatrix);
-    m_Direct3D->GetProjectionMatrix(projectionMatrix);
+    m_Direct3D->GetOrthoMatrix(orthoMatrix);
 
-    worldMatrix = XMMatrixRotationY(rotation);
+    // Turn off the Z buffer to begin all 2D rendering.
+    m_Direct3D->TurnZBufferOff();
 
-    m_Model->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(),
-        m_Light->GetDirection(),m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
+    // Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
+    result = m_Bitmap->Render(m_Direct3D->GetDeviceContext());
     if (!result)
     {
         return false;
     }
+
+    // Render the bitmap with the texture shader.
+    result = m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture());
+    if (!result)
+    {
+        return false;
+    }
+
+    // Turn the Z buffer back on now that all 2D rendering has completed.
+    m_Direct3D->TurnZBufferOn();
 
     // Present the rendered scene to the screen.
     m_Direct3D->EndScene();

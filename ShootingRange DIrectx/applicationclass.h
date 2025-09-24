@@ -1,11 +1,18 @@
 #pragma once
 
+//class includes
 #include "d3dclass.h"
 #include "cameraclass.h"
 #include "modelclass.h"
 #include "lightshaderclass.h"
 #include "lightclass.h"
+#include "textureshaderclass.h"
+#include "bitmapclass.h"
+#include "spriteclass.h"
+#include "timerclass.h"
 
+
+//globals
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
@@ -24,7 +31,7 @@ public:
 	bool Frame();
 
 private:
-	bool Render(float);
+	bool Render();
 
 private:
 	D3DClass* m_Direct3D;
@@ -32,4 +39,8 @@ private:
 	ModelClass* m_Model;
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
+	TextureShaderClass* m_TextureShader;
+	BitmapClass* m_Bitmap;
+	SpriteClass* m_Sprite;
+	TimerClass* m_Timer;
 };
