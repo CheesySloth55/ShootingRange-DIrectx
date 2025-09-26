@@ -40,13 +40,6 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
         return false;
     }
 
-    m_Direct3D->GetVideoCardInfo(videoCardName, videoCardMemory);
-
-    std::ofstream fout;
-    fout.open("videoCardinfo.txt");
-
-    fout << "Name: " << videoCardName << '\n';
-    fout << "Memory: +" << videoCardMemory << '\n';
     // Create the camera object.
     m_Camera = new CameraClass;
 

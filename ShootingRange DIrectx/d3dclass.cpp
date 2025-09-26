@@ -96,6 +96,12 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 			}
 		}
 	}
+	//choose gpu 1 instead of 0
+	result = factory->EnumAdapters(1, &adapter);
+	if (FAILED(result))
+	{
+		return false;
+	}
 
 	result = adapter->GetDesc(&adapterDesc);
 	if (FAILED(result))
@@ -119,9 +125,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	adapterOutput->Release();
 	adapterOutput = 0;
 
-	// Release the adapter.
-	adapter->Release();
-	adapter = 0;
+
 
 	// Release the factory.
 	factory->Release();
@@ -172,7 +176,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1,
+	result = D3D11CreateDeviceAndSwapChain(adapter, D3D_DRIVER_TYPE_UNKNOWN, NULL, 0, &featureLevel, 1,
 		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
 	if (FAILED(result))
 	{
@@ -193,6 +197,10 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 	backBufferPtr->Release();
 	backBufferPtr = 0;
+
+	// Release the adapter.
+	adapter->Release();
+	adapter = 0;
 
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
