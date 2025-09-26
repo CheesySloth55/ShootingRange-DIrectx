@@ -1,5 +1,5 @@
 #include "d3dclass.h"
-
+#include <fstream>
 
 D3DClass::D3DClass()
 {
@@ -43,32 +43,37 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	ID3D11Texture2D* backBufferPtr;
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	D3D11_DEPTH_STENCIL_VIEW_DESC	depthStencilViewDesc;
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	D3D11_RASTERIZER_DESC rasterDesc;
 	float fieldOfView{};
 	float screenAspect{};
 	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
+	int adapterNum = 1;
+
 	
 	m_vsync_enabled = vsync;
-
+	//create factory
 	result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
+	//get the first adapter to be able to get the screen outputs.
 	result = factory->EnumAdapters(0, &adapter);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
+	//get the screen outputs
 	result = adapter->EnumOutputs(0, &adapterOutput);
 	if (FAILED(result))
 	{
 		return false;
 	}
-
+	
+	//get display modes
 	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
 	if (FAILED(result))
 	{
@@ -87,7 +92,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	for (unsigned int i = 0; i < numModes; i++)
+	for (signed int i = 0; i < numModes; i++)
 	{
 		if (displayModeList[i].Width == (unsigned int)screenWidth)
 		{
@@ -99,12 +104,20 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		}
 	}
 
+	//after having the display modes, take the adapter you want to use
+	result = factory->EnumAdapters(adapterNum, &adapter);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	//get the adapter decription
 	result = adapter->GetDesc(&adapterDesc);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
+	//fill class variables
 	m_videoCardMemory = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 
 	error = wcstombs_s(&stringLength, m_videoCardDescription, 128, adapterDesc.Description, 128);
@@ -113,6 +126,9 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
+	//print the used GPU info to file
+	PrintAdapterInfoToFile(m_videoCardDescription, m_videoCardMemory);
+
 	// Release the display mode list.
 	delete[] displayModeList;
 	displayModeList = 0;
@@ -120,10 +136,6 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Release the adapter output.
 	adapterOutput->Release();
 	adapterOutput = 0;
-
-	// Release the adapter.
-	adapter->Release();
-	adapter = 0;
 
 	// Release the factory.
 	factory->Release();
@@ -174,7 +186,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1,
+	result = D3D11CreateDeviceAndSwapChain(adapter, D3D_DRIVER_TYPE_UNKNOWN, NULL, 0, &featureLevel, 1,
 		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
 	if (FAILED(result))
 	{
@@ -196,6 +208,9 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	backBufferPtr->Release();
 	backBufferPtr = 0;
 
+	// Release the adapter here so that it can be used for device creation.
+	adapter->Release();
+	adapter = 0;
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	
@@ -462,11 +477,24 @@ void D3DClass::GetOrthoMatrix(XMMATRIX& orthoMatrix)
 }
 
 
-void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
+void D3DClass::GetVideoCardInfo(char* cardName, int& memorySize)
 {
 	strcpy_s(cardName, 128, m_videoCardDescription);
-	memory = m_videoCardMemory;
+	memorySize = m_videoCardMemory;
 	return;
+}
+
+void D3DClass::PrintAdapterInfoToFile(char* cardName, int memorySize)  
+{  
+   std::ofstream fout;  
+   fout.open("videoCardinfo.txt", std::fstream::app);  
+   if (fout.is_open()) 
+   {  
+       fout << "Name: " << cardName << '\n';  
+       fout << "Memory: " << memorySize << '\n' << '\n';  
+       fout.close();
+   }  
+   return;  
 }
 
 

@@ -31,6 +31,7 @@ public:
 	void GetOrthoMatrix(XMMATRIX&);
 
 	void GetVideoCardInfo(char*, int&);
+	void PrintAdapterInfoToFile(char* videoCardName, int memorySize);
 
 	void SetBackBufferRenderTarget();
 	void ResetViewport();
