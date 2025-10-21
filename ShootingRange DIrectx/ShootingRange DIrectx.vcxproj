@@ -130,6 +130,9 @@
     <ClCompile Include="applicationclass.cpp" />
     <ClCompile Include="cameraclass.cpp" />
     <ClCompile Include="d3dclass.cpp" />
+    <ClCompile Include="fontclass.cpp" />
+    <ClCompile Include="fontshaderclass.cpp" />
+    <ClCompile Include="fpsclass.cpp" />
     <ClCompile Include="inputclass.cpp" />
     <ClCompile Include="lightclass.cpp" />
     <ClCompile Include="lightschaderclass.cpp" />
@@ -138,27 +141,36 @@
     <ClCompile Include="modelparser.cpp" />
     <ClCompile Include="modelparser.h" />
     <ClCompile Include="systemclass.cpp" />
+    <ClCompile Include="textclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="applicationclass.h" />
     <ClInclude Include="cameraclass.h" />
     <ClInclude Include="d3dclass.h" />
+    <ClInclude Include="fontclass.h" />
+    <ClInclude Include="fontshaderclass.h" />
+    <ClInclude Include="fpsclass.h" />
     <ClInclude Include="inputclass.h" />
     <ClInclude Include="lightclass.h" />
     <ClInclude Include="lightshaderclass.h" />
     <ClInclude Include="modelclass.h" />
     <ClInclude Include="systemclass.h" />
+    <ClInclude Include="textclass.h" />
     <ClInclude Include="textureclass.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Engine\font.ps" />
+    <None Include="..\Engine\font.vs" />
     <None Include="light.ps" />
     <None Include="light.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Engine\data\font\font01.tga" />
     <Image Include="stone01.tga" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\Engine\data\font\font01.txt" />
     <Text Include="cube.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

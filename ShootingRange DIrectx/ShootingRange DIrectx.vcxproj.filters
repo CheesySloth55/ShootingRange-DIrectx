@@ -13,24 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaderclasses">
+      <UniqueIdentifier>{009bdb7d-177c-49a1-97e9-08a10f674c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main application">
+      <UniqueIdentifier>{736c29c4-05cd-4cac-96f6-988b4e1f2ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{72ad9814-24ce-4fe4-9f0d-a4fe4ff77e39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{02180f2b-5fa3-4918-b0da-16bae2b23990}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="applicationclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="inputclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="systemclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="d3dclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lightschaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cameraclass.cpp">
@@ -51,21 +48,36 @@
     <ClCompile Include="modelparser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Main application</Filter>
+    </ClCompile>
+    <ClCompile Include="systemclass.cpp">
+      <Filter>Main application</Filter>
+    </ClCompile>
+    <ClCompile Include="applicationclass.cpp">
+      <Filter>Main application</Filter>
+    </ClCompile>
+    <ClCompile Include="d3dclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lightschaderclass.cpp">
+      <Filter>Shaderclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="fontclass.cpp">
+      <Filter>Font</Filter>
+    </ClCompile>
+    <ClCompile Include="fontshaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="textclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fpsclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="applicationclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inputclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="systemclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="d3dclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lightshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cameraclass.h">
@@ -80,15 +92,51 @@
     <ClInclude Include="modelclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="d3dclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fontclass.h">
+      <Filter>Font</Filter>
+    </ClInclude>
+    <ClInclude Include="lightshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="applicationclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="systemclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fontshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="textclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fpsclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="light.vs" />
-    <None Include="light.ps" />
+    <None Include="light.ps">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="light.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Engine\font.ps">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Engine\font.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="stone01.tga" />
+    <Image Include="..\Engine\data\font\font01.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt" />
+    <Text Include="..\Engine\data\font\font01.txt" />
   </ItemGroup>
 </Project>
