@@ -9,6 +9,7 @@
 #include "fontclass.h"
 #include "textclass.h"
 #include "fpsclass.h"
+#include "inputclass.h"
 
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
@@ -25,10 +26,13 @@ public:
 
 	bool Initialize(int, int, HWND);
 	void Shutdown();
-	bool Frame();
+	bool Frame(InputClass*);
+
 private:
 	bool Render(float);
 	bool UpdateFps();
+	bool UpdateMouseStrings(int, int, bool);
+
 private:
 	D3DClass* m_Direct3D;
 	CameraClass* m_Camera;
@@ -37,7 +41,7 @@ private:
 	LightClass* m_Light;
 	FontShaderClass* m_FontShader;
 	FontClass* m_Font;
-	TextClass* m_TextString1, * m_TextString2;
+	TextClass* m_MouseStrings;
 	XMMATRIX worldMatrixTEXT;
 	FpsClass* m_Fps;
 	TextClass* m_FpsString;

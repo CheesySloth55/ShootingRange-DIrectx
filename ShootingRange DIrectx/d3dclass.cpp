@@ -1,5 +1,5 @@
 #include "d3dclass.h"
-
+#include <fstream>
 
 D3DClass::D3DClass()
 {
@@ -108,7 +108,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	}
 
 	//choose gpu 0 because that is the dedicated GPU 
-	result = factory->EnumAdapters(1, &adapter);
+	result = factory->EnumAdapters(0, &adapter);
 	if (FAILED(result))
 	{
 		return false;
@@ -128,6 +128,8 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	{
 		return false;
 	}
+	PrintAdapterInfoToFile(m_videoCardDescription, m_videoCardMemory);
+
 
 	// Release the display mode list.
 	delete[] displayModeList;
@@ -597,4 +599,24 @@ void D3DClass::DisableAlphaBlending()
 	m_deviceContext->OMSetBlendState(m_alphaDisableBlendingState, blendFactor, 0xffffffff);
 
 	return;
+}
+
+void D3DClass::PrintAdapterInfoToFile(char* cardName, int memorySize)  
+{  
+   std::ofstream fout;  
+   fout.open("videoCardinfo.txt", std::ios::app);
+   time_t timestamp = time(nullptr); // Correctly initialize timestamp  
+   struct tm datetime;  
+   localtime_s(&datetime, &timestamp); 
+
+   if (fout.is_open())  
+   {  
+       fout << "Name: " << cardName << '\n';  
+       fout << "Memory: " << memorySize << '\n';  
+       fout << "Date: D/M/Y " << datetime.tm_mday << "/" << datetime.tm_mon + 1 << "/" << datetime.tm_year + 1900 << '\n';
+	   fout << "Time: " << datetime.tm_hour << ":" << datetime.tm_min + 1 << ":" << datetime.tm_sec << '\n' << '\n';
+
+       fout.close();  
+   }  
+   return;  
 }
