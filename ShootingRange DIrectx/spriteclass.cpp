@@ -72,45 +72,44 @@ bool SpriteClass::Render(ID3D11DeviceContext* deviceContext)
     return true;
 }
 
-void SpriteClass::Update(float frameTime, float& elapsed)
+bool SpriteClass::DoJump(const double& elapsed)
 {
-    int posX, posY;
+    int posX = m_renderX;
+    int posY = m_renderY;
     int groundY = 400;
-    int MAXJumpHeight = 200;
+    int MAXJumpHeight = 300;
+    double jumpDuration = 2.5; // seconds for a full jump (up and down)
+    double jumpStartTime = 2.0; // time when jump starts
 
-    GetRenderLocation(posX, posY);
+    // Calculate time since jump started
+    double t = elapsed - jumpStartTime;
 
-    float t = elapsed / 2.0f;
-    if (posX > 500)
+    // Only perform jump if within jump duration
+    if (t >= 0.0 && t <= jumpDuration)
     {
-        if (t >= 1.0f)
-        {
-            t = 1.0f;
-
-            posY = groundY;
-        }
-        else
-        {
-            posY = groundY - (-4 * MAXJumpHeight * pow(t - 0.5f, 2) + MAXJumpHeight);
-        }
+        // Parabolic motion: y = groundY - (4 * MAXJumpHeight * (t/jumpDuration - 0.5)^2 - MAXJumpHeight)
+        double normalizedT = t / jumpDuration;
+        posY = groundY - (int)((-4.0 * MAXJumpHeight * pow(normalizedT - 0.5, 2) + MAXJumpHeight));
     }
-
-    if (elapsed > 2.5f)
+    else if (t > jumpDuration)
     {
-        elapsed = -10.0;
+        return true;
+        // After jump, sprite returns to ground
+        posY = groundY;
     }
-    
-    if (posX > m_screenWidth - m_bitmapWidth)
-    {
-        SetRenderLocation(0, posY);
-    }
+    // Before jump, sprite stays at ground
     else
     {
-        SetRenderLocation(posX + 1, posY);
+        posY = groundY;
     }
 
-    
+    m_renderX = posX + 3;
+    m_renderY = posY;
+    return false;
+}
 
+void SpriteClass::Update(float frameTime)
+{
     m_frameTime += frameTime;
 
     if (m_frameTime >= m_cycleTime)

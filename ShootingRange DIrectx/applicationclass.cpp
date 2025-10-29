@@ -23,7 +23,7 @@ ApplicationClass::ApplicationClass(const ApplicationClass& other)
 ApplicationClass::~ApplicationClass()
 {
 }
-
+int screenWidthG;
 
 bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
@@ -36,7 +36,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     char spriteFilename1[128];
     char spriteFilename2[128];
 
-
+    screenWidthG = screenWidth;
     // Create and initialize the Direct3D object.
     m_Direct3D = new D3DClass;
 
@@ -175,38 +175,62 @@ void ApplicationClass::Shutdown()
 
 bool ApplicationClass::Frame()
 {
+    static int floorY = 400;
+    int screenMax = screenWidthG;
     float frameTime;
-    static float rotation = 0.0f;
     bool result;
     int posX, posY;
-    static float elapsed;
-
-    m_SpriteJump->GetRenderLocation(posX, posY);
-
+    static double elapsed = 0;
+    static double movementFrame;
     // Update the system stats.
     m_Timer->Frame();
 
     // Get the current frame time.
     frameTime = m_Timer->GetTime();
 
-    elapsed += frameTime;
+    elapsed += frameTime; // elapsed seconds
     // Update the sprite object using the frame time.
-    if (posX >= 600 && posX <= 950)
-    {
-        
-        m_jump = true;
-    }
+    if(m_jump)
+    m_SpriteJump->Update(frameTime);
     else
-    {
-        elapsed = 0;
-        m_jump = false;
-    }
+    m_Sprite->Update(frameTime);
+
+    m_Sprite->GetRenderLocation(posX, posY);
     
+    if (posX >= screenMax - 160)
+    {
+        m_Sprite->SetRenderLocation(0, floorY);
+        elapsed = 0;
+        movementFrame = 0;
+    }
 
-    m_Sprite->Update(frameTime, elapsed);
-    m_SpriteJump->Update(frameTime, elapsed);
+    //lock game logic to 60 fps so that 
+    if (elapsed - (1.0f / 60.0f) >= movementFrame)
+    {
+        movementFrame = elapsed;
+        if (m_jump)
+        {
 
-    // Render the graphics scene.
+            if (m_SpriteJump->DoJump(elapsed))
+            {
+                m_SpriteJump->GetRenderLocation(posX, posY);
+                m_Sprite->SetRenderLocation(posX, posY);
+                m_jump = false;
+                elapsed = -10.0f;
+                movementFrame = -10.0f;
+            }
+        }
+        else
+        {
+            if (elapsed > 2)
+            {
+                m_SpriteJump->SetRenderLocation(posX, posY);
+                m_jump = true;
+            }
+            m_Sprite->SetRenderLocation(posX + 3, posY);
+        }
+    }
+
     result = Render();
     if (!result)
     {

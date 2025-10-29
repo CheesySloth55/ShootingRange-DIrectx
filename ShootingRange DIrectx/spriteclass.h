@@ -26,13 +26,14 @@ public:
 	void Shutdown();
 	bool Render(ID3D11DeviceContext*);
 
-	void Update(float frametime, float& elapsed);
+	void Update(float frametime);
 
 	int GetIndexCount();
 	ID3D11ShaderResourceView* GetTexture();
 
-	void SetRenderLocation(int, int);
-	void GetRenderLocation(int&, int&);
+	void SetRenderLocation(int posX, int posY);
+	void GetRenderLocation(int& posX, int& posY);
+	bool DoJump(const double& Elapsed);
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
