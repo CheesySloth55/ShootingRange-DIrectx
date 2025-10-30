@@ -72,14 +72,13 @@ bool SpriteClass::Render(ID3D11DeviceContext* deviceContext)
     return true;
 }
 
-bool SpriteClass::DoJump(const double& elapsed)
+bool SpriteClass::DoJump(const double& elapsed, double jumpStartTime)
 {
     int posX = m_renderX;
     int posY = m_renderY;
     int groundY = 400;
     int MAXJumpHeight = 300;
     double jumpDuration = 2.5; // seconds for a full jump (up and down)
-    double jumpStartTime = 2.0; // time when jump starts
 
     // Calculate time since jump started
     double t = elapsed - jumpStartTime;

@@ -33,7 +33,7 @@ public:
 
 	void SetRenderLocation(int posX, int posY);
 	void GetRenderLocation(int& posX, int& posY);
-	bool DoJump(const double& Elapsed);
+	bool DoJump(const double& Elapsed, double jumpStartTime);
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();

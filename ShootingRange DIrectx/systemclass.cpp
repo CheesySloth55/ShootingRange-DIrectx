@@ -103,13 +103,17 @@ void SystemClass::Run()
 bool SystemClass::Frame()
 {
 	bool result;
-
+	bool jump = false;
 	if(m_Input->IsKeyDown(VK_ESCAPE))
 	{
 		return false;
 	}
 
-	result = m_Application->Frame();
+	if (m_Input->IsKeyDown(VK_SPACE))
+	{
+		jump = true;
+	}
+	result = m_Application->Frame(jump);
 	if(!result)
 	{
 		return false;

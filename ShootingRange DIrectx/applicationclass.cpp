@@ -173,7 +173,7 @@ void ApplicationClass::Shutdown()
 }
 
 
-bool ApplicationClass::Frame()
+bool ApplicationClass::Frame(bool jump)
 {
     static int floorY = 400;
     int screenMax = screenWidthG;
@@ -182,6 +182,8 @@ bool ApplicationClass::Frame()
     int posX, posY;
     static double elapsed = 0;
     static double movementFrame;
+    static double jumpStartTime = elapsed;
+
     // Update the system stats.
     m_Timer->Frame();
 
@@ -197,7 +199,7 @@ bool ApplicationClass::Frame()
 
     m_Sprite->GetRenderLocation(posX, posY);
     
-    if (posX >= screenMax - 160)
+    if (posX >= screenMax - 240)
     {
         m_Sprite->SetRenderLocation(0, floorY);
         elapsed = 0;
@@ -211,21 +213,23 @@ bool ApplicationClass::Frame()
         if (m_jump)
         {
 
-            if (m_SpriteJump->DoJump(elapsed))
+            if (m_SpriteJump->DoJump(elapsed, jumpStartTime))
             {
                 m_SpriteJump->GetRenderLocation(posX, posY);
                 m_Sprite->SetRenderLocation(posX, posY);
                 m_jump = false;
-                elapsed = -10.0f;
-                movementFrame = -10.0f;
+                elapsed = 0.0f;
+                movementFrame = 0.0f;
+                
             }
         }
         else
         {
-            if (elapsed > 2)
+            if (jump && !m_jump)
             {
                 m_SpriteJump->SetRenderLocation(posX, posY);
                 m_jump = true;
+                jumpStartTime = elapsed;
             }
             m_Sprite->SetRenderLocation(posX + 3, posY);
         }
