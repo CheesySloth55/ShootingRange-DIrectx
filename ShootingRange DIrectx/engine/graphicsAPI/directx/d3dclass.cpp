@@ -1,5 +1,6 @@
 #include "d3dclass.h"
 #include <fstream>
+#include <stdexcept>
 
 D3DClass::D3DClass()
 {
@@ -56,6 +57,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	//setting vsync setting
 	m_vsync_enabled = vsync;
 
+	m_fullScreenMode = fullscreen;
 
 	//choosing the specific screen size for fullscreen / initializing dedicated gpu as choice for rendering.
 	result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
@@ -190,7 +192,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 	//create the device together with the swapchain
-	result = D3D11CreateDeviceAndSwapChain(adapter, D3D_DRIVER_TYPE_UNKNOWN, NULL, 0, &featureLevel, 1,
+	result = D3D11CreateDeviceAndSwapChain(adapter, D3D_DRIVER_TYPE_UNKNOWN, NULL, D3D11_CREATE_DEVICE_DEBUG, &featureLevel, 1,
 		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
 	if (FAILED(result))
 	{
@@ -282,7 +284,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	//set swap chain as render target view
+	//bind the render target and depth/stencil view to the pipeline
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	//set rasterizer state
@@ -305,8 +307,8 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 	m_deviceContext->RSSetState(m_rasterState);
 
-	m_viewport.Width = (float)screenWidth;
-	m_viewport.Height = (float)screenHeight;
+	m_viewport.Width = static_cast<float>(screenWidth);
+	m_viewport.Height = static_cast<float>(screenHeight);
 	m_viewport.MinDepth = 0.0f;
 	m_viewport.MaxDepth = 1.0f;
 	m_viewport.TopLeftX = 0.0f;
@@ -316,13 +318,13 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 	// clip space matrices creation
 	fieldOfView = 3.141592654f / 4.0f;
-	screenAspect = (float)screenWidth / (float)screenHeight;
+	screenAspect = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
 
 	m_projectionMatrix = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
 
 	m_worldMatrix = XMMatrixIdentity();
 
-	m_orthoMatrix = XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
+	m_orthoMatrix = XMMatrixOrthographicLH(static_cast<float>(screenWidth), static_cast<float>(screenHeight), screenNear, screenDepth);
 
 	//disabled depth stencil state creation.
 	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
@@ -618,5 +620,20 @@ void D3DClass::PrintAdapterInfoToFile(char* cardName, int memorySize)
 
        fout.close();  
    }  
+
    return;  
+}
+
+void D3DClass::ToggleFullScreenMode()
+{
+	HRESULT result;
+
+	m_fullScreenMode = !m_fullScreenMode;
+	result = m_swapChain->SetFullscreenState(m_fullScreenMode, NULL);
+	if (FAILED(result))
+	{
+		throw new std::exception("Toggle screen mode failed.");
+	}
+
+	return;
 }

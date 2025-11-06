@@ -1,0 +1,381 @@
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 19:10:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:37:49
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:39:18
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:40:18
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:42:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:42:57
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:43:27
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:45:34
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/10/2025
+Time: 22:47:0
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:51:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:53:27
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:53:40
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:54:6
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:54:35
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:54:51
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:54:57
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:55:33
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:56:31
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:57:3
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:57:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:57:40
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:57:45
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:57:51
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:58:0
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:58:15
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:58:23
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:58:29
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:58:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:58:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 22/10/2025
+Time: 13:59:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 28/10/2025
+Time: 14:32:35
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 28/10/2025
+Time: 14:51:29
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 18:52:54
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 18:56:25
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 20:34:14
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 20:49:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 20:52:25
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 20:53:59
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 20:56:49
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 20:60:26
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:1:20
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:2:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:3:50
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:5:31
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:6:18
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:7:14
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:8:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:12:34
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:17:7
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:18:3
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:20:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:21:28
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 21:24:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 22:37:39
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 3/11/2025
+Time: 23:23:7
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 4/11/2025
+Time: 9:57:35
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 4/11/2025
+Time: 9:57:40
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:45:24
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:47:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:47:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:52:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:53:18
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:53:57
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:54:44
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:55:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 20:59:20
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:1:5
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:54:1
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:54:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:54:21
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:54:33
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:54:45
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 21:54:55
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 22:33:28
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 22:35:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 5/11/2025
+Time: 22:45:22
+

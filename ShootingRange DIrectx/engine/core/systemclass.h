@@ -7,7 +7,7 @@
 #include <windows.h>
 
 //my classes
-#include "inputclass.h"
+#include "../peripheral/inputclass.h"
 #include "applicationclass.h"
 
 

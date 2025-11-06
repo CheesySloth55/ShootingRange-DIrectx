@@ -6,7 +6,7 @@
 using namespace DirectX;
 
 //class includes
-#include "textureclass.h"
+#include "../textures/textureclass.h"
 
 class FontClass
 {

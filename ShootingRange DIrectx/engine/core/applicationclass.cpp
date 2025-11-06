@@ -6,14 +6,8 @@ ApplicationClass::ApplicationClass()
 	m_Direct3D = NULL;
 	m_Camera = NULL;
 	m_Model = NULL;
-    m_LightShader = NULL;
-	m_Light = NULL;
-    m_FontShader = NULL;
-    m_Font = NULL;
-    m_Fps = NULL;
-    m_FpsString = NULL;
-    m_MouseStrings = NULL;
-    m_MultiTextureShader = NULL;
+    m_AlphaMapShader = NULL;
+    m_Timer = NULL;
 }
 
 
@@ -29,8 +23,9 @@ ApplicationClass::~ApplicationClass()
 
 bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
-    char modelFilename[128], textureFilename1[128], textureFilename2[128];
+    char modelFilename[128], textureFilename1[128], textureFilename2[128], textureFilename3[128];
     bool result;
+
 
     // Create and initialize the Direct3D object.
     m_Direct3D = new D3DClass;
@@ -47,29 +42,37 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
     m_Camera->Render();
+    // Create and initialize the alpha map shader object.
+    m_AlphaMapShader = new AlphaMapShaderClass;
 
-        // Create and initialize the multitexture shader object.
-        m_MultiTextureShader = new MultiTextureShaderClass;
-
-    result = m_MultiTextureShader->Initialize(m_Direct3D->GetDevice(), hwnd);
+    result = m_AlphaMapShader->Initialize(m_Direct3D->GetDevice(), hwnd);
     if (!result)
     {
-        MessageBox(hwnd, L"Could not initialize the multitexture shader object.", L"Error", MB_OK);
+        MessageBox(hwnd, L"Could not initialize the alpha map shader object.", L"Error", MB_OK);
         return false;
     }
 
-        // Set the file name of the model.
-    strcpy_s(modelFilename, "../Engine/data/square.txt");
+    // Set the file name of the model.
+    strcpy_s(modelFilename, "engine/data/model-data/square.txt");
 
-    // Set the file name of the textures.
-    strcpy_s(textureFilename1, "../Engine/data/stone01.tga");
-    strcpy_s(textureFilename2, "../Engine/data/dirt01.tga");
+    strcpy_s(textureFilename1, "engine/data/images/stone01.tga");
+    strcpy_s(textureFilename2, "engine/data/images/dirt01.tga");
+    strcpy_s(textureFilename3, "engine/data/images/alpha01.tga");
 
     // Create and initialize the model object.
     m_Model = new ModelClass;
 
-    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilename, textureFilename1, textureFilename2);
+    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilename, textureFilename1, textureFilename2, textureFilename3);
     if (!result)
+    {
+        return false;
+    }
+
+    //initialize timer class;
+    m_Timer = new TimerClass;
+
+    result = m_Timer->Initialize();
+    if(!result)
     {
         return false;
     }
@@ -88,14 +91,20 @@ void ApplicationClass::Shutdown()
         m_Model = 0;
     }
 
-    // Release the multitexture shader object.
-    if (m_MultiTextureShader)
+    // Release the alpha map shader object.
+    if (m_AlphaMapShader)
     {
-        m_MultiTextureShader->Shutdown();
-        delete m_MultiTextureShader;
-        m_MultiTextureShader = 0;
+        m_AlphaMapShader->Shutdown();
+        delete m_AlphaMapShader;
+        m_AlphaMapShader = 0;
     }
 
+    //release timer object
+    if (m_Timer)
+    {
+        delete m_Timer;
+        m_Timer = 0;
+    }
 
     // Release the camera object.
     if (m_Camera)
@@ -119,12 +128,23 @@ void ApplicationClass::Shutdown()
 bool ApplicationClass::Frame(InputClass* Input)
 {
     bool result;
+    float frameTime;
+    m_Timer->Frame();
+
+    // Get the current frame time.
+    frameTime = m_Timer->GetFrameTime();
 
     // Check if the user pressed escape and wants to exit the application.
     if (Input->IsEscapePressed())
     {
         return false;
     }
+
+    if (Input->IsF11Pressed())
+    {
+        m_Direct3D->ToggleFullScreenMode();
+    }
+
 
     result = Render();
     if (!result)
@@ -139,7 +159,7 @@ bool ApplicationClass::Frame(InputClass* Input)
 
 bool ApplicationClass::Render()
 {
-    XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
+    XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
     bool result;
 
     m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
@@ -154,8 +174,8 @@ bool ApplicationClass::Render()
     // Render the model using the multitexture shader.
     m_Model->Render(m_Direct3D->GetDeviceContext());
 
-    result = m_MultiTextureShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-        m_Model->GetTexture(0), m_Model->GetTexture(1));
+    result = m_AlphaMapShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+        m_Model->GetTexture(0), m_Model->GetTexture(1), m_Model->GetTexture(2));
     if (!result)
     {
         return false;

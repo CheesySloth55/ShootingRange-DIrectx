@@ -25,6 +25,7 @@ public:
 	bool Frame();
 
 	bool IsEscapePressed();
+	bool IsF11Pressed();
 	void GetMouseLocation(int&, int&);
 	bool IsMousePressed();
 

@@ -127,55 +127,74 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="applicationclass.cpp" />
-    <ClCompile Include="cameraclass.cpp" />
-    <ClCompile Include="d3dclass.cpp" />
-    <ClCompile Include="fontclass.cpp" />
-    <ClCompile Include="fontshaderclass.cpp" />
-    <ClCompile Include="fpsclass.cpp" />
-    <ClCompile Include="inputclass.cpp" />
-    <ClCompile Include="lightclass.cpp" />
-    <ClCompile Include="lightschaderclass.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="modelclass.cpp" />
-    <ClCompile Include="modelparser.cpp" />
-    <ClCompile Include="modelparser.h" />
-    <ClCompile Include="multitextureshaderclass.cpp" />
-    <ClCompile Include="systemclass.cpp" />
-    <ClCompile Include="textclass.cpp" />
-    <ClCompile Include="textureclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\alphamapshader.cpp" />
+    <ClCompile Include="engine\core\applicationclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\camera\cameraclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\directx\d3dclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\font\fontclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\fontshaderclass.cpp" />
+    <ClCompile Include="engine\peripheral\fpsclass.cpp" />
+    <ClCompile Include="engine\peripheral\inputclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\light\lightclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\lightschaderclass.cpp" />
+    <ClCompile Include="engine\main.cpp" />
+    <ClCompile Include="engine\graphicsAPI\models\modelclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\multitextureshaderclass.cpp" />
+    <ClCompile Include="engine\core\systemclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\font\textclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\textures\textureclass.cpp" />
+    <ClCompile Include="engine\peripheral\timerclass.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="applicationclass.h" />
-    <ClInclude Include="cameraclass.h" />
-    <ClInclude Include="d3dclass.h" />
-    <ClInclude Include="fontclass.h" />
-    <ClInclude Include="fontshaderclass.h" />
-    <ClInclude Include="fpsclass.h" />
-    <ClInclude Include="inputclass.h" />
-    <ClInclude Include="lightclass.h" />
-    <ClInclude Include="lightshaderclass.h" />
-    <ClInclude Include="modelclass.h" />
-    <ClInclude Include="multitextureshaderclass.h" />
-    <ClInclude Include="systemclass.h" />
-    <ClInclude Include="textclass.h" />
-    <ClInclude Include="textureclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\alphamapshader.h" />
+    <ClInclude Include="engine\core\applicationclass.h" />
+    <ClInclude Include="engine\graphicsAPI\camera\cameraclass.h" />
+    <ClInclude Include="engine\graphicsAPI\directx\d3dclass.h" />
+    <ClInclude Include="engine\graphicsAPI\font\fontclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\fontshaderclass.h" />
+    <ClInclude Include="engine\peripheral\fpsclass.h" />
+    <ClInclude Include="engine\peripheral\timerclass.h" />
+    <ClInclude Include="engine\peripheral\inputclass.h" />
+    <ClInclude Include="engine\graphicsAPI\light\lightclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\lightshaderclass.h" />
+    <ClInclude Include="engine\graphicsAPI\models\modelclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\multitextureshaderclass.h" />
+    <ClInclude Include="engine\core\systemclass.h" />
+    <ClInclude Include="engine\graphicsAPI\font\textclass.h" />
+    <ClInclude Include="engine\graphicsAPI\textures\textureclass.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Engine\font.ps" />
-    <None Include="..\Engine\font.vs" />
-    <None Include="light.ps" />
-    <None Include="light.vs" />
-    <None Include="multitexture.ps" />
-    <None Include="multitexture.vs" />
+    <None Include="engine\data\shaderfiles\light.ps" />
+    <None Include="engine\data\shaderfiles\light.vs" />
+    <None Include="engine\data\shaderfiles\multitexture.ps" />
+    <None Include="engine\data\shaderfiles\multitexture.vs" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Engine\data\font\font01.tga" />
-    <Image Include="stone01.tga" />
+    <Text Include="engine\data\model-data\cube.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Engine\data\font\font01.txt" />
-    <Text Include="cube.txt" />
+    <FxCompile Include="engine\data\shaderfiles\alphamapps.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AlphaMapPixelShader</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AlphaMapPixelShader</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="engine\data\shaderfiles\alphamapvs.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AlphaMapVertexShader</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AlphaMapVertexShader</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="engine\data\shaderfiles\VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

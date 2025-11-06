@@ -218,6 +218,16 @@ bool InputClass::IsEscapePressed()
 	return false;
 }
 
+bool InputClass::IsF11Pressed()
+{
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if (m_keyboardState[DIK_F11] & 0xf0)
+	{
+		return true;
+	}
+	return false;
+}
+
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {
 	mouseX = m_mouseX;

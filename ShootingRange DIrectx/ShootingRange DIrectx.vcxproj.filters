@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Shaderclasses">
-      <UniqueIdentifier>{009bdb7d-177c-49a1-97e9-08a10f674c31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main application">
-      <UniqueIdentifier>{736c29c4-05cd-4cac-96f6-988b4e1f2ef6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Font">
       <UniqueIdentifier>{72ad9814-24ce-4fe4-9f0d-a4fe4ff77e39}</UniqueIdentifier>
     </Filter>
@@ -27,116 +21,124 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inputclass.cpp">
+    <ClCompile Include="engine\peripheral\inputclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cameraclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\camera\cameraclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lightclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\light\lightclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="textureclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\textures\textureclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="modelclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\models\modelclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="modelparser.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="modelparser.cpp">
+    <ClCompile Include="engine\graphicsAPI\directx\d3dclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Main application</Filter>
-    </ClCompile>
-    <ClCompile Include="systemclass.cpp">
-      <Filter>Main application</Filter>
-    </ClCompile>
-    <ClCompile Include="applicationclass.cpp">
-      <Filter>Main application</Filter>
-    </ClCompile>
-    <ClCompile Include="d3dclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lightschaderclass.cpp">
-      <Filter>Shaderclasses</Filter>
-    </ClCompile>
-    <ClCompile Include="fontclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\font\fontclass.cpp">
       <Filter>Font</Filter>
     </ClCompile>
-    <ClCompile Include="fontshaderclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\shaders\fontshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="textclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\font\textclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fpsclass.cpp">
+    <ClCompile Include="engine\peripheral\fpsclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shaders\alphamapshader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shaders\multitextureshaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\peripheral\timerclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\applicationclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shaders\lightschaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\systemclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inputclass.h">
+    <ClInclude Include="engine\peripheral\inputclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cameraclass.h">
+    <ClInclude Include="engine\graphicsAPI\camera\cameraclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lightclass.h">
+    <ClInclude Include="engine\graphicsAPI\light\lightclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="textureclass.h">
+    <ClInclude Include="engine\graphicsAPI\textures\textureclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="modelclass.h">
+    <ClInclude Include="engine\graphicsAPI\models\modelclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="d3dclass.h">
+    <ClInclude Include="engine\graphicsAPI\directx\d3dclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fontclass.h">
+    <ClInclude Include="engine\graphicsAPI\font\fontclass.h">
       <Filter>Font</Filter>
     </ClInclude>
-    <ClInclude Include="lightshaderclass.h">
+    <ClInclude Include="engine\graphicsAPI\shaders\lightshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="applicationclass.h">
+    <ClInclude Include="engine\core\applicationclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="systemclass.h">
+    <ClInclude Include="engine\core\systemclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fontshaderclass.h">
+    <ClInclude Include="engine\graphicsAPI\shaders\fontshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="textclass.h">
+    <ClInclude Include="engine\graphicsAPI\font\textclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fpsclass.h">
+    <ClInclude Include="engine\peripheral\fpsclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\shaders\alphamapshader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\shaders\multitextureshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\peripheral\timerclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="light.ps">
+    <None Include="engine\data\shaderfiles\light.ps">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="light.vs">
+    <None Include="engine\data\shaderfiles\light.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\Engine\font.ps">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\Engine\font.vs">
-      <Filter>Shaders</Filter>
-    </None>
+    <None Include="engine\data\shaderfiles\multitexture.ps" />
+    <None Include="engine\data\shaderfiles\multitexture.vs" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="stone01.tga" />
-    <Image Include="..\Engine\data\font\font01.tga" />
+    <Text Include="engine\data\model-data\cube.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="cube.txt" />
-    <Text Include="..\Engine\data\font\font01.txt" />
+    <FxCompile Include="engine\data\shaderfiles\alphamapps.hlsl" />
+    <FxCompile Include="engine\data\shaderfiles\alphamapvs.hlsl" />
+    <FxCompile Include="engine\data\shaderfiles\VertexShader.hlsl" />
   </ItemGroup>
 </Project>
