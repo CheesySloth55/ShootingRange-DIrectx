@@ -217,6 +217,65 @@ bool InputClass::IsEscapePressed()
 
 	return false;
 }
+bool InputClass::Is1Pressed()
+{
+	if (m_keyboardState[DIK_1] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::Is2Pressed()
+{
+	if (m_keyboardState[DIK_2] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsUPArrowPressed()
+{
+	if (m_keyboardState[DIK_UP] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsDOWNArrowPressed()
+{
+	if (m_keyboardState[DIK_DOWN] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsLEFTArrowPressed()
+{
+	if (m_keyboardState[DIK_LEFT] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsRIGHTArrowPressed()
+{
+	if (m_keyboardState[DIK_RIGHT] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 bool InputClass::IsF11Pressed()
 {

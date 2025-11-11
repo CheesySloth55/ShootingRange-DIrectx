@@ -133,6 +133,7 @@
     <ClCompile Include="engine\graphicsAPI\directx\d3dclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\font\fontclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\fontshaderclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\normalmapshaderclass.cpp" />
     <ClCompile Include="engine\peripheral\fpsclass.cpp" />
     <ClCompile Include="engine\peripheral\inputclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\light\lightclass.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="engine\graphicsAPI\directx\d3dclass.h" />
     <ClInclude Include="engine\graphicsAPI\font\fontclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\fontshaderclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\normalmapshaderclass.h" />
     <ClInclude Include="engine\peripheral\fpsclass.h" />
     <ClInclude Include="engine\peripheral\timerclass.h" />
     <ClInclude Include="engine\peripheral\inputclass.h" />
@@ -171,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="engine\data\model-data\cube.txt" />
+    <Text Include="engine\data\model-data\square.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="engine\data\shaderfiles\alphamapps.hlsl">
@@ -189,12 +192,27 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="engine\data\shaderfiles\VertexShader.hlsl">
+    <FxCompile Include="engine\data\shaderfiles\normalmapvs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NormalMapVertexShader</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NormalMapVertexShader</EntryPointName>
     </FxCompile>
+    <FxCompile Include="engine\data\shaderfiles\normalmapps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.1</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NormalMapPixelShader</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NormalMapPixelShader</EntryPointName>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\dx11win10tut20_src\dx11win10tut20_src\data\normal01.tga" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

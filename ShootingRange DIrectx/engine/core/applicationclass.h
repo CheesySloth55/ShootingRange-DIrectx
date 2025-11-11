@@ -4,8 +4,8 @@
 #include "../graphicsAPI/directx/d3dclass.h"
 #include "../graphicsAPI/camera/cameraclass.h"
 #include "../graphicsAPI/models/modelclass.h"
-#include "../graphicsAPI/shaders/alphamapshader.h"
-#include "../graphicsAPI/shaders/multitextureshaderclass.h"
+#include "../graphicsAPI/shaders/normalmapshaderclass.h"
+#include "../graphicsAPI/light/lightclass.h"
 
 //timer and input
 #include "../peripheral/inputclass.h"
@@ -31,12 +31,14 @@ public:
 	bool Frame(InputClass*);
 
 private:
-	bool Render();
+	bool Render(float);
 
+	void HandleKeyboardInput(InputClass* Input);
 private:
 	D3DClass* m_Direct3D;
 	CameraClass* m_Camera;
-	AlphaMapShaderClass* m_AlphaMapShader;
+	NormalMapShaderClass* m_NormalMapShader;
 	ModelClass* m_Model;
 	TimerClass* m_Timer;
+	LightClass* m_Light;
 };
