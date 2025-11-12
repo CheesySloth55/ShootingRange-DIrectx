@@ -75,6 +75,9 @@
     <ClCompile Include="engine\graphicsAPI\shaders\normalmapshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shaders\specmapshaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\peripheral\inputclass.h">
@@ -128,6 +131,9 @@
     <ClInclude Include="engine\graphicsAPI\shaders\normalmapshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\shaders\specmapshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\data\shaderfiles\light.ps">
@@ -148,6 +154,8 @@
     <FxCompile Include="engine\data\shaderfiles\alphamapvs.hlsl" />
     <FxCompile Include="engine\data\shaderfiles\normalmapvs.hlsl" />
     <FxCompile Include="engine\data\shaderfiles\normalmapps.hlsl" />
+    <FxCompile Include="engine\data\shaderfiles\specmapvs.hlsl" />
+    <FxCompile Include="engine\data\shaderfiles\specmapps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\dx11win10tut20_src\dx11win10tut20_src\data\normal01.tga" />

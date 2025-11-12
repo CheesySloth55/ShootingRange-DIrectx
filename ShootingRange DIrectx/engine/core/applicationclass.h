@@ -4,7 +4,7 @@
 #include "../graphicsAPI/directx/d3dclass.h"
 #include "../graphicsAPI/camera/cameraclass.h"
 #include "../graphicsAPI/models/modelclass.h"
-#include "../graphicsAPI/shaders/normalmapshaderclass.h"
+#include "../graphicsAPI/shaders/specmapshaderclass.h"
 #include "../graphicsAPI/light/lightclass.h"
 
 //timer and input
@@ -37,7 +37,7 @@ private:
 private:
 	D3DClass* m_Direct3D;
 	CameraClass* m_Camera;
-	NormalMapShaderClass* m_NormalMapShader;
+	SpecMapShaderClass* m_SpecMapShader;
 	ModelClass* m_Model;
 	TimerClass* m_Timer;
 	LightClass* m_Light;

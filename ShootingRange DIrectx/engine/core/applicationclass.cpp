@@ -6,7 +6,7 @@ ApplicationClass::ApplicationClass()
 	m_Direct3D = NULL;
 	m_Camera = NULL;
 	m_Model = NULL;
-    m_NormalMapShader = NULL;
+    m_SpecMapShader = NULL;
     m_Light = NULL;
     m_Timer = NULL;
 }
@@ -24,7 +24,7 @@ ApplicationClass::~ApplicationClass()
 
 bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
-    char modelFilename[128], textureFilename1[128], textureFilename2[128];
+    char modelFilename[128], textureFilename1[128], textureFilename2[128], textureFilename3[128];
     bool result;
 
 
@@ -44,25 +44,30 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     // camera points by default at the z direction
     m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
     m_Camera->Render();
-    // Create and initialize the normal map shader object.
-    m_NormalMapShader = new NormalMapShaderClass;
 
-    result = m_NormalMapShader->Initialize(m_Direct3D->GetDevice(), hwnd);
+    // Create and initialize the specular map shader object.
+    m_SpecMapShader = new SpecMapShaderClass;
+
+    result = m_SpecMapShader->Initialize(m_Direct3D->GetDevice(), hwnd);
     if (!result)
     {
-        MessageBox(hwnd, L"Could not initialize the normal map shader object.", L"Error", MB_OK);
+        MessageBox(hwnd, L"Could not initialize the specular map shader object.", L"Error", MB_OK);
         return false;
     }
 
-    strcpy_s(modelFilename, "engine/data/model-data/cube.txt");
+    //model data
+    strcpy_s(modelFilename, "engine/data/model-data/sphere.txt");
 
-    strcpy_s(textureFilename1, "engine/data/images/stone01.tga");
-    strcpy_s(textureFilename2, "engine/data/images/normal01.tga");
+    //textures
+    strcpy_s(textureFilename1, "engine/data/images/stone02.tga");
+    strcpy_s(textureFilename2, "engine/data/images/normal02.tga");
+    strcpy_s(textureFilename3, "engine/data/images/spec02.tga");
+
 
     // Create and initialize the model object.
     m_Model = new ModelClass;
 
-    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilename, textureFilename1, textureFilename2);
+    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilename, textureFilename1, textureFilename2, textureFilename3);
     if (!result)
     {
         return false;
@@ -81,7 +86,9 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Light = new LightClass;
 
     m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-    m_Light->SetDirection(1.0f, 0.0f, 0.0f);
+    m_Light->SetDirection(0.0f, 0.0f, 1.0f);
+    m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
+    m_Light->SetSpecularPower(5.0f);
 
     return true;
 }
@@ -97,19 +104,18 @@ void ApplicationClass::Shutdown()
         m_Model = 0;
     }
 
-    // Release the alpha map shader object.
-        // Release the light object.
+    if (m_SpecMapShader)
+    {
+        m_SpecMapShader->Shutdown();
+        delete m_SpecMapShader;
+        m_SpecMapShader = 0;
+    }
+
+    // Release the light object.
     if (m_Light)
     {
         delete m_Light;
         m_Light = 0;
-    }
-
-    if (m_NormalMapShader)
-    {
-        m_NormalMapShader->Shutdown();
-        delete m_NormalMapShader;
-        m_NormalMapShader = 0;
     }
 
     //release timer object
@@ -149,7 +155,7 @@ bool ApplicationClass::Frame(InputClass* Input)
     // Get the current frame time.
     frameTime = m_Timer->GetFrameTime();
 
-    rotation -= 0.0174532925f * 0.25f;
+    rotation -= 0.0174532925f * 0.10f;
     if (rotation <= 0.0f)
     {
         rotation += 360.0f;
@@ -194,8 +200,9 @@ bool ApplicationClass::Render(float rotation)
     // Render the model using the multitexture shader.
     m_Model->Render(m_Direct3D->GetDeviceContext());
 
-    result = m_NormalMapShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-        m_Model->GetTexture(0), m_Model->GetTexture(1), m_Light->GetDirection(), m_Light->GetDiffuseColor());
+    result = m_SpecMapShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+        m_Model->GetTexture(0), m_Model->GetTexture(1), m_Model->GetTexture(2), m_Light->GetDirection(), m_Light->GetDiffuseColor(),
+        m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
     if (!result)
     {
         return false;
@@ -219,7 +226,7 @@ void ApplicationClass::HandleKeyboardInput(InputClass* Input)
     {
         XMFLOAT3 curPos;
         curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x, curPos.y + movementSpeed, curPos.z);
+        m_Camera->SetPosition(curPos.x, curPos.y, curPos.z + movementSpeed);
         m_Camera->Render();
     }
 
@@ -227,7 +234,7 @@ void ApplicationClass::HandleKeyboardInput(InputClass* Input)
     {
         XMFLOAT3 curPos;
         curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x, curPos.y - movementSpeed, curPos.z);
+        m_Camera->SetPosition(curPos.x, curPos.y, curPos.z - movementSpeed);
         m_Camera->Render();
     }
 
