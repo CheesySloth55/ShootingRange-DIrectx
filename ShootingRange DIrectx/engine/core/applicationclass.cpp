@@ -1,5 +1,8 @@
 
 #include "applicationclass.h"
+#include <vector>
+#include <string>
+#include <fstream>
 
 ApplicationClass::ApplicationClass()
 {
@@ -24,9 +27,12 @@ ApplicationClass::~ApplicationClass()
 
 bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
-    char modelFilename[128], textureFilename1[128], textureFilename2[128], textureFilename3[128];
+    std::vector<std::string> modelFilenames;
+    std::vector<std::string> textureFilenames;
+    const std::string texturelistLocation{"engine/data/texturelist.txt"};
     bool result;
 
+    ReadFileLocationsFromFile(textureFilenames, texturelistLocation);
 
     // Create and initialize the Direct3D object.
     m_Direct3D = new D3DClass;
@@ -42,25 +48,22 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Camera = new CameraClass;
 
     // camera points by default at the z direction
-    m_Camera->SetPosition(0.0f, 0.0f, -8.0f);
+    m_Camera->SetPosition(0.0f, 10.0f, -8.0f);
     m_Camera->Render();
 
     // Create and initialize the specular map shader object.
 
 
     //model data
-    strcpy_s(modelFilename, "engine/data/model-data/cube.txt");
-
+    modelFilenames.push_back("engine/data/model-data/square.txt");
     //textures
-    strcpy_s(textureFilename1, "engine/data/images/stone01.tga");
-    strcpy_s(textureFilename2, "engine/data/images/normal01.tga");
-    strcpy_s(textureFilename3, "engine/data/images/dirt01.tga");
+
 
 
     // Create and initialize the model object.
     m_Model = new ModelClass;
 
-    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilename, textureFilename1, textureFilename2, textureFilename3);
+    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilenames[0], textureFilenames);
     if (!result)
     {
         return false;
@@ -80,7 +83,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f); 
     m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
-    m_Light->SetDirection(1.0f, 0.0f, 1.0f);
+    m_Light->SetDirection(0.0f, 0.0f, 1.0f);
     m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
     m_Light->SetSpecularPower(10.0f);
 
@@ -148,18 +151,26 @@ void ApplicationClass::Shutdown()
 bool ApplicationClass::Frame(InputClass* Input)
 {
     bool result;
-    float frameTime;
+    double frameTime;
     static float rotation = 360.0f;
+    static const int physicsFrametime = 10; // every 10ms update physics
+    static double physicsTimeAccumulator = 0.0; // accumulated time since last physics update
 
     m_Timer->Frame();
 
     // Get the current frame time.
     frameTime = m_Timer->GetFrameTime();
+    physicsTimeAccumulator += frameTime * 1000.0f; // convert to ms
 
-    rotation -= 0.0174532925f * 0.25f;
-    if (rotation <= 0.0f)
+    // Update physics only if enough time has passed
+    while (physicsTimeAccumulator >= physicsFrametime)
     {
-        rotation += 360.0f;
+        rotation -= 0.0174532925f * 0.5f ; // 1 degree in radians
+        if (rotation <= 0.0f)
+        {
+            rotation += 360.0f;
+        }
+        physicsTimeAccumulator -= physicsFrametime;
     }
 
     // Check if the user pressed escape and wants to exit the application.
@@ -195,46 +206,25 @@ bool ApplicationClass::Render(float rotation)
     m_Camera->GetViewMatrix(viewMatrix);
     m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
-    rotateMatrix = XMMatrixRotationY(rotation);
-    translateMatrix = XMMatrixTranslation(0.0f, 1.0f, 0.0f);
-    worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
 
-    // Render the model using the multitexture shader.
-    m_Model->Render(m_Direct3D->GetDeviceContext());    
-
-    result = m_ShaderManager->RenderLightShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-        m_Model->GetTexture(0), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
-    if (!result)
+    for (int i{ 0 }; i < 10; i++)
     {
-        return false;
-    }
+        for (int j{ 0 }; j < 10; j++)
+        {
+            rotateMatrix = XMMatrixRotationY(rotation);
+            translateMatrix = XMMatrixTranslation(-1.5f - i * 2.5f, -1.0f + j * 2.5f, 0.0f);
+            worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
 
-    rotateMatrix = XMMatrixRotationY(rotation);
-    translateMatrix = XMMatrixTranslation(1.5f, -1.0f, 0.0f);
-    worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
+            // Render the model using the normal map shader.
+            m_Model->Render(m_Direct3D->GetDeviceContext());
 
-    // Render the model using the normal map shader.
-    m_Model->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_ShaderManager->RenderNormalMapShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-        m_Model->GetTexture(0), m_Model->GetTexture(1), m_Light->GetDirection(), m_Light->GetDiffuseColor());
-    if (!result)
-    {
-        return false;
-    }
-
-    rotateMatrix = XMMatrixRotationY(rotation);
-    translateMatrix = XMMatrixTranslation(-1.5f, -1.0f, 0.0f);
-    worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
-
-    // Render the model using the normal map shader.
-    m_Model->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_ShaderManager->RenderMultiTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-        m_Model->GetTexture(0), m_Model->GetTexture(2));
-    if (!result)
-    {
-        return false;
+            result = m_ShaderManager->RenderMultiTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+                m_Model->GetTexture(3), m_Model->GetTexture(4), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
+            if (!result)
+            {
+                return false;
+            }
+        }
     }
 
 
@@ -283,4 +273,30 @@ void ApplicationClass::HandleKeyboardInput(InputClass* Input)
         m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
         m_Camera->Render();
     }
+}
+#include <iostream>
+void ApplicationClass::ReadFileLocationsFromFile(std::vector<std::string>& fileNames, const std::string& filelistName)
+{
+    int filelistLenght;
+    std::ifstream fin;
+    std::string line;
+
+    fin.open(filelistName);
+
+    //std::cerr << "WTF";
+    if (!fin)
+    {
+        return;
+    }
+
+    while (fin >> line)
+    {
+        fileNames.push_back(line);
+
+        line = "";
+    }
+
+    fin.close();
+
+    return;
 }

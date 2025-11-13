@@ -1,0 +1,7 @@
+engine/data/images/stone01.tga
+engine/data/images/normal01.tga
+engine/data/images/dirt01.tga
+engine/data/images/stone02.tga
+engine/data/images/normal02.tga
+engine/data/images/spec02.tga
+engine/data/images/alpha01.tga

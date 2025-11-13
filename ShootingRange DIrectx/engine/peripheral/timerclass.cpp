@@ -19,12 +19,12 @@ bool TimerClass::Initialize()
 {
 	INT64 frequency{};
 
-	QueryPerformanceCounter((LARGE_INTEGER*)&frequency);
+	QueryPerformanceFrequency((LARGE_INTEGER*)&frequency);
 	if (frequency == 0)
 	{
 		return false;
 	}
-	m_frequency = static_cast<float>(frequency);
+	m_frequency = (float)(frequency);
 
 	QueryPerformanceCounter((LARGE_INTEGER*)&m_startTime);
 
@@ -41,7 +41,7 @@ void TimerClass::Frame()
 	elapsedTicks = currTime - m_startTime;
 
 	//calculates frametime
-	m_frameTime = static_cast<float>(elapsedTicks) / m_startTime;
+	m_frameTime = (float)(elapsedTicks) / m_frequency;
 
 	m_startTime = currTime;
 

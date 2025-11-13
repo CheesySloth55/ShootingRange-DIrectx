@@ -17,7 +17,7 @@ TextClass::~TextClass()
 {
 }
 
-bool TextClass::Initialize(ID3D11Device * device, ID3D11DeviceContext * deviceContext, int screenWidth, int screenHeight, int maxLength, FontClass * Font, char* text,
+bool TextClass::Initialize(ID3D11Device * device, ID3D11DeviceContext * deviceContext, int screenWidth, int screenHeight, int maxLength, FontClass * Font,const char* text,
     int positionX, int positionY, float red, float green, float blue)
 {
     bool result;
@@ -61,7 +61,7 @@ int TextClass::GetIndexCount()
     return m_indexCount;
 }
 
-bool TextClass::InitializeBuffers(ID3D11Device* device, ID3D11DeviceContext* deviceContext, FontClass* Font, char* text, int positionX, int positionY, float red, float green, float blue)
+bool TextClass::InitializeBuffers(ID3D11Device* device, ID3D11DeviceContext* deviceContext, FontClass* Font,const char* text, int positionX, int positionY, float red, float green, float blue)
 {
     VertexType* vertices;
     unsigned long* indices;
@@ -152,7 +152,7 @@ void TextClass::ShutdownBuffers()
     return;
 }
 
-bool TextClass::UpdateText(ID3D11DeviceContext* deviceContext, FontClass* Font, char* text, int positionX, int positionY, float red, float green, float blue)
+bool TextClass::UpdateText(ID3D11DeviceContext* deviceContext, FontClass* Font, const char* text, int positionX, int positionY, float red, float green, float blue)
 {
     int numLetters;
     VertexType* vertices;

@@ -34,7 +34,7 @@ public:
 
 	ID3D11ShaderResourceView* GetTexture();
 
-	void BuildVertexArray(void*, char*, float, float);
+	void BuildVertexArray(void*, const char*, float, float);
 	int GetSentencePixelLength(char*);
 	int GetFontHeight();
 

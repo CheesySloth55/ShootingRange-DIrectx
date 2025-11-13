@@ -7,6 +7,7 @@
 #include "../graphicsAPI/light/lightclass.h"
 #include "../graphicsAPI/shadermanagerclass.h"
 
+
 //timer and input
 #include "../peripheral/inputclass.h"
 #include "../peripheral/timerclass.h"
@@ -34,6 +35,7 @@ private:
 	bool Render(float);
 
 	void HandleKeyboardInput(InputClass* Input);
+	void ReadFileLocationsFromFile(std::vector<std::string>&, const std::string&);
 private:
 	D3DClass* m_Direct3D;
 	CameraClass* m_Camera;

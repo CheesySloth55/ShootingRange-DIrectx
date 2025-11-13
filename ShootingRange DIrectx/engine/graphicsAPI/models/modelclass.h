@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <directxmath.h>
 #include <fstream>
+#include <vector>
 using namespace DirectX;
 
 #include "../textures/textureclass.h"
@@ -46,7 +47,7 @@ public:
 	ModelClass(const ModelClass&);
 	~ModelClass();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, char*, char*);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, const std::string& , const std::vector<std::string>&);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
@@ -58,11 +59,10 @@ private:
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
-	bool LoadTextures(ID3D11Device*, ID3D11DeviceContext*, char*, char*, char*);
+	bool LoadTextures(ID3D11Device*, ID3D11DeviceContext*, const std::vector<std::string>&);
 	void ReleaseTextures();
 
-	bool LoadModel(char*);
-	bool LoadBlenderModel(char*);
+	bool LoadModel(const char*);
 	void ReleaseModel();
 
 	void CalculateModelVectors();
@@ -72,4 +72,5 @@ private:
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Textures;
 	ModelType* m_model;
+	int m_textureCount;
 };

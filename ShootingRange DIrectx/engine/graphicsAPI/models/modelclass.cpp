@@ -1,9 +1,8 @@
 #include "modelclass.h"
 #include <iostream>
 #include <string>
-#include <sstream>
 #include <vector>
-#include <algorithm>
+
 ModelClass::ModelClass()
 {
 	m_vertexBuffer = NULL;
@@ -23,11 +22,13 @@ ModelClass::~ModelClass()
 }
 
 
-bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* modelFilename, char* textureFilename1, char* textureFilename2, char* textureFilename3)
+bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& modelFilename, const std::vector<std::string>& textureFilenames)
 {
 	bool result;
 
-	result = LoadModel(modelFilename);
+	m_textureCount = textureFilenames.size();
+
+	result = LoadModel(modelFilename.c_str());
 	if (!result)
 	{
 		return false;
@@ -43,7 +44,7 @@ bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCon
 	}
 
 	// Load the textures for this model.
-	result = LoadTextures(device, deviceContext, textureFilename1, textureFilename2, textureFilename3);
+	result = LoadTextures(device, deviceContext, textureFilenames);
 	if (!result)
 	{
 		return false;
@@ -206,30 +207,20 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 }
 
 
-bool ModelClass::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* filename1, char* filename2, char* filename3)
+bool ModelClass::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::vector<std::string>& filenames)
 {
-	bool result;
-
+	bool result;	
 
 	// Create and initialize the texture object array.
-	m_Textures = new TextureClass[3];
+	m_Textures = new TextureClass[m_textureCount];
 
-	result = m_Textures[0].Initialize(device, deviceContext, filename1);
-	if (!result)
+	for (int i{}; i < m_textureCount; i++)
 	{
-		return false;
-	}
-
-	result = m_Textures[1].Initialize(device, deviceContext, filename2);
-	if (!result)
-	{
-		return false;
-	}
-
-	result = m_Textures[2].Initialize(device, deviceContext, filename3);
-	if (!result)
-	{
-		return false;
+		result = m_Textures[i].Initialize(device, deviceContext, filenames[i].c_str());
+		if (!result)
+		{
+			return false;
+		}
 	}
 
 	return true;
@@ -241,9 +232,10 @@ void ModelClass::ReleaseTextures()
 	// Release the texture object array.
 	if (m_Textures)
 	{
-		m_Textures[0].Shutdown();
-		m_Textures[1].Shutdown();
-		m_Textures[2].Shutdown();
+		for (int i{}; i < m_textureCount; i++)
+		{
+			m_Textures[i].Shutdown();
+		}
 
 		delete[] m_Textures;
 		m_Textures = 0;
@@ -252,7 +244,7 @@ void ModelClass::ReleaseTextures()
 	return;
 }
 
-bool ModelClass::LoadModel(char* filename)
+bool ModelClass::LoadModel(const char* filename)
 {
 	std::ifstream fin;
 	char input;
@@ -291,110 +283,6 @@ bool ModelClass::LoadModel(char* filename)
 	}
 
 	fin.close();
-
-	return true;
-}
-
-bool ModelClass::LoadBlenderModel(char* filename)
-{
-	std::ifstream fin;
-	std::ofstream fout;
-	std::string input;
-	int vertexCount{};
-
-	// Create a buffer to hold the modified filename
-	char filenameWithExtension[256];
-	strcpy_s(filenameWithExtension, sizeof(filenameWithExtension), filename);
-	strcat_s(filenameWithExtension, sizeof(filenameWithExtension), ".txt");
-
-	fin.open(filename);
-	fout.open(filenameWithExtension);
-
-	if (fin.fail() || fout.fail())
-	{
-		return false;
-	}
-	// get vertex count
-	fout << "Vertex Count: ";
-	fout << "\n\n\n";
-	fout << "Data:\n\n";
-
-	std::vector<std::string> vLines, vtLines, vnLines;
-	//read all the position coordinates
-	while (std::getline(fin, input))
-	{
-		std::istringstream iss(input);
-		std::string type;
-		iss >> type;
-
-
-		if (type == "v")
-		{
-			vLines.push_back(input);
-			vertexCount++;
-		}
-		else if (type == "vt")
-		{
-			vtLines.push_back(input);
-		}
-		else if (type == "vn")
-		{
-			vnLines.push_back(input);
-		}
-		else if (type == "f")
-		{
-			// process faces immediately
-			std::istringstream faceStream(input.substr(2)); 
-			std::string vert;
-
-			while (faceStream >> vert)
-			{
-				std::replace(vert.begin(), vert.end(), '/', ' ');
-				std::istringstream vss(vert);
-				int vIdx = 0, vtIdx = 0, vnIdx = 0;
-				vss >> vIdx >> vtIdx >> vnIdx;
-
-				// look up values from raw lines (still no push_back for structs!)
-				float vx, vy, vz;
-				{
-					std::istringstream vs(vLines[vIdx - 1]);
-					std::string tmp; vs >> tmp >> vx >> vy >> vz;
-				}
-
-				float u = 0, v = 0;
-				if (vtIdx > 0) {
-					std::istringstream vts(vtLines[vtIdx - 1]);
-					std::string tmp; vts >> tmp >> u >> v;
-				}
-
-				float nx = 0, ny = 0, nz = 0;
-				if (vnIdx > 0) {
-					std::istringstream vns(vnLines[vnIdx - 1]);
-					std::string tmp; vns >> tmp >> nx >> ny >> nz;
-				}
-
-				// Write immediately to output
-				fout << vx << " " << vy << " " << vz << " "
-					<< u << " " << v << " "
-					<< nx << " " << ny << " " << nz << "\n";
-			}
-		}
-	}
-	fout.seekp(14);
-	fout << vertexCount;
-
-	
-	 
-
-	fin.close();
-	fout.close();
-
-	int result = LoadModel(filenameWithExtension);
-
-	if (!result)
-	{
-		return false;
-	}
 
 	return true;
 }

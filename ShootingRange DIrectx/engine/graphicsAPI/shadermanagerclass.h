@@ -4,6 +4,8 @@
 #include "shaders/lightshaderclass.h"
 #include "shaders/normalmapshaderclass.h"
 #include "shaders/multitextureshaderclass.h"
+#include "shaders/fontshaderclass.h"
+
 
 class ShaderManagerClass
 {
@@ -17,11 +19,13 @@ public:
 
 	bool RenderLightShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4);
 	bool RenderNormalMapShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*,XMFLOAT3, XMFLOAT4);
-	bool RenderMultiTextureShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*);
+	bool RenderMultiTextureShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4);
+	bool RenderFontShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT4);
 
 private:
 
 	LightShaderClass* m_LightShader;
 	NormalMapShaderClass* m_NormalMapShader;
 	MultiTextureShaderClass* m_MultiTextureShader;
+	FontShaderClass* m_FontShader;
 };	

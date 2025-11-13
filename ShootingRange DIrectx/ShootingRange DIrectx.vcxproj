@@ -127,6 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\graphicsAPI\camera\positionclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\frustum\frustumclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\models\modellistclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shadermanagerclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\alphamapshader.cpp" />
     <ClCompile Include="engine\core\applicationclass.cpp" />
@@ -149,6 +152,9 @@
     <ClCompile Include="engine\peripheral\timerclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\graphicsAPI\camera\positionclass.h" />
+    <ClInclude Include="engine\graphicsAPI\frustum\frustumclass.h" />
+    <ClInclude Include="engine\graphicsAPI\models\modellistclass.h" />
     <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\alphamapshader.h" />
     <ClInclude Include="engine\core\applicationclass.h" />
@@ -178,9 +184,11 @@
     <None Include="engine\data\shaderfiles\multitexture.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="engine\data\debug data\shader-error.txt" />
+    <Text Include="engine\data\debug data\videoCardinfo.txt" />
     <Text Include="engine\data\model-data\cube.txt" />
     <Text Include="engine\data\model-data\square.txt" />
-    <Text Include="videoCardinfo.txt" />
+    <Text Include="engine\data\texturelist.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="engine\data\shaderfiles\alphamapps.hlsl">
@@ -198,6 +206,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="engine\data\shaderfiles\multitextureps2.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiTexturePixelShader</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiTexturePixelShader</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="engine\data\shaderfiles\multitexturevs2.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiTextureVertexShader</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiTextureVertexShader</EntryPointName>
     </FxCompile>
     <FxCompile Include="engine\data\shaderfiles\normalmapvs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

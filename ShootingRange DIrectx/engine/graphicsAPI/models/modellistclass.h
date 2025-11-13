@@ -1,0 +1,31 @@
+#pragma once
+
+#include <stdlib.h>
+#include <time.h>
+
+
+class ModelListClass
+{
+private:
+	struct ModelInfoType
+	{
+		float posX;
+		float posY;
+		float posZ;
+	};
+
+public:
+	ModelListClass();
+	ModelListClass(const ModelListClass&);
+	~ModelListClass();
+
+	void Initialize(int);
+	void Shutdown();
+
+	int GetModelCount();
+	void GetData(int, float&, float&, float&);
+
+private:
+	int m_modelCount;
+	ModelInfoType* m_ModelInfoList;
+};

@@ -46,6 +46,14 @@ bool ShaderManagerClass::Intialize(ID3D11Device* device, HWND hwnd)
         return false;
     }
 
+    m_FontShader = new FontShaderClass;
+
+    result = m_FontShader->Initialize(device, hwnd);
+    if (!result)
+    {
+        return false;
+    }
+
     return true;
 }
 
@@ -76,16 +84,22 @@ void ShaderManagerClass::Shutdown()
         m_MultiTextureShader = 0;
     }
 
+    if (m_FontShader)
+    {
+        m_FontShader->Shutdown();
+        delete m_FontShader;
+        m_FontShader = 0;
+    }
     return;
 }
 
 bool ShaderManagerClass::RenderMultiTextureShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
-    ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2)
+    ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, XMFLOAT3 lightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuseColor)
 {
     bool result;
 
 
-    result = m_MultiTextureShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2);
+    result = m_MultiTextureShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, lightDirection, ambient, diffuseColor);
     if (!result)
     {
         return false;
@@ -117,6 +131,21 @@ bool ShaderManagerClass::RenderNormalMapShader(ID3D11DeviceContext* deviceContex
 
 
     result = m_NormalMapShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, colorTexture, normalTexture, lightDirection, diffuseColor);
+    if (!result)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool ShaderManagerClass::RenderFontShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+    ID3D11ShaderResourceView* texture, XMFLOAT4 pixelColor)
+{
+    bool result;
+
+
+    result = m_FontShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture, pixelColor);
     if (!result)
     {
         return false;

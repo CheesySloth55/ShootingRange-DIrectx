@@ -606,7 +606,7 @@ void D3DClass::DisableAlphaBlending()
 void D3DClass::PrintAdapterInfoToFile(char* cardName, int memorySize)  
 {  
    std::ofstream fout;  
-   fout.open("videoCardinfo.txt", std::ios::app);
+   fout.open("engine/data/debug data/videoCardinfo.txt", std::ios::app);
    time_t timestamp = time(nullptr); // Correctly initialize timestamp  
    struct tm datetime;  
    localtime_s(&datetime, &timestamp); 

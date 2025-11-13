@@ -8,6 +8,7 @@ MultiTextureShaderClass::MultiTextureShaderClass()
     m_layout = 0;
     m_matrixBuffer = 0;
     m_sampleState = 0;
+    m_lightBuffer = 0;
 }
 
 
@@ -29,14 +30,14 @@ bool MultiTextureShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
     int error;
 
     // Set the filename of the vertex shader.
-    error = wcscpy_s(vsFilename, 128, L"engine/data/shaderfiles/multitexture.vs");
+    error = wcscpy_s(vsFilename, 128, L"engine/data/shaderfiles/multitexturevs2.hlsl");
     if (error != 0)
     {
         return false;
     }
 
     // Set the filename of the pixel shader.
-    error = wcscpy_s(psFilename, 128, L"engine/data/shaderfiles/multitexture.ps");
+    error = wcscpy_s(psFilename, 128, L"engine/data/shaderfiles/multitextureps2.hlsl");
     if (error != 0)
     {
         return false;
@@ -61,13 +62,14 @@ void MultiTextureShaderClass::Shutdown()
 }
 
 bool MultiTextureShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-    XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2)
+    XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, 
+    XMFLOAT3 LightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuse)
 {
     bool result;
 
 
     // Set the shader parameters that it will use for rendering.
-    result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2);
+    result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, LightDirection, ambient, diffuse);
     if (!result)
     {
         return false;
@@ -88,6 +90,7 @@ bool MultiTextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, 
     D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
     unsigned int numElements;
     D3D11_BUFFER_DESC matrixBufferDesc;
+    D3D11_BUFFER_DESC lightBufferDesc;
     D3D11_SAMPLER_DESC samplerDesc;
 
 
@@ -228,11 +231,30 @@ bool MultiTextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, 
         return false;
     }
 
+    lightBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+    lightBufferDesc.ByteWidth = sizeof(LightBufferType);
+    lightBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    lightBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    lightBufferDesc.MiscFlags = 0;
+    lightBufferDesc.StructureByteStride = 0;
+
+    result = device->CreateBuffer(&lightBufferDesc, NULL, &m_lightBuffer);
+    if (FAILED(result))
+    {
+        return false;
+    }
+
     return true;
 }
 
 void MultiTextureShaderClass::ShutdownShader()
 {
+    if (m_lightBuffer)
+    {
+        m_lightBuffer->Release();
+        m_lightBuffer = 0;
+    }
+
     // Release the sampler state.
     if (m_sampleState)
     {
@@ -307,11 +329,12 @@ void MultiTextureShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
 }
 
 bool MultiTextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
-    XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2)
+    XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, XMFLOAT3 LightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuseColor)
 {
     HRESULT result;
     D3D11_MAPPED_SUBRESOURCE mappedResource;
     MatrixBufferType* dataPtr;
+    LightBufferType* dataPtr2;
     unsigned int bufferNumber;
 
 
@@ -348,6 +371,24 @@ bool MultiTextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceCon
     deviceContext->PSSetShaderResources(0, 1, &texture1);
     deviceContext->PSSetShaderResources(1, 1, &texture2);
 
+    result = deviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+    if (FAILED(result))
+    {
+        return false;
+    }
+
+    dataPtr2 = (LightBufferType*)mappedResource.pData;
+
+    dataPtr2->ambientColor = ambient;
+    dataPtr2->diffuseColor = diffuseColor;
+    dataPtr2->lightDirection = LightDirection;
+    dataPtr2->padding = 0.0f;
+
+    deviceContext->Unmap(m_lightBuffer, 0);
+
+    bufferNumber = 0;
+
+    deviceContext->PSSetConstantBuffers(bufferNumber, 1, &m_lightBuffer);
     return true;
 }
 
