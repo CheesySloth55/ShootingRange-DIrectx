@@ -29,14 +29,14 @@ bool MultiTextureShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
     int error;
 
     // Set the filename of the vertex shader.
-    error = wcscpy_s(vsFilename, 128, L"multitexture.vs");
+    error = wcscpy_s(vsFilename, 128, L"engine/data/shaderfiles/multitexture.vs");
     if (error != 0)
     {
         return false;
     }
 
     // Set the filename of the pixel shader.
-    error = wcscpy_s(psFilename, 128, L"multitexture.ps");
+    error = wcscpy_s(psFilename, 128, L"engine/data/shaderfiles/multitexture.ps");
     if (error != 0)
     {
         return false;

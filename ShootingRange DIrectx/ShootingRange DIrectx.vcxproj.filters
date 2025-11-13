@@ -78,6 +78,9 @@
     <ClCompile Include="engine\graphicsAPI\shaders\specmapshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shadermanagerclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\peripheral\inputclass.h">
@@ -134,6 +137,9 @@
     <ClInclude Include="engine\graphicsAPI\shaders\specmapshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\data\shaderfiles\light.ps">
@@ -144,10 +150,13 @@
     </None>
     <None Include="engine\data\shaderfiles\multitexture.ps" />
     <None Include="engine\data\shaderfiles\multitexture.vs" />
+    <None Include="engine\data\shaderfiles\font.ps" />
+    <None Include="engine\data\shaderfiles\font.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="engine\data\model-data\cube.txt" />
     <Text Include="engine\data\model-data\square.txt" />
+    <Text Include="videoCardinfo.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="engine\data\shaderfiles\alphamapps.hlsl" />
@@ -158,6 +167,12 @@
     <FxCompile Include="engine\data\shaderfiles\specmapps.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\dx11win10tut20_src\dx11win10tut20_src\data\normal01.tga" />
+    <Image Include="engine\data\images\alpha01.tga" />
+    <Image Include="engine\data\images\dirt01.tga" />
+    <Image Include="engine\data\images\normal01.tga" />
+    <Image Include="engine\data\images\normal02.tga" />
+    <Image Include="engine\data\images\spec02.tga" />
+    <Image Include="engine\data\images\stone01.tga" />
+    <Image Include="engine\data\images\stone02.tga" />
   </ItemGroup>
 </Project>

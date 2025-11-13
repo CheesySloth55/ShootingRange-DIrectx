@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\graphicsAPI\shadermanagerclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\alphamapshader.cpp" />
     <ClCompile Include="engine\core\applicationclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\camera\cameraclass.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="engine\peripheral\timerclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\alphamapshader.h" />
     <ClInclude Include="engine\core\applicationclass.h" />
     <ClInclude Include="engine\graphicsAPI\camera\cameraclass.h" />
@@ -168,6 +170,8 @@
     <ClInclude Include="engine\graphicsAPI\textures\textureclass.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="engine\data\shaderfiles\font.ps" />
+    <None Include="engine\data\shaderfiles\font.vs" />
     <None Include="engine\data\shaderfiles\light.ps" />
     <None Include="engine\data\shaderfiles\light.vs" />
     <None Include="engine\data\shaderfiles\multitexture.ps" />
@@ -176,6 +180,7 @@
   <ItemGroup>
     <Text Include="engine\data\model-data\cube.txt" />
     <Text Include="engine\data\model-data\square.txt" />
+    <Text Include="videoCardinfo.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="engine\data\shaderfiles\alphamapps.hlsl">
@@ -230,7 +235,13 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\dx11win10tut20_src\dx11win10tut20_src\data\normal01.tga" />
+    <Image Include="engine\data\images\alpha01.tga" />
+    <Image Include="engine\data\images\dirt01.tga" />
+    <Image Include="engine\data\images\normal01.tga" />
+    <Image Include="engine\data\images\normal02.tga" />
+    <Image Include="engine\data\images\spec02.tga" />
+    <Image Include="engine\data\images\stone01.tga" />
+    <Image Include="engine\data\images\stone02.tga" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
