@@ -14,7 +14,7 @@ FrustumClass::~FrustumClass()
 {
 }
 
-void FrustumClass::ConstructFrustrum(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, float screenDepth)
+void FrustumClass::ConstructFrustum(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, float screenDepth)
 {
 	XMMATRIX finalMatrix;
 	XMFLOAT4X4 projMatrix, matrix;
@@ -22,7 +22,7 @@ void FrustumClass::ConstructFrustrum(XMMATRIX viewMatrix, XMMATRIX projectionMat
 
 	XMStoreFloat4x4(&projMatrix, projectionMatrix);
 
-	zMinimum = -projMatrix._43 / -projMatrix._33;
+	zMinimum = -projMatrix._43 / projMatrix._33;
 	r = screenDepth / (screenDepth - zMinimum);
 	projMatrix._33 = r;
 	projMatrix._43 = -r * zMinimum;
@@ -199,8 +199,11 @@ bool FrustumClass::CheckCube(float xCenter, float yCenter, float zCenter, float 
 
 bool FrustumClass::CheckSphere(float xCenter, float yCenter, float zCenter, float radius)
 {
+	int i;
+
+
 	// Check if the radius of the sphere is inside the view frustum.
-	for (int i = 0; i < 6; i++)
+	for (i = 0; i < 6; i++)
 	{
 		if (((m_planes[i].x * xCenter) + (m_planes[i].y * yCenter) + (m_planes[i].z * zCenter) + m_planes[i].w) < -radius)
 		{

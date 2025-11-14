@@ -18,6 +18,7 @@ ModelListClass::~ModelListClass()
 
 void ModelListClass::Initialize(int numModels)
 {
+    float spawnAreaSize = 10.0f;
 
     m_modelCount = numModels;
 
@@ -27,9 +28,9 @@ void ModelListClass::Initialize(int numModels)
     
     for (int i{}; i < m_modelCount; i++)
     {
-        m_ModelInfoList[i].posX = (((float)rand() - (float)rand()) / RAND_MAX) * 10.0f;
-        m_ModelInfoList[i].posY = (((float)rand() - (float)rand()) / RAND_MAX) * 10.0f;
-        m_ModelInfoList[i].posZ = ((((float)rand() - (float)rand()) / RAND_MAX) * 10.0f) + 5.0f;
+        m_ModelInfoList[i].posX = (((float)rand() - (float)rand()) / RAND_MAX) * spawnAreaSize;
+        m_ModelInfoList[i].posY = (((float)rand() - (float)rand()) / RAND_MAX) * spawnAreaSize;
+        m_ModelInfoList[i].posZ = ((((float)rand() - (float)rand()) / RAND_MAX) * spawnAreaSize) + spawnAreaSize / 2;
     }
 
     return;

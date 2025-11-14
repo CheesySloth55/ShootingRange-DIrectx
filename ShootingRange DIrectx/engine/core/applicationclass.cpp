@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 
+#define MAX_MODELCOUNT 1
 ApplicationClass::ApplicationClass()
 {
 	m_Direct3D = NULL;
@@ -12,6 +13,11 @@ ApplicationClass::ApplicationClass()
     m_ShaderManager = NULL;
     m_Light = NULL;
     m_Timer = NULL;
+    m_Font = NULL;
+    m_RenderCountString = NULL;
+    m_ModelList = NULL;
+    m_Position = NULL;
+    m_Frustum = NULL;
 }
 
 
@@ -29,6 +35,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
     std::vector<std::string> modelFilenames;
     std::vector<std::string> textureFilenames;
+    std::string renderString;
     const std::string texturelistLocation{"engine/data/texturelist.txt"};
     bool result;
 
@@ -48,17 +55,14 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Camera = new CameraClass;
 
     // camera points by default at the z direction
-    m_Camera->SetPosition(0.0f, 10.0f, -8.0f);
+    m_Camera->SetPosition(0.0f, 0.0f, -50.0f);
     m_Camera->Render();
-
-    // Create and initialize the specular map shader object.
-
+    m_Camera->GetViewMatrix(m_baseViewMatrix);
 
     //model data
+    modelFilenames.push_back("engine/data/model-data/cube.txt");
     modelFilenames.push_back("engine/data/model-data/square.txt");
-    //textures
-
-
+    modelFilenames.push_back("engine/data/model-data/sphere.txt");
 
     // Create and initialize the model object.
     m_Model = new ModelClass;
@@ -83,9 +87,28 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f); 
     m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
-    m_Light->SetDirection(0.0f, 0.0f, 1.0f);
+    m_Light->SetDirection(1.0f, 0.0f, 0.5f);
     m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
-    m_Light->SetSpecularPower(10.0f);
+    m_Light->SetSpecularPower(16.0f);
+
+    m_Font = new FontClass;
+
+    result = m_Font->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), 0);
+    if (!result)
+    {
+        return false;
+    }
+
+    renderString = "Render Count: 0";
+
+    // Create and initialize the text object for the render count string.
+    m_RenderCountString = new TextClass;
+
+    result = m_RenderCountString->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, m_Font, renderString.c_str() , 10, 10, 1.0f, 1.0f, 1.0f);
+    if (!result)
+    {
+        return false;
+    }
 
     m_ShaderManager = new ShaderManagerClass;
 
@@ -94,6 +117,14 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     {
         return false;
     }
+
+    m_ModelList = new ModelListClass;
+    m_ModelList->Initialize(MAX_MODELCOUNT);
+
+    m_Position = new PositionClass;
+
+    m_Frustum = new FrustumClass;
+
     return true;
 }
 
@@ -101,20 +132,57 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 void ApplicationClass::Shutdown()
 {
     // Release the model object.
-    if (m_Model)
+    if (m_Frustum)
     {
-        m_Model->Shutdown();
-        delete m_Model;
-        m_Model = 0;
+        delete m_Frustum;
+        m_Frustum = 0;
     }
 
+    // Release the position object.
+    if (m_Position)
+    {
+        delete m_Position;
+        m_Position = 0;
+    }
+
+    // Release the timer object.
+    if (m_Timer)
+    {
+        delete m_Timer;
+        m_Timer = 0;
+    }
+
+    // Release the model list object.
+    if (m_ModelList)
+    {
+        m_ModelList->Shutdown();
+        delete m_ModelList;
+        m_ModelList = 0;
+    }
+
+    // Release the text objects for the render count string.
+    if (m_RenderCountString)
+    {
+        m_RenderCountString->Shutdown();
+        delete m_RenderCountString;
+        m_RenderCountString = 0;
+    }
+
+    // Release the font object.
+    if (m_Font)
+    {
+        m_Font->Shutdown();
+        delete m_Font;
+        m_Font = 0;
+    }
+
+    // Release the font shader object.
     if (m_ShaderManager)
     {
         m_ShaderManager->Shutdown();
         delete m_ShaderManager;
         m_ShaderManager = 0;
     }
-
     // Release the light object.
     if (m_Light)
     {
@@ -122,11 +190,12 @@ void ApplicationClass::Shutdown()
         m_Light = 0;
     }
 
-    //release timer object
-    if (m_Timer)
+    // Release the model object.
+    if (m_Model)
     {
-        delete m_Timer;
-        m_Timer = 0;
+        m_Model->Shutdown();
+        delete m_Model;
+        m_Model = 0;
     }
 
     // Release the camera object.
@@ -150,22 +219,20 @@ void ApplicationClass::Shutdown()
 
 bool ApplicationClass::Frame(InputClass* Input)
 {
-    bool result;
-    double frameTime;
+    bool result ,keyDown;
+    float rotationY;
     static float rotation = 360.0f;
-    static const int physicsFrametime = 10; // every 10ms update physics
-    static double physicsTimeAccumulator = 0.0; // accumulated time since last physics update
+    static float physicsTimeAccumulator{};
+    static float physicsFrametime = 0.01;
+    float frameTime;
 
     m_Timer->Frame();
 
-    // Get the current frame time.
     frameTime = m_Timer->GetFrameTime();
-    physicsTimeAccumulator += frameTime * 1000.0f; // convert to ms
-
-    // Update physics only if enough time has passed
+    physicsTimeAccumulator += frameTime;
     while (physicsTimeAccumulator >= physicsFrametime)
     {
-        rotation -= 0.0174532925f * 0.5f ; // 1 degree in radians
+        rotation -= 0.0174532925f * 0.5f; // 1 degree in radians
         if (rotation <= 0.0f)
         {
             rotation += 360.0f;
@@ -173,11 +240,25 @@ bool ApplicationClass::Frame(InputClass* Input)
         physicsTimeAccumulator -= physicsFrametime;
     }
 
+
     // Check if the user pressed escape and wants to exit the application.
     if (Input->IsEscapePressed())
     {
         return false;
     }
+
+    m_Position->SetFrameTime(frameTime);
+
+    keyDown = Input->IsLEFTArrowPressed();
+    m_Position->TurnLeft(keyDown);
+
+    keyDown = Input->IsRIGHTArrowPressed();
+    m_Position->TurnRight(keyDown);
+
+    m_Position->GetRotation(rotationY);
+
+    m_Camera->SetRotation(0.0f, rotationY, 0.0f);
+    m_Camera->Render();
 
     HandleKeyboardInput(Input);
 
@@ -194,49 +275,119 @@ bool ApplicationClass::Frame(InputClass* Input)
 
 bool ApplicationClass::Render(float rotation)
 {
-    XMMATRIX worldMatrix, viewMatrix, projectionMatrix, rotateMatrix, translateMatrix;
-    bool result;
+    XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix, rotationMatrix;
+    float positionX, positionY, positionZ, radius;
+    int modelCount, renderCount, i;
+    bool renderModel, result;
 
     m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
     m_Camera->Render();
 
-
     m_Direct3D->GetWorldMatrix(worldMatrix);
     m_Camera->GetViewMatrix(viewMatrix);
     m_Direct3D->GetProjectionMatrix(projectionMatrix);
+    m_Direct3D->GetOrthoMatrix(orthoMatrix);
 
+    m_Frustum->ConstructFrustum(viewMatrix, projectionMatrix, SCREEN_DEPTH);
 
-    for (int i{ 0 }; i < 10; i++)
+    // Render the model using the normal map shader.
+    modelCount = m_ModelList->GetModelCount();
+
+    renderCount = 0;
+
+    rotationMatrix = XMMatrixRotationY(rotation);
+
+    for (i = 0; i < modelCount; i++)
     {
-        for (int j{ 0 }; j < 10; j++)
-        {
-            rotateMatrix = XMMatrixRotationY(rotation);
-            translateMatrix = XMMatrixTranslation(-1.5f - i * 2.5f, -1.0f + j * 2.5f, 0.0f);
-            worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
 
-            // Render the model using the normal map shader.
+        // Get the position and color of the sphere model at this index.
+        m_ModelList->GetData(i, positionX, positionY, positionZ);
+
+        // Set the radius of the sphere to 1.0 since this is already known.
+        radius = 1.0f;
+
+        // Check if the sphere model is in the view frustum.
+        renderModel = m_Frustum->CheckCube(positionX, positionY, positionZ, radius);
+
+        // If it can be seen then render it, if not skip this model and check the next sphere.
+        if (renderModel)
+        {
+            // Move the model to the location it should be rendered at.
+            worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+            //worldMatrix = XMMatrixMultiply(rotationMatrix, worldMatrix);
+            // Render the model using the light shader.
             m_Model->Render(m_Direct3D->GetDeviceContext());
 
-            result = m_ShaderManager->RenderMultiTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-                m_Model->GetTexture(3), m_Model->GetTexture(4), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
+            result = m_ShaderManager->RenderSpecMapShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+                m_Model->GetTexture(3), m_Model->GetTexture(4), m_Model->GetTexture(5), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
             if (!result)
             {
                 return false;
             }
+
+            // Since this model was rendered then increase the count for this frame.
+            renderCount++;
         }
     }
 
+    result = UpdateRenderCountString(renderCount);
+    if (!result)
+    {
+        return false;
+    }
+
+    m_Direct3D->TurnZBufferOff();
+    m_Direct3D->EnableAlphaBlending();
+
+    // Reset the world matrix.
+    m_Direct3D->GetWorldMatrix(worldMatrix);
+
+    // Render the render count text string using the font shader.
+    m_RenderCountString->Render(m_Direct3D->GetDeviceContext());
+
+    result = m_ShaderManager->RenderFontShader(m_Direct3D->GetDeviceContext(), m_RenderCountString->GetIndexCount(), worldMatrix, m_baseViewMatrix, orthoMatrix,
+        m_Font->GetTexture(), m_RenderCountString->GetPixelColor());
+    if (!result)
+    {
+        return false;
+    }
+
+    // Enable the Z buffer and disable alpha blending now that 2D rendering is complete.
+    m_Direct3D->TurnZBufferOn();
+    m_Direct3D->DisableAlphaBlending();
 
     m_Direct3D->EndScene();
 
     return true;
 }
 
+bool ApplicationClass::UpdateRenderCountString(int renderCount)
+{
+    char tempString[16], finalString[32];
+    bool result;
+
+
+    // Convert the render count integer to string format.
+    sprintf_s(tempString, "%d", renderCount);
+
+    // Setup the render count string.
+    strcpy_s(finalString, "Render Count: ");
+    strcat_s(finalString, tempString);
+
+    // Update the sentence vertex buffer with the new string information.
+    result = m_RenderCountString->UpdateText(m_Direct3D->GetDeviceContext(), m_Font, finalString, 10, 10, 1.0f, 1.0f, 1.0f);
+    if (!result)
+    {
+        return false;
+    }
+
+    return true;
+}
 
 void ApplicationClass::HandleKeyboardInput(InputClass* Input)
 {
-    static float movementSpeed = 0.05;
+    static float movementSpeed = 0.15;
     if (Input->IsF11Pressed())
     {
         m_Direct3D->ToggleFullScreenMode();
@@ -258,21 +409,21 @@ void ApplicationClass::HandleKeyboardInput(InputClass* Input)
         m_Camera->Render();
     }
 
-    if (Input->IsLEFTArrowPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
-        m_Camera->Render();
-    }
+    //if (Input->IsLEFTArrowPressed())
+    //{
+    //    XMFLOAT3 curPos;
+    //    curPos = m_Camera->GetPosition();
+    //    m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
+    //    m_Camera->Render();
+    //}
 
-    if (Input->IsRIGHTArrowPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
-        m_Camera->Render();
-    }
+    //if (Input->IsRIGHTArrowPressed())
+    //{
+    //    XMFLOAT3 curPos;
+    //    curPos = m_Camera->GetPosition();
+    //    m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
+    //    m_Camera->Render();
+    //}
 }
 #include <iostream>
 void ApplicationClass::ReadFileLocationsFromFile(std::vector<std::string>& fileNames, const std::string& filelistName)

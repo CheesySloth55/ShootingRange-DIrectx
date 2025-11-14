@@ -51,7 +51,7 @@
     <ClCompile Include="engine\peripheral\fpsclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\graphicsAPI\shaders\alphamapshader.cpp">
+    <ClCompile Include="engine\graphicsAPI\shaders\alphamapshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\graphicsAPI\shaders\multitextureshaderclass.cpp">
@@ -131,7 +131,7 @@
     <ClInclude Include="engine\peripheral\fpsclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\graphicsAPI\shaders\alphamapshader.h">
+    <ClInclude Include="engine\graphicsAPI\shaders\alphamapshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\graphicsAPI\shaders\multitextureshaderclass.h">

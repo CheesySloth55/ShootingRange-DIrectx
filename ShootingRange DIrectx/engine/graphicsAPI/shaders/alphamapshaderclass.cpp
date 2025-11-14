@@ -1,4 +1,4 @@
-#include "alphamapshader.h"
+#include "alphamapshaderclass.h"
 
 
 AlphaMapShaderClass::AlphaMapShaderClass()

@@ -10,7 +10,7 @@ public:
 	FrustumClass(const FrustumClass& other);
 	~FrustumClass();
 
-	void ConstructFrustrum(XMMATRIX, XMMATRIX, float);
+	void ConstructFrustum(XMMATRIX, XMMATRIX, float);
 
 	bool CheckPoint(float, float, float);
 	bool CheckCube(float, float, float, float);

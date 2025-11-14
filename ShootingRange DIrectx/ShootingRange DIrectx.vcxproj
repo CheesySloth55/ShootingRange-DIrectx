@@ -131,7 +131,7 @@
     <ClCompile Include="engine\graphicsAPI\frustum\frustumclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\models\modellistclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shadermanagerclass.cpp" />
-    <ClCompile Include="engine\graphicsAPI\shaders\alphamapshader.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\alphamapshaderclass.cpp" />
     <ClCompile Include="engine\core\applicationclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\camera\cameraclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\directx\d3dclass.cpp" />
@@ -156,7 +156,7 @@
     <ClInclude Include="engine\graphicsAPI\frustum\frustumclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\modellistclass.h" />
     <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h" />
-    <ClInclude Include="engine\graphicsAPI\shaders\alphamapshader.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\alphamapshaderclass.h" />
     <ClInclude Include="engine\core\applicationclass.h" />
     <ClInclude Include="engine\graphicsAPI\camera\cameraclass.h" />
     <ClInclude Include="engine\graphicsAPI\directx\d3dclass.h" />

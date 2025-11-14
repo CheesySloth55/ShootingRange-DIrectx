@@ -26,16 +26,16 @@ bool FontClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 	{
 		case 0:
 		{
-			strcpy_s(fontFilename, "../Engine/data/font/font01.txt");
-			strcpy_s(fontTextureFilename, "../Engine/data/font/font01.tga");
+			strcpy_s(fontFilename, "engine/data/font/font01.txt");
+			strcpy_s(fontTextureFilename, "engine/data/font/font01.tga");
 			m_fontHeight = 32.0f;
 			m_spaceSize = 3;
 			break;
 		}
 		default:
 		{
-			strcpy_s(fontFilename, "../Engine/data/font/font01.txt");
-			strcpy_s(fontTextureFilename, "../Engine/data/font/font01.tga");
+			strcpy_s(fontFilename, "engine/data/font/font01.txt");
+			strcpy_s(fontTextureFilename, "engine/data/font/font01.tga");
 			m_fontHeight = 32.0f;
 			m_spaceSize = 3;
 			break;

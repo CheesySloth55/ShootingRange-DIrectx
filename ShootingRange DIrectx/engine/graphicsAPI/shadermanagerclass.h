@@ -5,6 +5,9 @@
 #include "shaders/normalmapshaderclass.h"
 #include "shaders/multitextureshaderclass.h"
 #include "shaders/fontshaderclass.h"
+#include "shaders/alphamapshaderclass.h"
+#include "shaders/specmapshaderclass.h"
+
 
 
 class ShaderManagerClass
@@ -20,6 +23,8 @@ public:
 	bool RenderLightShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4);
 	bool RenderNormalMapShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*,XMFLOAT3, XMFLOAT4);
 	bool RenderMultiTextureShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4);
+	bool RenderAlphaMapShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*);
+	bool RenderSpecMapShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT3, XMFLOAT4, float);
 	bool RenderFontShader(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT4);
 
 private:
@@ -28,4 +33,6 @@ private:
 	NormalMapShaderClass* m_NormalMapShader;
 	MultiTextureShaderClass* m_MultiTextureShader;
 	FontShaderClass* m_FontShader;
+	AlphaMapShaderClass* m_AlphaMapShader;
+	SpecMapShaderClass* m_SpecMapShader;
 };	
