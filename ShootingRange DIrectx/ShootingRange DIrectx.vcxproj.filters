@@ -90,6 +90,18 @@
     <ClCompile Include="engine\graphicsAPI\camera\positionclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shaders\shaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\textures\rendertextureclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\models\displayplaneclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\shaders\textureshaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\peripheral\inputclass.h">
@@ -158,6 +170,18 @@
     <ClInclude Include="engine\graphicsAPI\camera\positionclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\shaders\shaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\textures\rendertextureclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\models\displayplaneclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\shaders\textureshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\data\shaderfiles\light.ps">
@@ -170,6 +194,8 @@
     <None Include="engine\data\shaderfiles\multitexture.vs" />
     <None Include="engine\data\shaderfiles\font.ps" />
     <None Include="engine\data\shaderfiles\font.vs" />
+    <None Include="engine\data\shaderfiles\texture.ps" />
+    <None Include="engine\data\shaderfiles\texture.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="engine\data\model-data\cube.txt" />

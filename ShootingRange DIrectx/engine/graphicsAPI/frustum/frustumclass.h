@@ -12,10 +12,10 @@ public:
 
 	void ConstructFrustum(XMMATRIX, XMMATRIX, float);
 
-	bool CheckPoint(float, float, float);
-	bool CheckCube(float, float, float, float);
-	bool CheckSphere(float, float, float, float);
-	bool CheckRectangle(float, float, float, float, float, float);
+	bool CheckPoint(float x, float y, float z);
+	bool CheckCube(float x, float y, float z, float radius);
+	bool CheckSphere(float x, float y, float z, float radius);
+	bool CheckRectangle(float x, float y, float z, float xSize, float ySize, float zSize);
 
 private:
 	XMFLOAT4 m_planes[6];

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="engine\graphicsAPI\camera\positionclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\frustum\frustumclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\models\displayplaneclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\models\modellistclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shadermanagerclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\alphamapshaderclass.cpp" />
@@ -138,7 +139,10 @@
     <ClCompile Include="engine\graphicsAPI\font\fontclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\fontshaderclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\normalmapshaderclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\shaderclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\specmapshaderclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\shaders\textureshaderclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\textures\rendertextureclass.cpp" />
     <ClCompile Include="engine\peripheral\fpsclass.cpp" />
     <ClCompile Include="engine\peripheral\inputclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\light\lightclass.cpp" />
@@ -154,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="engine\graphicsAPI\camera\positionclass.h" />
     <ClInclude Include="engine\graphicsAPI\frustum\frustumclass.h" />
+    <ClInclude Include="engine\graphicsAPI\models\displayplaneclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\modellistclass.h" />
     <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\alphamapshaderclass.h" />
@@ -163,6 +168,9 @@
     <ClInclude Include="engine\graphicsAPI\font\fontclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\fontshaderclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\normalmapshaderclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\textureshaderclass.h" />
+    <ClInclude Include="engine\graphicsAPI\textures\rendertextureclass.h" />
+    <ClInclude Include="engine\graphicsAPI\shaders\shaderclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\specmapshaderclass.h" />
     <ClInclude Include="engine\peripheral\fpsclass.h" />
     <ClInclude Include="engine\peripheral\timerclass.h" />
@@ -182,6 +190,8 @@
     <None Include="engine\data\shaderfiles\light.vs" />
     <None Include="engine\data\shaderfiles\multitexture.ps" />
     <None Include="engine\data\shaderfiles\multitexture.vs" />
+    <None Include="engine\data\shaderfiles\texture.ps" />
+    <None Include="engine\data\shaderfiles\texture.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="engine\data\debug data\shader-error.txt" />

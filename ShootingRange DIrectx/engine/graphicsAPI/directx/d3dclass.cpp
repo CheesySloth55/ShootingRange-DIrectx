@@ -4,17 +4,7 @@
 
 D3DClass::D3DClass()
 {
-	m_swapChain = NULL;
-	m_device = NULL;
-	m_deviceContext = NULL;
-	m_renderTargetView = NULL;
-	m_depthStencilBuffer = NULL;
-	m_depthStencilState = NULL;
-	m_depthStencilView = NULL;
-	m_rasterState = NULL;
-	m_depthDisabledStencilState = NULL;
-	m_alphaEnableBlendingState = NULL;
-	m_alphaDisableBlendingState = NULL;
+
 }
 
 
@@ -31,27 +21,27 @@ D3DClass::~D3DClass()
 bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear)
 {
 	HRESULT result;
-	IDXGIFactory* factory;
-	IDXGIAdapter* adapter;
-	IDXGIOutput* adapterOutput;
+	ComPtr<IDXGIFactory> factory;
+	ComPtr<IDXGIAdapter> adapter;
+	ComPtr<IDXGIOutput> adapterOutput;
 	unsigned int numModes{};
 	unsigned int numerator{};
 	unsigned int denominator{};
-	unsigned long long stringLength;
+	unsigned long long stringLength{};
 	DXGI_MODE_DESC* displayModeList;
 	DXGI_ADAPTER_DESC adapterDesc;
-	int error{};
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	D3D_FEATURE_LEVEL featureLevel;
-	ID3D11Texture2D* backBufferPtr;
+	ComPtr<ID3D11Texture2D> backBufferPtr;
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC	depthStencilViewDesc;
 	D3D11_RASTERIZER_DESC rasterDesc;
-	float fieldOfView{};
-	float screenAspect{};
 	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
 	D3D11_BLEND_DESC blendStateDescription;
+	float fieldOfView{};
+	float screenAspect{};
+	int error{};
 
 	
 	//setting vsync setting
@@ -137,14 +127,6 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	delete[] displayModeList;
 	displayModeList = 0;
 
-	// Release the adapter output.
-	adapterOutput->Release();
-	adapterOutput = 0;
-
-	// Release the factory.
-	factory->Release();
-	factory = 0;
-
 	//initialize swapchain
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 
@@ -192,7 +174,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 	//create the device together with the swapchain
-	result = D3D11CreateDeviceAndSwapChain(adapter, D3D_DRIVER_TYPE_UNKNOWN, NULL, D3D11_CREATE_DEVICE_DEBUG, &featureLevel, 1,
+	result = D3D11CreateDeviceAndSwapChain(adapter.Get(), D3D_DRIVER_TYPE_UNKNOWN, NULL, D3D11_CREATE_DEVICE_DEBUG, &featureLevel, 1,
 		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
 	if (FAILED(result))
 	{
@@ -207,18 +189,11 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	}
 
 	//create render target view for the backbuffer of the swapchain
-	result = m_device->CreateRenderTargetView(backBufferPtr, NULL, &m_renderTargetView);
+	result = m_device->CreateRenderTargetView(backBufferPtr.Get(), NULL, m_renderTargetView.GetAddressOf());
 	if (FAILED(result))
 	{
 		return false;
 	}
-
-	//release unnecesarry pointers
-	backBufferPtr->Release();
-	backBufferPtr = 0;
-
-	adapter->Release();
-	adapter = 0;
 
 	//initialize depthstencilbuffer
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
@@ -262,13 +237,13 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	result = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
+	result = m_device->CreateDepthStencilState(&depthStencilDesc, m_depthStencilState.GetAddressOf());
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
+	m_deviceContext->OMSetDepthStencilState(m_depthStencilState.Get(), 1);
 
 	//create the depth stencil view pointer
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
@@ -278,14 +253,14 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 
-	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
+	result = m_device->CreateDepthStencilView(m_depthStencilBuffer.Get(), &depthStencilViewDesc, &m_depthStencilView);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
 	//bind the render target and depth/stencil view to the pipeline
-	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+	m_deviceContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
 
 	//set rasterizer state
 	rasterDesc.AntialiasedLineEnable = false;
@@ -305,7 +280,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 		return false;
 	}
 
-	m_deviceContext->RSSetState(m_rasterState);
+	m_deviceContext->RSSetState(m_rasterState.Get());
 
 	m_viewport.Width = static_cast<float>(screenWidth);
 	m_viewport.Height = static_cast<float>(screenHeight);
@@ -389,72 +364,6 @@ void D3DClass::Shutdown()
 		m_swapChain->SetFullscreenState(false, NULL);
 	}
 
-	if (m_alphaEnableBlendingState)
-	{
-		m_alphaEnableBlendingState->Release();
-		m_alphaEnableBlendingState = 0;
-	}
-
-	if (m_alphaDisableBlendingState)
-	{
-		m_alphaDisableBlendingState->Release();
-		m_alphaDisableBlendingState = 0;
-	}
-
-	if (m_depthDisabledStencilState)
-	{
-		m_depthDisabledStencilState->Release();
-		m_depthDisabledStencilState = 0;
-	}
-
-	if(m_rasterState)
-	{
-		m_rasterState->Release();
-		m_rasterState = 0;
-	}
-
-	if(m_depthStencilView)
-	{
-		m_depthStencilView->Release();
-		m_depthStencilView = 0;
-	}
-
-	if(m_depthStencilState)
-	{
-		m_depthStencilState->Release();
-		m_depthStencilState = 0;
-	}
-
-	if(m_depthStencilBuffer)
-	{
-		m_depthStencilBuffer->Release();
-		m_depthStencilBuffer = 0;
-	}
-
-	if(m_renderTargetView)
-	{
-		m_renderTargetView->Release();
-		m_renderTargetView = 0;
-	}
-
-	if(m_deviceContext)
-	{
-		m_deviceContext->Release();
-		m_deviceContext = 0;
-	}
-
-	if(m_device)
-	{
-		m_device->Release();
-		m_device = 0;
-	}
-
-	if(m_swapChain)
-	{
-		m_swapChain->Release();
-		m_swapChain = 0;
-	}
-
 	return;
 }
 
@@ -471,10 +380,10 @@ void D3DClass::BeginScene(float red, float green, float blue, float alpha)
 	color[3] = alpha;
 
 	// Clear the back buffer.
-	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
+	m_deviceContext->ClearRenderTargetView(m_renderTargetView.Get(), color);
     
 	// Clear the depth buffer.
-	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	m_deviceContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	return;
 }
@@ -500,13 +409,13 @@ void D3DClass::EndScene()
 
 ID3D11Device* D3DClass::GetDevice()
 {
-	return m_device;
+	return m_device.Get();
 }
 
 
 ID3D11DeviceContext* D3DClass::GetDeviceContext()
 {
-	return m_deviceContext;
+	return m_deviceContext.Get();
 }
 
 
@@ -542,7 +451,7 @@ void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
 void D3DClass::SetBackBufferRenderTarget()
 {
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
-	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+	m_deviceContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
 
 	return;
 }
@@ -558,14 +467,14 @@ void D3DClass::ResetViewport()
 
 void D3DClass::TurnZBufferOn()
 {
-	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
+	m_deviceContext->OMSetDepthStencilState(m_depthStencilState.Get(), 1);
 	return;
 }
 
 
 void D3DClass::TurnZBufferOff()
 {
-	m_deviceContext->OMSetDepthStencilState(m_depthDisabledStencilState, 1);
+	m_deviceContext->OMSetDepthStencilState(m_depthDisabledStencilState.Get(), 1);
 	return;
 }
 
@@ -581,7 +490,7 @@ void D3DClass::EnableAlphaBlending()
 	blendFactor[3] = 0.0f;
 
 	// Turn on the alpha blending.
-	m_deviceContext->OMSetBlendState(m_alphaEnableBlendingState, blendFactor, 0xffffffff);
+	m_deviceContext->OMSetBlendState(m_alphaEnableBlendingState.Get(), blendFactor, 0xffffffff);
 
 	return;
 }
@@ -598,7 +507,7 @@ void D3DClass::DisableAlphaBlending()
 	blendFactor[3] = 0.0f;
 
 	// Turn off the alpha blending.
-	m_deviceContext->OMSetBlendState(m_alphaDisableBlendingState, blendFactor, 0xffffffff);
+	m_deviceContext->OMSetBlendState(m_alphaDisableBlendingState.Get(), blendFactor, 0xffffffff);
 
 	return;
 }

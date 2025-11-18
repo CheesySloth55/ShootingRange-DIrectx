@@ -6,7 +6,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow)
 {
 	SystemClass* System;
-	std::ofstream inf{ "ExceptionInfo.txt" };
+	std::ofstream inf;
 	bool result;
 
 	try
@@ -25,9 +25,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
 	}
 	catch (std::exception except)
 	{
+		inf.open("ExceptionInfo.txt");
 		if (!inf)
 		{
-			return false;
+			return -1;
 		}
 
 		inf << except.what();

@@ -319,6 +319,7 @@ bool AlphaMapShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext
 	// Set shader texture resources in the pixel shader.
 	deviceContext->PSSetShaderResources(0, 1, &texture1);
 	deviceContext->PSSetShaderResources(1, 1, &texture2);
+	if(texture3 != NULL)
 	deviceContext->PSSetShaderResources(2, 1, &texture3);
 
 	return true;

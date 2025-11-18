@@ -24,16 +24,14 @@ bool ShaderManagerClass::Intialize(ID3D11Device* device, HWND hwnd)
 {
     bool result;
 
-    m_MultiTextureShader = new MultiTextureShaderClass;
-
+    m_MultiTextureShader = std::make_unique<MultiTextureShaderClass>();
     result = m_MultiTextureShader->Initialize(device, hwnd);
     if (!result)
     {
         return false;
     }
 
-    // Create and initialize the light shader object.
-    m_LightShader = new LightShaderClass;
+    m_LightShader = std::make_unique<LightShaderClass>();
 
     result = m_LightShader->Initialize(device, hwnd);
     if (!result)
@@ -41,7 +39,7 @@ bool ShaderManagerClass::Intialize(ID3D11Device* device, HWND hwnd)
         return false;
     }
 
-    m_NormalMapShader = new NormalMapShaderClass;
+    m_NormalMapShader = std::make_unique<NormalMapShaderClass>();
 
     result = m_NormalMapShader->Initialize(device, hwnd);
     if (!result)
@@ -49,7 +47,7 @@ bool ShaderManagerClass::Intialize(ID3D11Device* device, HWND hwnd)
         return false;
     }
 
-    m_FontShader = new FontShaderClass;
+    m_FontShader = std::make_unique<FontShaderClass>();
 
     result = m_FontShader->Initialize(device, hwnd);
     if (!result)
@@ -57,7 +55,7 @@ bool ShaderManagerClass::Intialize(ID3D11Device* device, HWND hwnd)
         return false;
     }
 
-    m_AlphaMapShader = new AlphaMapShaderClass;
+    m_AlphaMapShader = std::make_unique<AlphaMapShaderClass>();
 
     result = m_AlphaMapShader->Initialize(device, hwnd);
     if (!result)
@@ -65,9 +63,17 @@ bool ShaderManagerClass::Intialize(ID3D11Device* device, HWND hwnd)
         return false;
     }
 
-    m_SpecMapShader = new SpecMapShaderClass;
+    m_SpecMapShader = std::make_unique<SpecMapShaderClass>();
 
     result = m_SpecMapShader->Initialize(device, hwnd);
+    if (!result)
+    {
+        return false;
+    }
+
+    m_TextureShader = std::make_unique<TextureShaderClass>();
+
+    result = m_TextureShader->Initialize(device, hwnd);
     if (!result)
     {
         return false;
@@ -83,45 +89,33 @@ void ShaderManagerClass::Shutdown()
     if (m_NormalMapShader)
     {
         m_NormalMapShader->Shutdown();
-        delete m_NormalMapShader;
-        m_NormalMapShader = 0;
     }
 
     // Release the light shader object.
     if (m_LightShader)
     {
         m_LightShader->Shutdown();
-        delete m_LightShader;
-        m_LightShader = 0;
     }
 
     // Release the texture shader object.
     if (m_MultiTextureShader)
     {
         m_MultiTextureShader->Shutdown();
-        delete m_MultiTextureShader;
-        m_MultiTextureShader = 0;
     }
 
     if (m_FontShader)
     {
         m_FontShader->Shutdown();
-        delete m_FontShader;
-        m_FontShader = 0;
     }
 
     if (m_AlphaMapShader)
     {
         m_AlphaMapShader->Shutdown();
-        delete m_AlphaMapShader;
-        m_AlphaMapShader = 0;
     }
 
     if (m_SpecMapShader)
     {
         m_SpecMapShader->Shutdown();
-        delete m_SpecMapShader;
-        m_SpecMapShader = 0;
     }
 
     return;
@@ -211,6 +205,19 @@ bool ShaderManagerClass::RenderSpecMapShader(ID3D11DeviceContext* deviceContext,
 
 
     result = m_SpecMapShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, texture3, lightDirection, diffuseColor, cameraPosition, specularColor, specularPower );
+    if (!result)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool ShaderManagerClass::RenderTextureShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
+{
+    bool result;
+
+    result = m_TextureShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture);
     if (!result)
     {
         return false;
