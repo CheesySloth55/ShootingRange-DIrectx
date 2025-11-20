@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 
-#define MAX_MODELCOUNT 1
+#define MAX_MODELCOUNT 100
 ApplicationClass::ApplicationClass()
 {
 	m_Direct3D = NULL;
@@ -55,14 +55,14 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Camera = new CameraClass;
 
     // camera points by default at the z direction
-    m_Camera->SetPosition(0.0f, 0.0f, -50.0f);
+    m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
     m_Camera->Render();
     m_Camera->GetViewMatrix(m_baseViewMatrix);
 
     //model data
+    modelFilenames.push_back("engine/data/model-data/sphere.txt");
     modelFilenames.push_back("engine/data/model-data/cube.txt");
     modelFilenames.push_back("engine/data/model-data/square.txt");
-    modelFilenames.push_back("engine/data/model-data/sphere.txt");
 
     // Create and initialize the model object.
     m_Model = new ModelClass;
@@ -87,7 +87,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f); 
     m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
-    m_Light->SetDirection(1.0f, 0.0f, 0.5f);
+    m_Light->SetDirection(-1.0f, -0.8f, 0.3f);
     m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
     m_Light->SetSpecularPower(16.0f);
 
@@ -280,7 +280,7 @@ bool ApplicationClass::Render(float rotation)
     int modelCount, renderCount, i;
     bool renderModel, result;
 
-    m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+    m_Direct3D->BeginScene(0.5f, 0.8f, 1.0f, 1.0f);
 
     m_Camera->Render();
 
@@ -319,8 +319,15 @@ bool ApplicationClass::Render(float rotation)
             // Render the model using the light shader.
             m_Model->Render(m_Direct3D->GetDeviceContext());
 
-            result = m_ShaderManager->RenderSpecMapShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-                m_Model->GetTexture(3), m_Model->GetTexture(4), m_Model->GetTexture(5), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+            //result = m_ShaderManager->RenderSpecMapShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+            //    m_Model->GetTexture(3), m_Model->GetTexture(4), m_Model->GetTexture(5), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+            //if (!result)
+            //{
+            //    return false;
+            //}
+
+            result = m_ShaderManager->RenderMultiTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+                m_Model->GetTexture(3), m_Model->GetTexture(4), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
             if (!result)
             {
                 return false;
@@ -388,12 +395,14 @@ bool ApplicationClass::UpdateRenderCountString(int renderCount)
 void ApplicationClass::HandleKeyboardInput(InputClass* Input)
 {
     static float movementSpeed = 0.15;
+    static float lightchangeSpeed = 0.005;
+
     if (Input->IsF11Pressed())
     {
         m_Direct3D->ToggleFullScreenMode();
     }
 
-    if (Input->IsUPArrowPressed())
+    if (Input->IsWPressed())
     {
         XMFLOAT3 curPos;
         curPos = m_Camera->GetPosition();
@@ -401,7 +410,7 @@ void ApplicationClass::HandleKeyboardInput(InputClass* Input)
         m_Camera->Render();
     }
 
-    if (Input->IsDOWNArrowPressed())
+    if (Input->IsSPressed())
     {
         XMFLOAT3 curPos;
         curPos = m_Camera->GetPosition();
@@ -409,21 +418,52 @@ void ApplicationClass::HandleKeyboardInput(InputClass* Input)
         m_Camera->Render();
     }
 
-    //if (Input->IsLEFTArrowPressed())
-    //{
-    //    XMFLOAT3 curPos;
-    //    curPos = m_Camera->GetPosition();
-    //    m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
-    //    m_Camera->Render();
-    //}
+    if (Input->IsAPressed())
+    {
+        XMFLOAT3 curPos;
+        curPos = m_Camera->GetPosition();
+        m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
+        m_Camera->Render();
+    }
 
-    //if (Input->IsRIGHTArrowPressed())
-    //{
-    //    XMFLOAT3 curPos;
-    //    curPos = m_Camera->GetPosition();
-    //    m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
-    //    m_Camera->Render();
-    //}
+    if (Input->IsDPressed())
+    {
+        XMFLOAT3 curPos;
+        curPos = m_Camera->GetPosition();
+        m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
+        m_Camera->Render();
+    }
+
+    if (Input->IsAPressed())
+    {
+        XMFLOAT3 curPos;
+        curPos = m_Camera->GetPosition();
+        m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
+        m_Camera->Render();
+    }
+
+    if (Input->IsDPressed())
+    {
+        XMFLOAT3 curPos;
+        curPos = m_Camera->GetPosition();
+        m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
+        m_Camera->Render();
+    }
+
+    if (Input->Is1Pressed())
+    {
+        XMFLOAT3 curPos;
+        curPos = m_Light->GetDirection();
+        m_Light->SetDirection(curPos.x , curPos.y, curPos.z + lightchangeSpeed);
+
+    }
+
+    if (Input->Is2Pressed())
+    {
+        XMFLOAT3 curPos;
+        curPos = m_Light->GetDirection();
+        m_Light->SetDirection(curPos.x , curPos.y, curPos.z - lightchangeSpeed);
+    }
 }
 #include <iostream>
 void ApplicationClass::ReadFileLocationsFromFile(std::vector<std::string>& fileNames, const std::string& filelistName)

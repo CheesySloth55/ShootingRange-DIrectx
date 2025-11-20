@@ -277,6 +277,46 @@ bool InputClass::IsRIGHTArrowPressed()
 	return false;
 }
 
+bool InputClass::IsWPressed()
+{
+	if (m_keyboardState[DIK_W] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsAPressed()
+{
+	if (m_keyboardState[DIK_A] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsSPressed()
+{
+	if (m_keyboardState[DIK_S] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsDPressed()
+{
+	if (m_keyboardState[DIK_D] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool InputClass::IsF11Pressed()
 {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.

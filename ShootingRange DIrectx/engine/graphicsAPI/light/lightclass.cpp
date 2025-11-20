@@ -32,7 +32,15 @@ void LightClass::SetDiffuseColor(float red, float green, float blue, float alpha
 
 void LightClass::SetDirection(float x, float y, float z)
 {
-	m_direction = XMFLOAT3(x, y, z);
+	x = fabs(x);
+	y = fabs(y);
+	z = fabs(z);
+
+	if (x <= 1.0f && y <= 1.0f && z <= 1.0f)
+	{
+		m_direction = XMFLOAT3(x, y, z);
+	}
+
 	return;
 }
 

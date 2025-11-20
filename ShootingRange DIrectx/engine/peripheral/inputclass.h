@@ -28,10 +28,16 @@ public:
 	bool IsF11Pressed();
 	bool Is1Pressed();
 	bool Is2Pressed();
+
 	bool IsUPArrowPressed();
 	bool IsDOWNArrowPressed();
 	bool IsLEFTArrowPressed();
 	bool IsRIGHTArrowPressed();
+
+	bool IsWPressed();
+	bool IsAPressed();
+	bool IsSPressed();
+	bool IsDPressed();
 
 	void GetMouseLocation(int&, int&);
 	bool IsMousePressed();
