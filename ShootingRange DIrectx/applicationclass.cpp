@@ -83,8 +83,8 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
         return false;
     }
 
-    m_Sprite->SetRenderLocation(200, 400);
-    m_SpriteJump->SetRenderLocation(200, 400);
+    m_Sprite->SetRenderLocation(-240, 400);
+    m_SpriteJump->SetRenderLocation(-240, 400);
     // Create and initialize the timer object.
     m_Timer = new TimerClass;
 
@@ -199,9 +199,9 @@ bool ApplicationClass::Frame(bool jump)
 
     m_Sprite->GetRenderLocation(posX, posY);
     
-    if (posX >= screenMax - 240)
+    if (posX >= screenMax - 80)
     {
-        m_Sprite->SetRenderLocation(0, floorY);
+        m_Sprite->SetRenderLocation(-240, floorY);
         elapsed = 0;
         movementFrame = 0;
     }
