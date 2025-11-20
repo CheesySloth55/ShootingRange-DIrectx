@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 
-#define MAX_MODELCOUNT 100
+#define MAX_MODELCOUNT 1000
 ApplicationClass::ApplicationClass()
 {
 	m_Direct3D = NULL;
@@ -55,13 +55,13 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Camera = new CameraClass;
 
     // camera points by default at the z direction
-    m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
+    m_Camera->SetPosition(0.0f, 0.0f, -100.0f);
     m_Camera->Render();
     m_Camera->GetViewMatrix(m_baseViewMatrix);
 
     //model data
-    modelFilenames.push_back("engine/data/model-data/sphere.txt");
     modelFilenames.push_back("engine/data/model-data/cube.txt");
+    modelFilenames.push_back("engine/data/model-data/sphere.txt");
     modelFilenames.push_back("engine/data/model-data/square.txt");
 
     // Create and initialize the model object.
@@ -315,7 +315,7 @@ bool ApplicationClass::Render(float rotation)
         {
             // Move the model to the location it should be rendered at.
             worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
-            //worldMatrix = XMMatrixMultiply(rotationMatrix, worldMatrix);
+            worldMatrix = XMMatrixMultiply(rotationMatrix, worldMatrix);
             // Render the model using the light shader.
             m_Model->Render(m_Direct3D->GetDeviceContext());
 
@@ -327,7 +327,7 @@ bool ApplicationClass::Render(float rotation)
             //}
 
             result = m_ShaderManager->RenderMultiTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-                m_Model->GetTexture(3), m_Model->GetTexture(4), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
+                m_Model->GetTexture(0), m_Model->GetTexture(2), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
             if (!result)
             {
                 return false;
@@ -383,7 +383,7 @@ bool ApplicationClass::UpdateRenderCountString(int renderCount)
     strcat_s(finalString, tempString);
 
     // Update the sentence vertex buffer with the new string information.
-    result = m_RenderCountString->UpdateText(m_Direct3D->GetDeviceContext(), m_Font, finalString, 10, 10, 1.0f, 1.0f, 1.0f);
+    result = m_RenderCountString->UpdateText(m_Direct3D->GetDeviceContext(), m_Font, finalString, 10, 10, 0.0f, 0.0f, 1.0f);
     if (!result)
     {
         return false;
