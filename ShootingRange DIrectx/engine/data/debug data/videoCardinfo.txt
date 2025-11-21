@@ -2104,3 +2104,13 @@ Memory: 8018
 Date: D/M/Y 20/11/2025
 Time: 15:25:25
 
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/11/2025
+Time: 9:52:45
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 21/11/2025
+Time: 9:54:46
+

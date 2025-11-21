@@ -249,11 +249,7 @@ bool ApplicationClass::Frame(InputClass* Input)
 
     m_Position->SetFrameTime(frameTime);
 
-    keyDown = Input->IsLEFTArrowPressed();
-    m_Position->TurnLeft(keyDown);
 
-    keyDown = Input->IsRIGHTArrowPressed();
-    m_Position->TurnRight(keyDown);
 
     m_Position->GetRotation(rotationY);
 
@@ -394,61 +390,26 @@ bool ApplicationClass::UpdateRenderCountString(int renderCount)
 
 void ApplicationClass::HandleKeyboardInput(InputClass* Input)
 {
-    static float movementSpeed = 0.15;
+    bool keyDown{};
     static float lightchangeSpeed = 0.005;
 
     if (Input->IsF11Pressed())
     {
         m_Direct3D->ToggleFullScreenMode();
     }
+    //WASD = movement relative to you
+    //TODO: handle Mouse movement
+    keyDown = Input->IsLEFTArrowPressed();
+    m_Position->TurnLeft(keyDown);
 
-    if (Input->IsWPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x, curPos.y, curPos.z + movementSpeed);
-        m_Camera->Render();
-    }
+    keyDown = Input->IsRIGHTArrowPressed();
+    m_Position->TurnRight(keyDown);
 
-    if (Input->IsSPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x, curPos.y, curPos.z - movementSpeed);
-        m_Camera->Render();
-    }
+    keyDown = Input->IsDOWNArrowPressed();
+    m_Position->TurnLeft(keyDown);
 
-    if (Input->IsAPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
-        m_Camera->Render();
-    }
-
-    if (Input->IsDPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
-        m_Camera->Render();
-    }
-
-    if (Input->IsAPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
-        m_Camera->Render();
-    }
-
-    if (Input->IsDPressed())
-    {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
-        m_Camera->Render();
-    }
+    keyDown = Input->IsUPArrowPressed();
+    m_Position->TurnRight(keyDown);
 
     if (Input->Is1Pressed())
     {

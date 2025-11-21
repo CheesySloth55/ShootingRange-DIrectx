@@ -33,7 +33,14 @@ void PositionClass::GetRotation(float& y)
     return;
 }
 
-void PositionClass::TurnLeft(bool keydown)
+void PositionClass::GetMovement(float& x, float& z)
+{
+    x = m_posX;
+    z = m_posZ;
+    return;
+}
+
+void PositionClass::MoveLeft(bool keydown)
 {
     if (keydown)
     {
@@ -64,34 +71,21 @@ void PositionClass::TurnLeft(bool keydown)
     return;
 }
 
-void PositionClass::TurnRight(bool keydown)
+void PositionClass::MoveRight(bool keydown)
 {
-    // If the key is pressed increase the speed at which the camera turns right.  If not slow down the turn speed.
     if (keydown)
     {
-        m_rightTurnSpeed += m_frameTime * 1.5f;
-
-        if (m_rightTurnSpeed > (m_frameTime * 200.0f))
-        {
-            m_rightTurnSpeed = m_frameTime * 200.0f;
-        }
-    }
-    else
-    {
-        m_rightTurnSpeed -= m_frameTime * 1.0f;
-
-        if (m_rightTurnSpeed < 0.0f)
-        {
-            m_rightTurnSpeed = 0.0f;
-        }
+        m_movementSpeed += 1;
     }
 
-    // Update the rotation using the turning speed.
-    m_rotationY += m_rightTurnSpeed;
-    if (m_rotationY > 360.0f)
-    {
-        m_rotationY -= 360.0f;
-    }
+}
 
-    return;
+void PositionClass::MoveBackward(bool keydown)
+{
+
+}
+
+void PositionClass::MoveForward(bool keydown)
+{
+
 }

@@ -12,12 +12,19 @@ public:
 
     void SetFrameTime(float);
     void GetRotation(float&);
+    void GetMovement(float&, float&);
 
-    void TurnLeft(bool);
-    void TurnRight(bool);
-
+    void MoveLeft(bool);
+    void MoveRight(bool);
+    void MoveForward(bool);
+    void MoveBackward(bool);
 private:
     float m_frameTime;
     float m_rotationY;
-    float m_leftTurnSpeed, m_rightTurnSpeed;
+    float m_posX;
+    float m_posY;
+    float m_posZ;
+    float m_leftTurnSpeed;
+    float m_rightTurnSpeed;
+    float m_movementSpeed;
 };
