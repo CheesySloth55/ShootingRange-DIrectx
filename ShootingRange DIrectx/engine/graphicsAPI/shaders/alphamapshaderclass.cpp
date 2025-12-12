@@ -56,7 +56,7 @@ void AlphaMapShaderClass::Shutdown()
 	return;
 }
 
-bool AlphaMapShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool AlphaMapShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
 	ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, ID3D11ShaderResourceView* texture3)
 {
 	bool result;
@@ -68,7 +68,7 @@ bool AlphaMapShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCo
 		return false;
 	}
 
-	RenderShader(deviceContext, indexCount);
+	RenderShader(deviceContext);
 
 	return true;
 }
@@ -325,7 +325,7 @@ bool AlphaMapShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext
 	return true;
 }
 
-void AlphaMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void AlphaMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
 	// Set the vertex input layout.
 	deviceContext->IASetInputLayout(m_layout);
@@ -338,7 +338,6 @@ void AlphaMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int i
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 
 	// Render the triangle.
-	deviceContext->DrawIndexed(indexCount, 0, 0);
 
 	return;
 }

@@ -267,22 +267,60 @@ bool InputClass::IsLEFTArrowPressed()
 	return false;
 }
 
+
+bool InputClass::IsWKeyPressed()
+{
+	return m_keyboardState[DIK_W] & 0xf0;
+}
+bool InputClass::IsAKeyPressed()
+{
+	return m_keyboardState[DIK_A] & 0xf0;
+}
+bool InputClass::IsSKeyPressed()
+{
+	return m_keyboardState[DIK_S] & 0xf0;
+}
+bool InputClass::IsDKeyPressed()
+{
+	return m_keyboardState[DIK_D] & 0xf0;
+}
+
+
 bool InputClass::IsRIGHTArrowPressed()
 {
-	if (m_keyboardState[DIK_RIGHT] & 0xf0)
-	{
-		return true;
-	}
-
-	return false;
+	return m_keyboardState[DIK_RIGHT] & 0xf0;
 }
+
+bool InputClass::IsSpacePressed()
+{
+	return m_keyboardState[DIK_SPACE] & 0xf0;
+}
+
+bool InputClass::IsControlPressed()
+{
+	return m_keyboardState[DIK_LCONTROL] & 0xf0;
+}
+
 
 bool InputClass::IsF11Pressed()
 {
+	static bool pressed = false;
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_F11] & 0xf0)
 	{
-		return true;
+		if (!pressed)
+		{
+			pressed = true;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		pressed = false;
 	}
 	return false;
 }
@@ -294,10 +332,21 @@ void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 	return;
 }
 
-bool InputClass::IsMousePressed()
+bool InputClass::IsLeftMousePressed()
 {
 	// Check the left mouse button state.
 	if (m_mouseState.rgbButtons[0] & 0xf0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsRightMousePressed()
+{
+	// Check the right mouse button state.
+	if (m_mouseState.rgbButtons[1] & 0xf0)
 	{
 		return true;
 	}

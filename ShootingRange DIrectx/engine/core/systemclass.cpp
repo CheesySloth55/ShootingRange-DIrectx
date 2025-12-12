@@ -46,8 +46,16 @@ bool SystemClass::Initialize()
 }
 
 
+
 void SystemClass::Shutdown()
 {
+	m_done = true;
+	m_frameThread.request_stop();
+	m_renderThread1.request_stop();
+	m_renderThread2.request_stop();
+
+	m_inputThread.request_stop();
+
 	if(m_Application)
 	{
 		m_Application->Shutdown();
@@ -67,17 +75,65 @@ void SystemClass::Shutdown()
 	return;
 }
 
+void SystemClass::startThread()
+{
+	static bool active{ false };
+
+	if (!active)
+	{
+		active = true;
+
+		m_inputThread = std::jthread([this](std::stop_token stoken)
+			{
+
+				while (!stoken.stop_requested() && !m_done)
+				{
+					if (!m_Input->Frame())
+					{
+						m_done = true;
+						break;
+					}
+					// You may want to pass a real rotation value or synchronize with main thread
+					std::this_thread::sleep_for(std::chrono::milliseconds(10)); 
+				}
+			});
+
+		m_frameThread = std::jthread([this](std::stop_token stoken)
+			{
+
+				while (!stoken.stop_requested() && !m_done)
+				{
+					if (!m_Application->Frame(m_Input))
+					{
+						m_done = true;
+						break;
+					}
+				}
+			});
+
+		m_renderThread1 = std::jthread([this](std::stop_token stoken) {
+			while (!stoken.stop_requested() && !m_done)
+			{
+				if (!m_Application->Render(0.0f))
+				{
+					m_done = true;
+					break;
+				} // You may want to pass a real rotation value or synchronize with main thread
+			}
+			});
+	}
+}
 
 void SystemClass::Run()
 {
 	MSG msg;
-	bool done;
 	bool result;
 
 	ZeroMemory(&msg, sizeof(MSG));
 	
-	done = false;
-	while(!done)
+	m_done = false;
+
+	while(!m_done)
 	{
 		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -87,14 +143,14 @@ void SystemClass::Run()
 
 		if(msg.message == WM_QUIT)
 		{
-			done = true;
+			m_done = true;
 		}
 		else
 		{
 			result = Frame();
 			if(!result)
 			{
-				done = true;
+				m_done = true;
 			}
 		}
 
@@ -106,19 +162,8 @@ void SystemClass::Run()
 
 bool SystemClass::Frame()
 {
-	bool result;
 
-	result = m_Input->Frame();
-	if (!result)
-	{
-		return false;
-	}
-
-	result = m_Application->Frame(m_Input);
-	if(!result)
-	{
-		return false;
-	}
+	startThread();
 
 	return true;
 }

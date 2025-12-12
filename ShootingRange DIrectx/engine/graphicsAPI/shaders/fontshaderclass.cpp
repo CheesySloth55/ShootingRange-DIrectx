@@ -58,7 +58,7 @@ void FontShaderClass::Shutdown()
     return;
 }
 
-bool FontShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
+bool FontShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
     XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT4 pixelColor)
 {
     bool result;
@@ -72,7 +72,7 @@ bool FontShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount,
     }
 
     // Now render the prepared buffers with the shader.
-    RenderShader(deviceContext, indexCount);
+    RenderShader(deviceContext);
 
     return true;
 }
@@ -372,7 +372,7 @@ bool FontShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XM
     return true;
 }
 
-void FontShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void FontShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
     deviceContext->IASetInputLayout(m_layout);
 
@@ -380,8 +380,6 @@ void FontShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int index
     deviceContext->PSSetShader(m_pixelShader, NULL, 0);
 
     deviceContext->PSSetSamplers(0, 1, &m_sampleState);
-
-    deviceContext->DrawIndexed(indexCount, 0, 0);
 
     return;
 }

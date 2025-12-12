@@ -292,7 +292,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	m_deviceContext->RSSetViewports(1, &m_viewport);
 
 	// clip space matrices creation
-	fieldOfView = 3.141592654f / 4.0f;
+	fieldOfView = XMConvertToRadians(90.0f);
 	screenAspect = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
 
 	m_projectionMatrix = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
@@ -451,6 +451,7 @@ void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
 void D3DClass::SetBackBufferRenderTarget()
 {
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
+
 	m_deviceContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
 
 	return;

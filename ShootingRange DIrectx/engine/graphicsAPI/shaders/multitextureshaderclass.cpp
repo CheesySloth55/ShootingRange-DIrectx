@@ -61,7 +61,7 @@ void MultiTextureShaderClass::Shutdown()
     return;
 }
 
-bool MultiTextureShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
+bool MultiTextureShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix,
     XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, 
     XMFLOAT3 LightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuse)
 {
@@ -76,7 +76,7 @@ bool MultiTextureShaderClass::Render(ID3D11DeviceContext* deviceContext, int ind
     }
 
     // Now render the prepared buffers with the shader.
-    RenderShader(deviceContext, indexCount);
+    RenderShader(deviceContext);
 
     return true;
 }
@@ -392,7 +392,7 @@ bool MultiTextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceCon
     return true;
 }
 
-void MultiTextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void MultiTextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
     // Set the vertex input layout.
     deviceContext->IASetInputLayout(m_layout);
@@ -405,7 +405,5 @@ void MultiTextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, i
     deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 
     // Render the triangle.
-    deviceContext->DrawIndexed(indexCount, 0, 0);
-
     return;
 }

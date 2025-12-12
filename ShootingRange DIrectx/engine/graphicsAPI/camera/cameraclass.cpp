@@ -1,117 +1,179 @@
-////////////////////////////////////////////////////////////////////////////////
-// Filename: cameraclass.cpp
-////////////////////////////////////////////////////////////////////////////////
 #include "cameraclass.h"
-
+#include "cmath"
 
 CameraClass::CameraClass()
 {
-	m_positionX = 0.0f;
-	m_positionY = 0.0f;
-	m_positionZ = 0.0f;
+	m_position = XMFLOAT3(0.0f, 3.0f, -4.0f);
+	m_worldUp = XMFLOAT3(0.0f, 1.0f, 0.0f);
 
-	m_rotationX = 0.0f;
-	m_rotationY = 0.0f;
-	m_rotationZ = 0.0f;
+	m_yaw = 1.0f;
+	m_pitch = 0.0f;
+
+	m_mouseSensitivity = 0.02f;
+	m_movementSpeed = 0.2f;
+
+	m_firstMouse = true;
+	m_mouseCaptured = false;
+
+	UpdateVectors();
 }
-
-
-CameraClass::CameraClass(const CameraClass& other)
-{
-}
-
 
 CameraClass::~CameraClass()
 {
 }
 
-
-void CameraClass::SetPosition(float x, float y, float z)
+void CameraClass::Initialize(int screenWidth, int screenHeight)
 {
-	m_positionX = x;
-	m_positionY = y;
-	m_positionZ = z;
-	return;
+	m_screenWidth = screenWidth;
+	m_screenHeight = screenHeight;
+
+	//center last mouse initially
+	m_lastMouseX = screenWidth / 2;
+	m_lastMouseY = screenHeight / 2;
+
+
+	constexpr float fov = XMConvertToRadians(90.f);
+	float aspectRatio = static_cast<float>(m_screenWidth) / static_cast<float>(m_screenHeight);
+	float nearZ = 0.3f;
+	float farZ = 1000.0f;
+
+	m_projectionMatrix = XMMatrixPerspectiveFovLH(fov, aspectRatio, nearZ, farZ);
+}
+
+void CameraClass::UpdateVectors()
+{
+    // Calculate front vector from yaw and pitch angles
+    XMFLOAT3 front;
+    front.x = -cosf(m_yaw) * cosf(m_pitch);  // Negative X
+    front.y = sinf(m_pitch);
+    front.z = sinf(m_yaw) * cosf(m_pitch);
+
+    // Normalize the front vector
+    float length = sqrtf(front.x * front.x + front.y * front.y + front.z * front.z);
+    m_front.x = front.x / length;
+    m_front.y = front.y / length;
+    m_front.z = front.z / length;
+
+    // Calculate right vector: cross product of front and world up
+    m_right.x = m_front.y * m_worldUp.z - m_front.z * m_worldUp.y;
+    m_right.y = m_front.z * m_worldUp.x - m_front.x * m_worldUp.z;
+    m_right.z = m_front.x * m_worldUp.y - m_front.y * m_worldUp.x;
+
+    // Normalize right vector
+    length = sqrtf(m_right.x * m_right.x + m_right.y * m_right.y + m_right.z * m_right.z);
+    m_right.x /= length;
+    m_right.y /= length;
+    m_right.z /= length;
+
+    // Calculate up vector: cross product of right and front
+    m_up.x = m_right.y * m_front.z - m_right.z * m_front.y;
+    m_up.y = m_right.z * m_front.x - m_right.x * m_front.z;
+    m_up.z = m_right.x * m_front.y - m_right.y * m_front.x;
+}
+
+void CameraClass::UpdateViewMatrix()
+{
+    // Calculate target position (where camera is looking)
+    DirectX::XMFLOAT3 target;
+    target.x = m_position.x + m_front.x;
+    target.y = m_position.y + m_front.y;
+    target.z = m_position.z + m_front.z;
+
+    // Create view matrix
+    DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&m_position);
+    DirectX::XMVECTOR targ = DirectX::XMLoadFloat3(&target);
+    DirectX::XMVECTOR up = DirectX::XMLoadFloat3(&m_up);
+
+    m_viewMatrix = DirectX::XMMatrixLookAtLH(pos, targ, up);
+}
+
+void CameraClass::HandleMouseMovement(int mouseX, int mouseY)
+{
+    if (m_firstMouse)
+    {
+        m_lastMouseX = mouseX;
+        m_lastMouseY = mouseY;
+        m_firstMouse = false;
+        return;
+    }
+
+    // Calculate mouse movement difference
+    float xOffset = (float)(m_lastMouseX - mouseX);
+    float yOffset = (float)(mouseY - m_lastMouseY);
+
+    // Store last mouse position
+    m_lastMouseX = mouseX;
+    m_lastMouseY = mouseY;
+
+    // Apply sensitivity
+    xOffset *= m_mouseSensitivity;
+    yOffset *= m_mouseSensitivity;
+
+    // Update yaw and pitch
+    m_yaw -= xOffset;
+    m_pitch -= yOffset;  // Note: minus because screen Y goes down, but we want up
+
+    // Prevent camera from flipping (limit pitch)
+    const float maxPitch = DirectX::XMConvertToRadians(89.0f);
+    if (m_pitch > maxPitch)
+        m_pitch = maxPitch;
+    if (m_pitch < -maxPitch)
+        m_pitch = -maxPitch;
+
+    // Update camera vectors
+    UpdateVectors();
+    UpdateViewMatrix();
 }
 
 
-void CameraClass::SetRotation(float x, float y, float z)
+void CameraClass::MoveForward()
 {
-	m_rotationX = x;
-	m_rotationY = y;
-	m_rotationZ = z;
-	return;
+    // Move in the direction the camera is facing (front vector)
+    m_position.x += m_front.x * m_movementSpeed;
+    m_position.z += m_front.z * m_movementSpeed;  // Don't change Y to keep on ground
+    UpdateViewMatrix();
 }
 
-
-XMFLOAT3 CameraClass::GetPosition()
+void CameraClass::MoveBackward()
 {
-	return XMFLOAT3(m_positionX, m_positionY, m_positionZ);
+    m_position.x -= m_front.x * m_movementSpeed;
+    m_position.z -= m_front.z * m_movementSpeed;
+    UpdateViewMatrix();
 }
 
-
-XMFLOAT3 CameraClass::GetRotation()
+void CameraClass::MoveLeft()
 {
-	return XMFLOAT3(m_rotationX, m_rotationY, m_rotationZ);
+    // Move left relative to camera (use right vector, but negative)
+    m_position.x += m_right.x * m_movementSpeed;
+    m_position.z += m_right.z * m_movementSpeed;
+    UpdateViewMatrix();
 }
 
-
-void CameraClass::Render()
+void CameraClass::MoveRight()
 {
-	XMFLOAT3 up, position, lookAt;
-	XMVECTOR upVector, positionVector, lookAtVector;
-	float yaw, pitch, roll;
-	XMMATRIX rotationMatrix;
-
-
-	// Setup the vector that points upwards.
-	up.x = 0.0f;
-	up.y = 1.0f;
-	up.z = 0.0f;
-
-	// Load it into a XMVECTOR structure.
-	upVector = XMLoadFloat3(&up);
-
-	// Setup the position of the camera in the world.
-	position.x = m_positionX;
-	position.y = m_positionY;
-	position.z = m_positionZ;
-
-	// Load it into a XMVECTOR structure.
-	positionVector = XMLoadFloat3(&position);
-
-	// Setup where the camera is looking by default.
-	lookAt.x = 0.0f;
-	lookAt.y = 0.0f;
-	lookAt.z = 1.0f;
-
-	// Load it into a XMVECTOR structure.
-	lookAtVector = XMLoadFloat3(&lookAt);
-
-	// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
-	pitch = m_rotationX * 0.0174532925f;
-	yaw = m_rotationY * 0.0174532925f;
-	roll = m_rotationZ * 0.0174532925f;
-
-	// Create the rotation matrix from the yaw, pitch, and roll values.
-	rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
-
-	// Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.
-	lookAtVector = XMVector3TransformCoord(lookAtVector, rotationMatrix);
-	upVector = XMVector3TransformCoord(upVector, rotationMatrix);
-
-	// Translate the rotated camera position to the location of the viewer.
-	lookAtVector = XMVectorAdd(positionVector, lookAtVector);
-
-	// Finally create the view matrix from the three updated vectors.
-	m_viewMatrix = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
-
-	return;
+    m_position.x -= m_right.x * m_movementSpeed;
+    m_position.z -= m_right.z * m_movementSpeed;
+    UpdateViewMatrix();
 }
 
-
-void CameraClass::GetViewMatrix(XMMATRIX& viewMatrix)
+void CameraClass::MoveUp(float deltaTime)
 {
-	viewMatrix = m_viewMatrix;
-	return;
+    // Move left relative to camera (use right vector, but negative)
+    m_position.y += 20.0f * deltaTime;
+    UpdateViewMatrix();
+}
+
+void CameraClass::MoveDown(float deltaTime)
+{
+    m_position.y -= 20.0f * deltaTime;
+    UpdateViewMatrix();
+}
+
+void CameraClass::Update(float deltaTime)
+{
+    // Scale movement by deltaTime for framerate independence
+    float speed = m_movementSpeed * deltaTime;
+
+    // We'll handle key states in the main application
+    // This function is for any continuous updates
 }

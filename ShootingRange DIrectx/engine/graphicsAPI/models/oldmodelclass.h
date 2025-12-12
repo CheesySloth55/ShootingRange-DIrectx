@@ -8,7 +8,7 @@ using namespace DirectX;
 
 #include "../textures/textureclass.h"
 
-class ModelClass
+class OldModelClass
 {
 private:
 	struct VertexType
@@ -43,9 +43,9 @@ public:
 	};
 
 public:
-	ModelClass();
-	ModelClass(const ModelClass&);
-	~ModelClass();
+	OldModelClass();
+	OldModelClass(const OldModelClass&);
+	~OldModelClass();
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, const std::string& , const std::vector<std::string>&);
 	void Shutdown();

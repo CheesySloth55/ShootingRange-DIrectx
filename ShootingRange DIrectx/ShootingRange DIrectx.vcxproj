@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -118,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +132,7 @@
     <ClCompile Include="engine\graphicsAPI\camera\positionclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\frustum\frustumclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\models\displayplaneclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\models\meshclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\models\modellistclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shadermanagerclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\alphamapshaderclass.cpp" />
@@ -148,7 +151,7 @@
     <ClCompile Include="engine\graphicsAPI\light\lightclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\lightschaderclass.cpp" />
     <ClCompile Include="engine\main.cpp" />
-    <ClCompile Include="engine\graphicsAPI\models\modelclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\models\oldmodelclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\multitextureshaderclass.cpp" />
     <ClCompile Include="engine\core\systemclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\font\textclass.cpp" />
@@ -159,6 +162,7 @@
     <ClInclude Include="engine\graphicsAPI\camera\positionclass.h" />
     <ClInclude Include="engine\graphicsAPI\frustum\frustumclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\displayplaneclass.h" />
+    <ClInclude Include="engine\graphicsAPI\models\meshclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\modellistclass.h" />
     <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\alphamapshaderclass.h" />
@@ -177,7 +181,7 @@
     <ClInclude Include="engine\peripheral\inputclass.h" />
     <ClInclude Include="engine\graphicsAPI\light\lightclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\lightshaderclass.h" />
-    <ClInclude Include="engine\graphicsAPI\models\modelclass.h" />
+    <ClInclude Include="engine\graphicsAPI\models\oldmodelclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\multitextureshaderclass.h" />
     <ClInclude Include="engine\core\systemclass.h" />
     <ClInclude Include="engine\graphicsAPI\font\textclass.h" />

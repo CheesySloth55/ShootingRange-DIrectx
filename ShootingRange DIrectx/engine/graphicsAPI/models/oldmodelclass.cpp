@@ -1,9 +1,9 @@
-#include "modelclass.h"
+#include "oldmodelclass.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-ModelClass::ModelClass()
+OldModelClass::OldModelClass()
 {
 	m_vertexBuffer = NULL;
 	m_indexBuffer = NULL;
@@ -12,17 +12,17 @@ ModelClass::ModelClass()
 }
 
 
-ModelClass::ModelClass(const ModelClass& other)
+OldModelClass::OldModelClass(const OldModelClass& other)
 {
 }
 
 
-ModelClass::~ModelClass()
+OldModelClass::~OldModelClass()
 {
 }
 
 
-bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& modelFilename, const std::vector<std::string>& textureFilenames)
+bool OldModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& modelFilename, const std::vector<std::string>& textureFilenames)
 {
 	bool result;
 
@@ -54,7 +54,7 @@ bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCon
 }
 
 
-void ModelClass::Shutdown()
+void OldModelClass::Shutdown()
 {
 	ReleaseModel();
 
@@ -66,7 +66,7 @@ void ModelClass::Shutdown()
 }
 
 
-void ModelClass::Render(ID3D11DeviceContext* deviceContext)
+void OldModelClass::Render(ID3D11DeviceContext* deviceContext)
 {
 	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	RenderBuffers(deviceContext);
@@ -75,19 +75,19 @@ void ModelClass::Render(ID3D11DeviceContext* deviceContext)
 }
 
 
-int ModelClass::GetIndexCount()
+int OldModelClass::GetIndexCount()
 {
 	return m_indexCount;
 }
 
 
-ID3D11ShaderResourceView* ModelClass::GetTexture(int index)
+ID3D11ShaderResourceView* OldModelClass::GetTexture(int index)
 {
 	return m_Textures[index].GetTexture();
 }
 
 
-bool ModelClass::InitializeBuffers(ID3D11Device* device)
+bool OldModelClass::InitializeBuffers(ID3D11Device* device)
 {
 	VertexType* vertices;
 	unsigned long* indices;
@@ -164,7 +164,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 }
 
 
-void ModelClass::ShutdownBuffers()
+void OldModelClass::ShutdownBuffers()
 {
 	// Release the index buffer.
 	if(m_indexBuffer)
@@ -184,7 +184,7 @@ void ModelClass::ShutdownBuffers()
 }
 
 
-void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
+void OldModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
 	unsigned int stride;
 	unsigned int offset;
@@ -207,7 +207,7 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 }
 
 
-bool ModelClass::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::vector<std::string>& filenames)
+bool OldModelClass::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::vector<std::string>& filenames)
 {
 	bool result;	
 
@@ -227,7 +227,7 @@ bool ModelClass::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* deviceC
 }
 
 
-void ModelClass::ReleaseTextures()
+void OldModelClass::ReleaseTextures()
 {
 	// Release the texture object array.
 	if (m_Textures)
@@ -244,7 +244,7 @@ void ModelClass::ReleaseTextures()
 	return;
 }
 
-bool ModelClass::LoadModel(const char* filename)
+bool OldModelClass::LoadModel(const char* filename)
 {
 	std::ifstream fin;
 	char input;
@@ -287,7 +287,7 @@ bool ModelClass::LoadModel(const char* filename)
 	return true;
 }
 
-void ModelClass::ReleaseModel()
+void OldModelClass::ReleaseModel()
 {
 	if (m_model)
 	{
@@ -298,7 +298,7 @@ void ModelClass::ReleaseModel()
 	return;
 }
 
-void ModelClass::CalculateModelVectors()
+void OldModelClass::CalculateModelVectors()
 {
 	int faceCount, i, index;
 	TempVertexType vertex1, vertex2, vertex3;
@@ -365,7 +365,7 @@ void ModelClass::CalculateModelVectors()
 	return;
 }
 
-void ModelClass::CalculateTangentBinormal(TempVertexType vertex1, TempVertexType vertex2, TempVertexType vertex3, VectorType& tangent, VectorType& binormal)
+void OldModelClass::CalculateTangentBinormal(TempVertexType vertex1, TempVertexType vertex2, TempVertexType vertex3, VectorType& tangent, VectorType& binormal)
 {
 	float vector1[3], vector2[3];
 	float tuVector[2], tvVector[2];

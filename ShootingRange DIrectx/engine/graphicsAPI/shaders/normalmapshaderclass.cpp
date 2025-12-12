@@ -57,7 +57,7 @@ void NormalMapShaderClass::Shutdown()
 }
 
 
-bool NormalMapShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool NormalMapShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
 	ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
 {
 	bool result;
@@ -71,7 +71,7 @@ bool NormalMapShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexC
 	}
 
 	// Now render the prepared buffers with the shader.
-	RenderShader(deviceContext, indexCount);
+	RenderShader(deviceContext);
 
 	return true;
 }
@@ -413,7 +413,7 @@ bool NormalMapShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContex
     return true;
 }
 
-void NormalMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void NormalMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
     // Set the vertex input layout.
     deviceContext->IASetInputLayout(m_layout);
@@ -424,9 +424,6 @@ void NormalMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int 
 
     // Set the sampler state in the pixel shader.
     deviceContext->PSSetSamplers(0, 1, &m_sampleState);
-
-    // Render the triangle.
-    deviceContext->DrawIndexed(indexCount, 0, 0);
 
     return;
 }

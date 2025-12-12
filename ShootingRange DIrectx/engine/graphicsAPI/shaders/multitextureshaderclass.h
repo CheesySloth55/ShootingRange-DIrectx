@@ -30,7 +30,7 @@ public:
 
     bool Initialize(ID3D11Device*, HWND);
     void Shutdown();
-    bool Render(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*,
+    bool Render(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*,
         XMFLOAT3 LightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuse);
 
 private:
@@ -40,7 +40,7 @@ private:
 
     bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*,
         XMFLOAT3 LightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuse);
-    void RenderShader(ID3D11DeviceContext*, int);
+    void RenderShader(ID3D11DeviceContext*);
 
 private:
     ID3D11VertexShader* m_vertexShader;

@@ -5,7 +5,7 @@
 
 //includes
 #include <windows.h>
-
+#include <thread>
 //my classes
 #include "../peripheral/inputclass.h"
 #include "applicationclass.h"
@@ -32,13 +32,22 @@ private:
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
 
+	void startThread();
 private:
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hinstance;
 	HWND m_hwnd;
 
+	bool m_done;
+
+
 	InputClass* m_Input;
 	ApplicationClass* m_Application;
+	std::jthread m_frameThread;
+	std::jthread m_inputThread;
+	std::jthread m_renderThread1;
+	std::jthread m_renderThread2;
+
 };
 
 static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

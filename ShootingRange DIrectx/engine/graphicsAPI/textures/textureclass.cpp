@@ -1,25 +1,5 @@
-////////////////////////////////////////////////////////////////////////////////
-// Filename: textureclass.cpp
-////////////////////////////////////////////////////////////////////////////////
+
 #include "textureclass.h"
-
-
-TextureClass::TextureClass()
-{
-	m_targaData = 0;
-	m_texture = 0;
-	m_textureView = 0;
-}
-
-
-TextureClass::TextureClass(const TextureClass& other)
-{
-}
-
-
-TextureClass::~TextureClass()
-{
-}
 
 
 bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* filename)
@@ -52,7 +32,7 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
 
 	// Create the empty texture.
-	hResult = device->CreateTexture2D(&textureDesc, NULL, &m_texture);
+	hResult = device->CreateTexture2D(&textureDesc, NULL, m_texture.GetAddressOf());
 	if(FAILED(hResult))
 	{
 		return false;
@@ -62,7 +42,7 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	rowPitch = (m_width * 4) * sizeof(unsigned char);
 
 	// Copy the targa image data into the texture.
-	deviceContext->UpdateSubresource(m_texture, 0, NULL, m_targaData, rowPitch, 0);
+	deviceContext->UpdateSubresource(m_texture.Get(), 0, NULL, m_targaData.get(), rowPitch, 0);
 
 	// Setup the shader resource view description.
 	srvDesc.Format = textureDesc.Format;
@@ -71,18 +51,14 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	srvDesc.Texture2D.MipLevels = -1;
 
 	// Create the shader resource view for the texture.
-	hResult = device->CreateShaderResourceView(m_texture, &srvDesc, &m_textureView);
+	hResult = device->CreateShaderResourceView(m_texture.Get(), &srvDesc, &m_textureView);
 	if(FAILED(hResult))
 	{
 		return false;
 	}
 
 	// Generate mipmaps for this texture.
-	deviceContext->GenerateMips(m_textureView);
-
-	// Release the targa image data now that the image data has been loaded into the texture.
-	delete [] m_targaData;
-	m_targaData = 0;
+	deviceContext->GenerateMips(m_textureView.Get());
 
 	return true;
 }
@@ -90,34 +66,14 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 
 void TextureClass::Shutdown()
 {
-	// Release the texture view resource.
-	if(m_textureView)
-	{
-		m_textureView->Release();
-		m_textureView = 0;
-	}
-
-	// Release the texture.
-	if(m_texture)
-	{
-		m_texture->Release();
-		m_texture = 0;
-	}
-
-	// Release the targa data.
-	if(m_targaData)
-	{
-		delete [] m_targaData;
-		m_targaData = 0;
-	}
-
+	// remove another time
 	return;
 }
 
 
 ID3D11ShaderResourceView* TextureClass::GetTexture()
 {
-	return m_textureView;
+	return m_textureView.Get();
 }
 
 
@@ -174,9 +130,8 @@ bool TextureClass::LoadTarga32Bit(const char* filename)
 	{
 		return false;
 	}
-
 	// Allocate memory for the targa destination data.
-	m_targaData = new unsigned char[imageSize];
+	m_targaData = std::make_unique<unsigned char[]>(imageSize);
 
 	// Initialize the index into the targa destination data array.
 	index = 0;
@@ -189,10 +144,10 @@ bool TextureClass::LoadTarga32Bit(const char* filename)
 	{
 		for(i=0; i<m_width; i++)
 		{
-			m_targaData[index + 0] = targaImage[k + 2];  // Red.
-			m_targaData[index + 1] = targaImage[k + 1];  // Green.
-			m_targaData[index + 2] = targaImage[k + 0];  // Blue
-			m_targaData[index + 3] = targaImage[k + 3];  // Alpha
+			m_targaData.get()[index + 0] = targaImage[k + 2];  // Red.
+			m_targaData.get()[index + 1] = targaImage[k + 1];  // Green.
+			m_targaData.get()[index + 2] = targaImage[k + 0];  // Blue
+			m_targaData.get()[index + 3] = targaImage[k + 3];  // Alpha
 
 			// Increment the indexes into the targa data.
 			k += 4;
@@ -202,10 +157,6 @@ bool TextureClass::LoadTarga32Bit(const char* filename)
 		// Set the targa image data index back to the preceding row at the beginning of the column since its reading it in upside down.
 		k -= (m_width * 8);
 	}
-
-	// Release the targa image data now that it was copied into the destination array.
-	delete [] targaImage;
-	targaImage = 0;
 
 	return true;
 }

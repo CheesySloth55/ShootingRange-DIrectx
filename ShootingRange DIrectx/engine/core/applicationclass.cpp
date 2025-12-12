@@ -1,7 +1,6 @@
-
 #include "applicationclass.h"
 
-
+void CenterMouse(HWND& hwnd, int screenWidth, int screenHeight);
 
 bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
@@ -13,13 +12,16 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     ReadFileLocationsFromFile(textureFilenames, texturelistLocation);
 
+    m_screenWidth = screenWidth;
+    m_screenHeight = screenHeight;
+    m_hwnd = hwnd;
     // Create and initialize the Direct3D object.
     m_Direct3D = std::make_unique<D3DClass>();
-
-    result = m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
+    
+    result = m_Direct3D->Initialize(m_screenWidth, m_screenHeight, true, m_hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
     if (!result)
     {
-        MessageBox(hwnd, L"Could not initialize Direct3D", L"Error", MB_OK);
+        MessageBox(m_hwnd, L"Could not initialize Direct3D", L"Error", MB_OK);
         return false;
     }
 
@@ -27,28 +29,19 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
     m_Camera = std::make_unique<CameraClass>();
 
     // camera points by default at the z direction
-    m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
-    m_Camera->Render();
-    m_Camera->GetViewMatrix(m_baseViewMatrix);
+    m_Camera->Initialize(m_screenWidth, m_screenHeight);
+    CenterMouse(m_hwnd, m_screenWidth, m_screenHeight);
 
-    //model data
-    modelFilenames.push_back("engine/data/model-data/sphere.txt");
-    modelFilenames.push_back("engine/data/model-data/square.txt");
-    modelFilenames.push_back("engine/data/model-data/cube.txt");
-    modelFilenames.push_back("engine/data/model-data/m4a1.txt");
+    m_baseViewMatrix = m_Camera->GetViewMatrix();
 
-    // Create and initialize the model object.
-    m_Model = std::make_unique<ModelClass>();
+    modelFilenames.push_back("engine/data/model-data/shooting_range.mesh");
+    modelFilenames.push_back("engine/data/model-data/cube.mesh");
 
-    result = m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilenames[0], textureFilenames);
-    if (!result)
-    {
-        return false;
-    }
 
-    m_Model2 = std::make_unique<ModelClass>();
+    //initialize meshes
+    m_MeshClass = std::make_unique<MeshClass>();
 
-    result = m_Model2->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilenames[1], textureFilenames);
+    result = m_MeshClass->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), modelFilenames[0], textureFilenames);
     if (!result)
     {
         return false;
@@ -56,7 +49,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_RenderTexture = std::make_unique<RenderTextureClass>();
 
-    result = m_RenderTexture->Initialize(m_Direct3D->GetDevice(), 256, 256, SCREEN_DEPTH, SCREEN_NEAR, 1);
+    result = m_RenderTexture->Initialize(m_Direct3D->GetDevice(), 1080, 1080, SCREEN_DEPTH, SCREEN_NEAR, 1);
     if (!result)
     {
         return false;
@@ -64,7 +57,7 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_DisplayPlane = std::make_unique<DisplayPlaneClass>();
 
-    result = m_DisplayPlane->Initialize(m_Direct3D->GetDevice(), 1.0f, 1.0f);
+    result = m_DisplayPlane->Initialize(m_Direct3D->GetDevice(), 3.0f, 3.0f);
     if (!result)
     {
         return false;
@@ -108,19 +101,28 @@ bool ApplicationClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
     m_ShaderManager = std::make_unique<ShaderManagerClass>();
 
-    result = m_ShaderManager->Intialize(m_Direct3D->GetDevice(), hwnd);
+    result = m_ShaderManager->Intialize(m_Direct3D->GetDevice(), m_hwnd);
     if (!result)
     {
         return false;
     }
 
-    m_ModelList = std::make_unique<ModelListClass>();
-    m_ModelList->Initialize(maxObjectCount);
-
     m_Position = std::make_unique<PositionClass>();
 
     m_Frustum = std::make_unique<FrustumClass>();
+    // Pseudocode plan:
+    // 1. Store the jthread as a member variable to keep it alive for the application's lifetime.
+    // 2. In Initialize(), start the jthread and have it repeatedly call Render() in a loop.
+    // 3. Use a stop_token to allow the thread to exit cleanly when requested (e.g., on shutdown).
+    // 4. Ensure thread safety if Render() or related resources are accessed from multiple threads.
 
+    // Step 1: Add a member variable to ApplicationClass (in the header):
+    // std::jthread m_renderThread;
+
+    // Step 2: Start the thread in Initialize():
+
+    
+    // Note: You must include <thread> and <chrono> headers, and ensure Render() is thread-safe.
     return true;
 }
 
@@ -153,12 +155,6 @@ void ApplicationClass::Shutdown()
         m_ShaderManager->Shutdown();
     }
 
-    // Release the model object.
-    if (m_Model)
-    {
-        m_Model->Shutdown();
-    }
-
     // Release the Direct3D object.
     if (m_Direct3D)
     {
@@ -175,13 +171,16 @@ bool ApplicationClass::Frame(InputClass* Input)
     float rotationY;
     static float rotation = 360.0f;
     static float physicsTimeAccumulator{};
-    static float physicsFrametime = 0.01f;
+    static float physicsFrametime = 1.0f/ 60.0f;
     float frameTime;
 
     m_Timer->Frame();
 
     frameTime = m_Timer->GetFrameTime();
     physicsTimeAccumulator += frameTime;
+
+    m_Camera->Update(frameTime);
+
     while (physicsTimeAccumulator >= physicsFrametime)
     {
         rotation -= 0.0174532925f * 0.5f; // 1 degree in radians
@@ -189,206 +188,110 @@ bool ApplicationClass::Frame(InputClass* Input)
         {
             rotation += 360.0f;
         }
+
+        // Check if the user pressed escape and wants to exit the application.
+        if (Input->IsEscapePressed())
+        {
+            return false;
+        }
+
+        HandleMouseMovement(*Input, physicsTimeAccumulator);
+        HandleKeyboardInput(*Input, physicsTimeAccumulator);
         physicsTimeAccumulator -= physicsFrametime;
     }
 
-
-    // Check if the user pressed escape and wants to exit the application.
-    if (Input->IsEscapePressed())
-    {
-        return false;
-    }
-
-    m_Position->SetFrameTime(frameTime);
-
-    keyDown = Input->IsLEFTArrowPressed();
-    m_Position->TurnLeft(keyDown);
-
-    keyDown = Input->IsRIGHTArrowPressed();
-    m_Position->TurnRight(keyDown);
-
-    m_Position->GetRotation(rotationY);
-
-    m_Camera->SetRotation(0.0f, rotationY, 0.0f);
-    m_Camera->Render();
-
-    HandleKeyboardInput(Input);
-
-    result = RenderSceneToTexture(rotation);
-    if (!result)
-    {
-        return false;
-    }
-
-    result = Render();
-    if (!result)
-    {
-        return false;
-    }
-
     return true;
 }
 
-bool ApplicationClass::RenderSceneToTexture(float rotation)
+bool ApplicationClass::Render(float rotation)
 {
     XMMATRIX worldMatrix, viewMatrix, projectionMatrix, rotationMatrix;
     bool result;
-   
-    m_RenderTexture->SetRenderTarget(m_Direct3D->GetDeviceContext());
-    m_RenderTexture->ClearRenderTarget(m_Direct3D->GetDeviceContext(), 0.0f, 0.5f, 1.0f, 1.0f);
-
-    m_Direct3D->GetWorldMatrix(worldMatrix);
-    m_Camera->GetViewMatrix(viewMatrix);
-    m_RenderTexture->GetProjectionMatrix(projectionMatrix);
-
-    rotationMatrix = XMMatrixRotationY(rotation);
-
-    // Render the model using the texture shader.
-    m_Model->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_ShaderManager->RenderLightShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), rotationMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(0),
-                                            m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
-    if (!result)
-    {
-        return false;
-    }
-
-    m_Model2->Render(m_Direct3D->GetDeviceContext());
-
-    worldMatrix = XMMatrixScaling(2.1f, 2.1f, 1.0f);
-
-    result = m_ShaderManager->RenderTextureShader(m_Direct3D->GetDeviceContext(), m_Model2->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model2->GetTexture(0));
-    if (!result)
-    {
-        return false;
-    }
-    m_Direct3D->SetBackBufferRenderTarget();
-    m_Direct3D->ResetViewport();
-
-    return true;
-}
-
-
-bool ApplicationClass::Render()
-{
-    XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
-    bool result;
     XMFLOAT3 curPos;
 
-    m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+    m_Direct3D->BeginScene(0.2f, 0.2f, 1.0f, 1.0f);
 
     // Set the position of the camera for viewing the display planes with the render textures on them.
-    curPos = m_Camera->GetPosition();
-    m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
-    m_Camera->Render();
 
     // Get the world, view, and projection matrices from the camera and d3d objects.
     m_Direct3D->GetWorldMatrix(worldMatrix);
-    m_Camera->GetViewMatrix(viewMatrix);
+    viewMatrix = m_Camera->GetViewMatrix();
     m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
-    worldMatrix = XMMatrixTranslation(0.0f, 1.5f, 0.0f);
+    worldMatrix = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 
+    rotationMatrix = XMMatrixRotationY(0.0174532925f * 90);
     // Render the display plane using the texture shader and the render texture resource.
-    m_DisplayPlane->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_ShaderManager->RenderTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_RenderTexture->GetShaderResourceView());
+    result = m_ShaderManager->RenderLightShader(m_Direct3D->GetDeviceContext(), rotationMatrix, viewMatrix, projectionMatrix, m_MeshClass->GetTexture(0),
+        m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
     if (!result)
     {
         return false;
     }
-
-    worldMatrix = XMMatrixTranslation(-1.5f, -1.5f, 0.0f);
-
-    // Render the display plane using the texture shader and the render texture resource.
-    m_DisplayPlane->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_ShaderManager->RenderTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_RenderTexture->GetShaderResourceView());
-    if (!result)
-    {
-        return false;
-    }
-    worldMatrix = XMMatrixTranslation(1.5f, -1.5f, 0.0f);
-
-    // Render the display plane using the texture shader and the render texture resource.
-    m_DisplayPlane->Render(m_Direct3D->GetDeviceContext());
-
-    result = m_ShaderManager->RenderTextureShader(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_RenderTexture->GetShaderResourceView());
-    if (!result)
-    {
-        return false;
-    }
+    m_MeshClass->Render(m_Direct3D->GetDeviceContext());
 
     m_Direct3D->EndScene();
 
-    m_Camera->SetPosition(curPos.x, curPos.y, curPos.z);
     return true;
 }
 
-bool ApplicationClass::UpdateRenderCountString(int renderCount)
+void ApplicationClass::HandleKeyboardInput(InputClass& Input, float deltaTime)
 {
-    char tempString[16], finalString[32];
-    bool result;
 
-
-    // Convert the render count integer to string format.
-    sprintf_s(tempString, "%d", renderCount);
-
-    // Setup the render count string.
-    strcpy_s(finalString, "Render Count: ");
-    strcat_s(finalString, tempString);
-
-    // Update the sentence vertex buffer with the new string information.
-    result = m_RenderCountString->UpdateText(m_Direct3D->GetDeviceContext(), m_Font.get(), finalString, 10, 10, 1.0f, 1.0f, 1.0f);
-    if (!result)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-void ApplicationClass::HandleKeyboardInput(InputClass* Input)
-{
     static float movementSpeed = 0.15f;
-    if (Input->IsF11Pressed())
+    if (Input.IsF11Pressed())
     {
         m_Direct3D->ToggleFullScreenMode();
     }
-
-    if (Input->IsUPArrowPressed())
+    
+    if (Input.IsUPArrowPressed() || Input.IsWKeyPressed())
     {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x, curPos.y, curPos.z + movementSpeed);
-        m_Camera->Render();
+        m_Camera->MoveForward();
     }
 
-    if (Input->IsDOWNArrowPressed())
+    if (Input.IsDOWNArrowPressed() || Input.IsSKeyPressed())
     {
-        XMFLOAT3 curPos;
-        curPos = m_Camera->GetPosition();
-        m_Camera->SetPosition(curPos.x, curPos.y, curPos.z - movementSpeed);
-        m_Camera->Render();
+        m_Camera->MoveBackward();
     }
 
-    //if (Input->IsLEFTArrowPressed())
-    //{
-    //    XMFLOAT3 curPos;
-    //    curPos = m_Camera->GetPosition();
-    //    m_Camera->SetPosition(curPos.x - movementSpeed, curPos.y, curPos.z);
-    //    m_Camera->Render();
-    //}
+    if (Input.IsLEFTArrowPressed() || Input.IsAKeyPressed())
+    {
+        m_Camera->MoveLeft();
+    }
 
-    //if (Input->IsRIGHTArrowPressed())
-    //{
-    //    XMFLOAT3 curPos;
-    //    curPos = m_Camera->GetPosition();
-    //    m_Camera->SetPosition(curPos.x + movementSpeed, curPos.y, curPos.z);
-    //    m_Camera->Render();
-    //}
+    if (Input.IsRIGHTArrowPressed() || Input.IsDKeyPressed())
+    {
+        m_Camera->MoveRight();
+    }
+
+    if (Input.IsSpacePressed())
+    {
+        m_Camera->MoveUp(deltaTime);
+    }
+    if (Input.IsControlPressed())
+    {
+        m_Camera->MoveDown(deltaTime);
+    }
 }
-#include <iostream>
+
+void ApplicationClass::HandleMouseMovement(InputClass& Input, float deltaTime)
+{
+    if (GetForegroundWindow() != m_hwnd)
+    {
+        return;
+    }
+
+    int mouseX;
+    int mouseY;
+    Input.GetMouseLocation(mouseX, mouseY);
+
+    m_Camera->HandleMouseMovement(mouseX, mouseY);
+
+    CenterMouse(m_hwnd, m_screenWidth, m_screenHeight);
+
+    return;
+}
+
 void ApplicationClass::ReadFileLocationsFromFile(std::vector<std::string>& fileNames, const std::string& filelistName)
 {
     std::ifstream fin;
@@ -412,4 +315,14 @@ void ApplicationClass::ReadFileLocationsFromFile(std::vector<std::string>& fileN
     fin.close();
 
     return;
+}
+
+void CenterMouse(HWND& hwnd, int screenWidth, int screenHeight)
+{
+    POINT center;
+    center.x = screenWidth / 2;
+    center.y = screenHeight / 2;
+
+    ClientToScreen(hwnd, &center);
+    SetCursorPos(center.x, center.y);
 }

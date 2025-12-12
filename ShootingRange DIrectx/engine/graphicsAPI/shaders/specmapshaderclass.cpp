@@ -58,7 +58,7 @@ void SpecMapShaderClass::Shutdown()
     return;
 }
 
-bool SpecMapShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, 
+bool SpecMapShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, 
     ID3D11ShaderResourceView* texture1,ID3D11ShaderResourceView* texture2, ID3D11ShaderResourceView* texture3, 
     XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor, XMFLOAT3 cameraPosition, XMFLOAT4 specularColor, float specularPower)
 {
@@ -72,7 +72,7 @@ bool SpecMapShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCou
         return false;
     }
 
-    RenderShader(deviceContext, indexCount);
+    RenderShader(deviceContext);
 
     return true;
 }
@@ -398,7 +398,7 @@ bool SpecMapShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
     return true;
 }
 
-void SpecMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void SpecMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
     deviceContext->IASetInputLayout(m_layout);
 
@@ -406,8 +406,6 @@ void SpecMapShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int in
     deviceContext->PSSetShader(m_pixelShader, NULL, 0);
 
     deviceContext->PSSetSamplers(0, 1, &m_sampleState);
-
-    deviceContext->DrawIndexed(indexCount, 0, 0);
 
     return;
 }

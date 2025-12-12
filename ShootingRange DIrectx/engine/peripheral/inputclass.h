@@ -25,16 +25,27 @@ public:
 	bool Frame();
 
 	bool IsEscapePressed();
+	bool IsSpacePressed();
+	bool IsControlPressed();
 	bool IsF11Pressed();
+
 	bool Is1Pressed();
 	bool Is2Pressed();
+
 	bool IsUPArrowPressed();
 	bool IsDOWNArrowPressed();
 	bool IsLEFTArrowPressed();
 	bool IsRIGHTArrowPressed();
 
-	void GetMouseLocation(int&, int&);
-	bool IsMousePressed();
+	bool IsWKeyPressed();
+	bool IsAKeyPressed();
+	bool IsSKeyPressed();
+	bool IsDKeyPressed();
+
+	void GetMouseLocation(int& x, int& y);
+	bool IsLeftMousePressed();
+	bool IsRightMousePressed();
+
 
 private:
 	bool ReadKeyboard();

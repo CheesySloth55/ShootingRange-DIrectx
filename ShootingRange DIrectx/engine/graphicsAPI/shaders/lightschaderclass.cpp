@@ -55,7 +55,7 @@ void LightShaderClass::Shutdown()
 	return;
 }
 
-bool LightShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX world, XMMATRIX view, XMMATRIX projection,
+bool LightShaderClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX world, XMMATRIX view, XMMATRIX projection,
 	ID3D11ShaderResourceView* SRV, XMFLOAT3 lightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuseColor)
 {
 	bool result;
@@ -66,7 +66,7 @@ bool LightShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount
 		return false;
 	}
 
-	RenderShader(deviceContext, indexCount);
+	RenderShader(deviceContext);
 
 	return true;
 }
@@ -355,7 +355,7 @@ bool LightShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, X
 	return true;
 }
 
-void LightShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void LightShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 {
 	deviceContext->IASetInputLayout(m_layout);
 
@@ -365,9 +365,6 @@ void LightShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int inde
 
 	// Set the sampler state in the pixel shader.
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
-
-	// Render the triangle.
-	deviceContext->DrawIndexed(indexCount, 0, 0);
 
 	return;
 }

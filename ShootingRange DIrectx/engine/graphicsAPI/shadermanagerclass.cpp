@@ -118,16 +118,21 @@ void ShaderManagerClass::Shutdown()
         m_SpecMapShader->Shutdown();
     }
 
+    if (m_TextureShader)
+    {
+        m_TextureShader->Shutdown();
+    }
+
     return;
 }
 
-bool ShaderManagerClass::RenderMultiTextureShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool ShaderManagerClass::RenderMultiTextureShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
     ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, XMFLOAT3 lightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuseColor)
 {
     bool result;
 
 
-    result = m_MultiTextureShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, lightDirection, ambient, diffuseColor);
+    result = m_MultiTextureShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, lightDirection, ambient, diffuseColor);
     if (!result)
     {
         return false;
@@ -137,13 +142,13 @@ bool ShaderManagerClass::RenderMultiTextureShader(ID3D11DeviceContext* deviceCon
 }
 
 
-bool ShaderManagerClass::RenderLightShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool ShaderManagerClass::RenderLightShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
     ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 ambient, XMFLOAT4 diffuseColor)
 {
     bool result;
 
 
-    result = m_LightShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture, lightDirection, ambient,diffuseColor);
+    result = m_LightShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture, lightDirection, ambient,diffuseColor);
     if (!result)
     {
         return false;
@@ -152,13 +157,13 @@ bool ShaderManagerClass::RenderLightShader(ID3D11DeviceContext* deviceContext, i
     return true;
 }
 
-bool ShaderManagerClass::RenderNormalMapShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool ShaderManagerClass::RenderNormalMapShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
     ID3D11ShaderResourceView* colorTexture, ID3D11ShaderResourceView* normalTexture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
 {
     bool result;
 
 
-    result = m_NormalMapShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, colorTexture, normalTexture, lightDirection, diffuseColor);
+    result = m_NormalMapShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, colorTexture, normalTexture, lightDirection, diffuseColor);
     if (!result)
     {
         return false;
@@ -167,13 +172,13 @@ bool ShaderManagerClass::RenderNormalMapShader(ID3D11DeviceContext* deviceContex
     return true;
 }
 
-bool ShaderManagerClass::RenderFontShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool ShaderManagerClass::RenderFontShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
     ID3D11ShaderResourceView* texture, XMFLOAT4 pixelColor)
 {
     bool result;
 
 
-    result = m_FontShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture, pixelColor);
+    result = m_FontShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture, pixelColor);
     if (!result)
     {
         return false;
@@ -182,13 +187,13 @@ bool ShaderManagerClass::RenderFontShader(ID3D11DeviceContext* deviceContext, in
     return true;
 }
 
-bool ShaderManagerClass::RenderAlphaMapShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool ShaderManagerClass::RenderAlphaMapShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
     ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, ID3D11ShaderResourceView* texture3)
 {
     bool result;
 
 
-    result = m_AlphaMapShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, texture3);
+    result = m_AlphaMapShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, texture3);
     if (!result)
     {
         return false;
@@ -197,14 +202,14 @@ bool ShaderManagerClass::RenderAlphaMapShader(ID3D11DeviceContext* deviceContext
     return true;
 }
 
-bool ShaderManagerClass::RenderSpecMapShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
+bool ShaderManagerClass::RenderSpecMapShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix,
     ID3D11ShaderResourceView* texture1, ID3D11ShaderResourceView* texture2, ID3D11ShaderResourceView* texture3, 
     XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor, XMFLOAT3 cameraPosition, XMFLOAT4 specularColor, float specularPower)
 {
     bool result;
 
 
-    result = m_SpecMapShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, texture3, lightDirection, diffuseColor, cameraPosition, specularColor, specularPower );
+    result = m_SpecMapShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture1, texture2, texture3, lightDirection, diffuseColor, cameraPosition, specularColor, specularPower );
     if (!result)
     {
         return false;
@@ -213,11 +218,11 @@ bool ShaderManagerClass::RenderSpecMapShader(ID3D11DeviceContext* deviceContext,
     return true;
 }
 
-bool ShaderManagerClass::RenderTextureShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
+bool ShaderManagerClass::RenderTextureShader(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture)
 {
     bool result;
 
-    result = m_TextureShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, texture);
+    result = m_TextureShader->Render(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture);
     if (!result)
     {
         return false;

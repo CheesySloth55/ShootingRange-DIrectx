@@ -1,0 +1,9 @@
+Name: Intel(R) Iris(R) Xe Graphics
+Memory: 128
+
+Name: Intel(R) Iris(R) Xe Graphics
+Memory: 128
+
+Name: Intel(R) Iris(R) Xe Graphics
+Memory: 128
+

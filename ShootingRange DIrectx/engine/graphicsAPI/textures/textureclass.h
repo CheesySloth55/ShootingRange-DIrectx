@@ -10,8 +10,9 @@
 //////////////
 #include <d3d11.h>
 #include <stdio.h>
-
-
+#include <wrl/client.h>
+#include <memory>
+using namespace Microsoft::WRL;
 ////////////////////////////////////////////////////////////////////////////////
 // Class name: TextureClass
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,9 +29,9 @@ private:
 	};
 
 public:
-	TextureClass();
-	TextureClass(const TextureClass&);
-	~TextureClass();
+	TextureClass() = default;
+	TextureClass(const TextureClass&) = delete;
+	~TextureClass() = default;
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*,const char*);
 	void Shutdown();
@@ -44,9 +45,9 @@ private:
 	bool LoadTarga32Bit(const char*);
 
 private:
-	unsigned char* m_targaData;
-	ID3D11Texture2D* m_texture;
-	ID3D11ShaderResourceView* m_textureView;
+	std::unique_ptr<unsigned char[]> m_targaData;
+	ComPtr<ID3D11Texture2D> m_texture;
+	ComPtr<ID3D11ShaderResourceView> m_textureView;
 	int m_width, m_height;
 };
 

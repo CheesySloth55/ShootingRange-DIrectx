@@ -33,7 +33,7 @@
     <ClCompile Include="engine\graphicsAPI\textures\textureclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\graphicsAPI\models\modelclass.cpp">
+    <ClCompile Include="engine\graphicsAPI\models\oldmodelclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\graphicsAPI\directx\d3dclass.cpp">
@@ -102,6 +102,9 @@
     <ClCompile Include="engine\graphicsAPI\shaders\textureshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\models\meshclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\peripheral\inputclass.h">
@@ -116,7 +119,7 @@
     <ClInclude Include="engine\graphicsAPI\textures\textureclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\graphicsAPI\models\modelclass.h">
+    <ClInclude Include="engine\graphicsAPI\models\oldmodelclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\graphicsAPI\directx\d3dclass.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\graphicsAPI\shaders\textureshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\models\meshclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
