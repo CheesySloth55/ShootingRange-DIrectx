@@ -45,9 +45,6 @@
     <ClCompile Include="engine\graphicsAPI\shaders\fontshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\graphicsAPI\font\textclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\peripheral\fpsclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -131,16 +128,10 @@
     <ClInclude Include="engine\graphicsAPI\shaders\lightshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\applicationclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\core\systemclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\graphicsAPI\shaders\fontshaderclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\graphicsAPI\font\textclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\peripheral\fpsclass.h">
@@ -186,6 +177,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\graphicsAPI\models\meshclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\vertextypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\applicationclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

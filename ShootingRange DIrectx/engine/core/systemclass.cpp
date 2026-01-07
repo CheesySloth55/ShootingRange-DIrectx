@@ -52,8 +52,6 @@ void SystemClass::Shutdown()
 	m_done = true;
 	m_frameThread.request_stop();
 	m_renderThread1.request_stop();
-	m_renderThread2.request_stop();
-
 	m_inputThread.request_stop();
 
 	if(m_Application)

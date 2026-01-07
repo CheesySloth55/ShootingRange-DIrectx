@@ -154,11 +154,11 @@
     <ClCompile Include="engine\graphicsAPI\models\oldmodelclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\shaders\multitextureshaderclass.cpp" />
     <ClCompile Include="engine\core\systemclass.cpp" />
-    <ClCompile Include="engine\graphicsAPI\font\textclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\textures\textureclass.cpp" />
     <ClCompile Include="engine\peripheral\timerclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\applicationclass.h" />
     <ClInclude Include="engine\graphicsAPI\camera\positionclass.h" />
     <ClInclude Include="engine\graphicsAPI\frustum\frustumclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\displayplaneclass.h" />
@@ -166,7 +166,6 @@
     <ClInclude Include="engine\graphicsAPI\models\modellistclass.h" />
     <ClInclude Include="engine\graphicsAPI\shadermanagerclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\alphamapshaderclass.h" />
-    <ClInclude Include="engine\core\applicationclass.h" />
     <ClInclude Include="engine\graphicsAPI\camera\cameraclass.h" />
     <ClInclude Include="engine\graphicsAPI\directx\d3dclass.h" />
     <ClInclude Include="engine\graphicsAPI\font\fontclass.h" />
@@ -176,6 +175,7 @@
     <ClInclude Include="engine\graphicsAPI\textures\rendertextureclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\shaderclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\specmapshaderclass.h" />
+    <ClInclude Include="engine\graphicsAPI\vertextypes.h" />
     <ClInclude Include="engine\peripheral\fpsclass.h" />
     <ClInclude Include="engine\peripheral\timerclass.h" />
     <ClInclude Include="engine\peripheral\inputclass.h" />
@@ -184,7 +184,6 @@
     <ClInclude Include="engine\graphicsAPI\models\oldmodelclass.h" />
     <ClInclude Include="engine\graphicsAPI\shaders\multitextureshaderclass.h" />
     <ClInclude Include="engine\core\systemclass.h" />
-    <ClInclude Include="engine\graphicsAPI\font\textclass.h" />
     <ClInclude Include="engine\graphicsAPI\textures\textureclass.h" />
   </ItemGroup>
   <ItemGroup>

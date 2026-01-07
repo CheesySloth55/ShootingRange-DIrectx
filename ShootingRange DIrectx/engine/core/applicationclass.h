@@ -13,8 +13,6 @@
 #include "../graphicsAPI/camera/cameraclass.h"
 #include "../graphicsAPI/light/lightclass.h"
 #include "../graphicsAPI/shadermanagerclass.h"
-#include "../graphicsAPI/font/fontclass.h"
-#include "../graphicsAPI/font/textclass.h"
 #include "../graphicsAPI/models/modellistclass.h"
 #include "../graphicsAPI/camera/positionclass.h"
 #include "../graphicsAPI/frustum/frustumclass.h"
@@ -58,8 +56,6 @@ private:
 	std::unique_ptr<CameraClass> m_Camera{};
 	std::unique_ptr<TimerClass> m_Timer{};
 	std::unique_ptr<LightClass> m_Light{};
-	std::unique_ptr<FontClass> m_Font{};
-	std::unique_ptr<TextClass> m_RenderCountString{};
 	std::unique_ptr<ModelListClass> m_ModelList{};
 	std::unique_ptr<PositionClass>m_Position{};
 	std::unique_ptr<FrustumClass> m_Frustum{};

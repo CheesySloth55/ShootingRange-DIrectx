@@ -1,62 +1,59 @@
 #pragma once
+#include <DirectXMath.h>
 
-#include <directxmath.h>
 using namespace DirectX;
-
 
 class CameraClass
 {
 public:
 	CameraClass();
-	CameraClass(const CameraClass&);
-	~CameraClass();
+	CameraClass(const CameraClass& other) = delete;
+	~CameraClass() = default;
 
-	void Initialize(int screenWidth, int screenHeight);
+	// Position
+	void SetPosition(float x, float y, float z);
+	XMFLOAT3 GetPosition() const;
+	XMVECTOR GetRotationQuat() const;
 
-	void Update(float deltaTime);
-	void HandleMouseMovement(int mouseX, int mouseY);
+	void MoveForward(float deltaTime);
+	void MoveBackward(float deltaTime);
+	void StrafeRight(float deltaTime);
+	void StrafeLeft(float deltaTime);
 
-	void MoveForward();
-	void MoveBackward();
-	void MoveLeft();
-	void MoveRight();
-	void MoveUp(float deltaTime);
-	void MoveDown(float deltaTime);
+	void Jump();
+	void UpdatePhysics(float deltaTime);
 
-	XMFLOAT3 GetPosition() const { return m_position; };
+	// Mouse input (DirectInput8)
+	void ProcessMouseInput(long mouseX, long mouseY);
 
-	XMMATRIX GetViewMatrix() const { return m_viewMatrix; }
-	XMMATRIX GetProjectionMatrix() const { return m_projectionMatrix; }
+	// Build view matrix
+	void Render();
+	void GetViewMatrix(XMMATRIX& viewMatrix) const;
 
-	void UpdateViewMatrix();
 private:
-	void UpdateVectors();
-
-private:
-	//position and rotation
+	// Position
 	XMFLOAT3 m_position;
 
-	XMFLOAT4 m_rotationQuaternion;
+	// Euler rotation (degrees)
+	float m_pitch; // X
+	float m_yaw;   // Y
 
-	float m_yaw;    // Left/right rotation
-	float m_pitch; // up/down rotation
-	
-	XMFLOAT3 m_front;
-	XMFLOAT3 m_up;
-	XMFLOAT3 m_right;
-	XMFLOAT3 m_worldUp;
-
+	// Quaternion rotation (internal)
+	XMVECTOR m_rotationQuat;
 	XMMATRIX m_viewMatrix;
-	XMMATRIX m_projectionMatrix;
 
-	int m_screenWidth;
-	int m_screenHeight;
-	int m_lastMouseX;
-	int m_lastMouseY;
-	bool m_firstMouse;
-
+	// Movement
+	float m_moveSpeed;
 	float m_mouseSensitivity;
-	float m_movementSpeed;
-	bool m_mouseCaptured;
-};
 
+	// Physics
+	float m_verticalVelocity;
+	bool  m_isGrounded;
+
+	float m_gravity;
+	float m_jumpStrength;
+
+	// Bounding box (half extents)
+	XMFLOAT3 m_bounds;
+	float    m_groundHeight;
+};
