@@ -11,6 +11,8 @@ CameraClass::CameraClass()
 
 	m_rotationQuat = XMQuaternionIdentity();
 	m_viewMatrix = XMMatrixIdentity();
+	m_UIMatrix = XMMatrixIdentity();
+	UImatrixSetup();
 
 	m_moveSpeed = 10.0f;
 	m_mouseSensitivity = 0.2f;
@@ -25,6 +27,25 @@ CameraClass::CameraClass()
 	// Bounding box (player size)
 	m_bounds = XMFLOAT3(0.4f, 0.9f, 0.4f);
 	m_groundHeight = 3.0f;
+}
+
+void CameraClass::UImatrixSetup()
+{
+	XMVECTOR position = XMLoadFloat3(&m_position);
+	position.m128_f32[2] = -10.0f;
+	// World basis
+	XMVECTOR forward = XMVectorSet(0, 0, 1, 0);   // +Z is forward in DX
+	XMVECTOR up = XMVectorSet(0, 1, 0, 0);
+
+	// Rotate them using quaternion
+	forward = XMVector3Rotate(forward, m_rotationQuat);
+	up = XMVector3Rotate(up, m_rotationQuat);
+
+	// Compute look target
+	XMVECTOR lookAt = XMVectorAdd(position, forward);
+
+	// Build view matrix
+	m_UIMatrix = XMMatrixLookAtLH(position, lookAt, up);
 }
 
 void CameraClass::SetPosition(float x, float y, float z)
@@ -148,21 +169,29 @@ void CameraClass::UpdatePhysics(float deltaTime)
 
 void CameraClass::Render()
 {
-	XMVECTOR up = XMVectorSet(0, 1, 0, 0);
-	XMVECTOR lookAt = XMVectorSet(0, 0, 1, 0);
 	XMVECTOR position = XMLoadFloat3(&m_position);
 
-	XMMATRIX rot = XMMatrixRotationQuaternion(m_rotationQuat);
+	// World basis
+	XMVECTOR forward = XMVectorSet(0, 0, 1, 0);   // +Z is forward in DX
+	XMVECTOR up = XMVectorSet(0, 1, 0, 0);	
 
-	lookAt = XMVector3TransformCoord(lookAt, rot);
-	up = XMVector3TransformCoord(up, rot);
+	// Rotate them using quaternion
+	forward = XMVector3Rotate(forward, m_rotationQuat);
+	up = XMVector3Rotate(up, m_rotationQuat);
 
-	lookAt += position;
+	// Compute look target
+	XMVECTOR lookAt = XMVectorAdd(position, forward);
 
+	// Build view matrix
 	m_viewMatrix = XMMatrixLookAtLH(position, lookAt, up);
 }
 
 void CameraClass::GetViewMatrix(XMMATRIX& viewMatrix) const
 {
 	viewMatrix = m_viewMatrix;
+}
+
+void CameraClass::GetUIMatrix(XMMATRIX& UIMatrix) const
+{
+	UIMatrix = m_UIMatrix;
 }

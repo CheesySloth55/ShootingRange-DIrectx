@@ -5114,3 +5114,848 @@ Memory: 8018
 Date: D/M/Y 7/1/2026
 Time: 19:55:35
 
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 13:37:1
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 13:48:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 13:60:55
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:1:14
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:1:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:2:21
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:2:29
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:4:10
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:4:47
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:5:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:7:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:8:10
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:9:39
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:11:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:13:35
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:14:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:18:16
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:18:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:18:56
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:19:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 12/1/2026
+Time: 14:19:28
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 19:15:19
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:4:45
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:5:8
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:6:6
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:6:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:8:41
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:9:8
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:18:5
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:18:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:22:5
+
+Name: Intel(R) UHD Graphics
+Memory: 128
+Date: D/M/Y 13/1/2026
+Time: 20:30:25
+
+Name: Intel(R) UHD Graphics
+Memory: 128
+Date: D/M/Y 13/1/2026
+Time: 20:31:13
+
+Name: Intel(R) UHD Graphics
+Memory: 128
+Date: D/M/Y 13/1/2026
+Time: 20:37:37
+
+Name: Intel(R) UHD Graphics
+Memory: 128
+Date: D/M/Y 13/1/2026
+Time: 20:39:47
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:44:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:44:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:45:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 20:49:28
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:33:21
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:33:46
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:37:47
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:38:1
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:38:15
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:38:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:38:54
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:39:50
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:39:59
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:40:10
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:40:38
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:40:54
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:41:0
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:42:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:42:21
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:42:42
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:49:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:49:39
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:53:28
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:56:37
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:56:56
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:57:19
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:57:55
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:58:25
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:58:53
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:59:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:59:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:60:6
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:60:10
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:60:19
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:60:29
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 21:60:37
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:1:5
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:1:37
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:8:13
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:9:18
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:9:40
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:10:29
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:11:0
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:11:54
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:12:18
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:13:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:13:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:16:58
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:17:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:18:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:18:31
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:18:42
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 13/1/2026
+Time: 22:19:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:36:16
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:36:38
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:39:34
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:39:42
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:41:22
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:44:52
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:49:53
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:50:57
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 14/1/2026
+Time: 13:51:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 12:59:41
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 12:60:23
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 12:60:56
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:1:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:9:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:9:33
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:9:39
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:10:13
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:10:54
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:31:33
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:34:0
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:41:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:44:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:50:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:50:25
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:51:22
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:54:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:55:13
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:55:40
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:56:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:59:34
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 13:59:52
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:1:39
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:1:46
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:2:41
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:3:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:5:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:5:57
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:10:44
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:11:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:11:23
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:12:0
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:12:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:13:31
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:13:51
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:14:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:15:12
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:15:42
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:20:47
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:21:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:21:39
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:23:21
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:23:48
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:30:4
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:30:11
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:30:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:39:9
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:40:16
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:40:38
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:44:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:45:26
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 14:60:35
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:1:19
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:1:32
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:2:5
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:2:30
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:7:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:7:27
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:10:42
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:15:36
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:17:29
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:20:44
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:24:35
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:24:53
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:25:21
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:25:34
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:26:22
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:27:7
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 15/1/2026
+Time: 15:31:37
+
+Name: Intel(R) UHD Graphics
+Memory: 128
+Date: D/M/Y 16/1/2026
+Time: 9:54:17
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 16/1/2026
+Time: 9:59:55
+
+Name: NVIDIA GeForce RTX 3070 Ti Laptop GPU
+Memory: 8018
+Date: D/M/Y 19/1/2026
+Time: 22:60:20
+

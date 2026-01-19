@@ -8,6 +8,7 @@ ShaderManagerClass::ShaderManagerClass()
     m_FontShader = NULL;
     m_AlphaMapShader = NULL;
     m_SpecMapShader = NULL;
+    m_TextureShader = NULL;
 }
 
 

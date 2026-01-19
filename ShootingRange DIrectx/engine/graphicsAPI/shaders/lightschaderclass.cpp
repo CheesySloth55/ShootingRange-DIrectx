@@ -366,5 +366,6 @@ void LightShaderClass::RenderShader(ID3D11DeviceContext* deviceContext)
 	// Set the sampler state in the pixel shader.
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 
+
 	return;
 }

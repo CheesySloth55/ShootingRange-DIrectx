@@ -29,6 +29,10 @@ public:
 	// Build view matrix
 	void Render();
 	void GetViewMatrix(XMMATRIX& viewMatrix) const;
+	void GetUIMatrix(XMMATRIX& UImatrix) const;
+
+private:
+	void UImatrixSetup();
 
 private:
 	// Position
@@ -41,7 +45,7 @@ private:
 	// Quaternion rotation (internal)
 	XMVECTOR m_rotationQuat;
 	XMMATRIX m_viewMatrix;
-
+	XMMATRIX m_UIMatrix;
 	// Movement
 	float m_moveSpeed;
 	float m_mouseSensitivity;

@@ -292,14 +292,14 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	m_deviceContext->RSSetViewports(1, &m_viewport);
 
 	// clip space matrices creation
-	fieldOfView = XMConvertToRadians(90.0f);
+	fieldOfView = 3.141592654f / 4.0f;
 	screenAspect = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
 
 	m_projectionMatrix = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
 
 	m_worldMatrix = XMMatrixIdentity();
 
-	m_orthoMatrix = XMMatrixOrthographicOffCenterLH(0.0f, (float)screenWidth, (float)screenHeight, 0.0f, screenNear, screenDepth);
+	m_orthoMatrix = XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
 
 
 	//disabled depth stencil state creation.
@@ -359,7 +359,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 void D3DClass::Shutdown()
 {
-	// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.
+	// Before shutting down set to windowed mode or it will throw an exception when you release the swap chain.
 	if(m_swapChain)
 	{
 		m_swapChain->SetFullscreenState(false, NULL);

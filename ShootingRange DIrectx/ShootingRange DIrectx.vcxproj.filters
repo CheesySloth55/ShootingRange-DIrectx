@@ -102,6 +102,9 @@
     <ClCompile Include="engine\graphicsAPI\models\meshclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\graphicsAPI\font\textclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\peripheral\inputclass.h">
@@ -183,6 +186,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\applicationclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphicsAPI\font\textclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

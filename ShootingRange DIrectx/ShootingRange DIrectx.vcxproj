@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphicsAPI\camera\positionclass.cpp" />
+    <ClCompile Include="engine\graphicsAPI\font\textclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\frustum\frustumclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\models\displayplaneclass.cpp" />
     <ClCompile Include="engine\graphicsAPI\models\meshclass.cpp" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="engine\core\applicationclass.h" />
     <ClInclude Include="engine\graphicsAPI\camera\positionclass.h" />
+    <ClInclude Include="engine\graphicsAPI\font\textclass.h" />
     <ClInclude Include="engine\graphicsAPI\frustum\frustumclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\displayplaneclass.h" />
     <ClInclude Include="engine\graphicsAPI\models\meshclass.h" />

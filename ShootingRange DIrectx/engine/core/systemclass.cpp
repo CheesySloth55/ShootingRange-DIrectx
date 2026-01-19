@@ -50,9 +50,6 @@ bool SystemClass::Initialize()
 void SystemClass::Shutdown()
 {
 	m_done = true;
-	m_frameThread.request_stop();
-	m_renderThread1.request_stop();
-	m_inputThread.request_stop();
 
 	if(m_Application)
 	{
@@ -112,11 +109,11 @@ void SystemClass::startThread()
 		m_renderThread1 = std::jthread([this](std::stop_token stoken) {
 			while (!stoken.stop_requested() && !m_done)
 			{
-				if (!m_Application->Render(0.0f))
+				if (!m_Application->Render(0.0f) && !m_done)
 				{
 					m_done = true;
 					break;
-				} // You may want to pass a real rotation value or synchronize with main thread
+				} 
 			}
 			});
 	}
